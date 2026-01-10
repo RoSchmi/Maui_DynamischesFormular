@@ -17,21 +17,21 @@
 
         <DataTemplate x:Key="TextTemplate" x:DataType="models:TextItem">
             <Grid ColumnDefinitions="*,2*" Padding="10">
-                <Label Text="{Binding Name}" />
+                <Label Text="{Binding LabelText}" />
                 <Entry Text="{Binding Value}" Grid.Column="1" />
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="BoolTemplate" x:DataType="models:BooleanItem">
             <Grid ColumnDefinitions="*,2*" Padding="10">
-                <Label Text="{Binding Name}" />
+                <Label Text="{Binding LabelText}" />
                 <CheckBox IsChecked="{Binding Value}" Grid.Column="1" />
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="DateTemplate" x:DataType="models:DateItem">
             <Grid ColumnDefinitions="*,2*" Padding="10">
-                <Label Text="{Binding Name}" />
+                <Label Text="{Binding LabelText}" />
                 <DatePicker Date="{Binding Value}" Grid.Column="1" />
             </Grid>
         </DataTemplate>
@@ -81,8 +81,15 @@
                 <Label Text="Name:" />
                 <Entry Text="{Binding TableName}" Placeholder="Enter Tablename here" IsTextPredictionEnabled="False" MinimumWidthRequest="200"/>
             </HorizontalStackLayout>
+            <HorizontalStackLayout FlowDirection ="RightToLeft">
+                <Picker ItemsSource="{Binding PersonRecords}"
+                    SelectedItem="{Binding SelectedRecord}" />
+                
+            </HorizontalStackLayout>
 
-            <CollectionView ItemsSource="{Binding Items}" ItemTemplate="{StaticResource ItemSelector}"/>
+      
+
+            <CollectionView ItemsSource="{Binding SelectedRecord.Items}" ItemTemplate="{StaticResource ItemSelector}"/>
 
             <!--   <CollectionView ItemsSource="{Binding Items}" ItemTemplate="{StaticResource ItemTemplateSelector}" /> -->
 

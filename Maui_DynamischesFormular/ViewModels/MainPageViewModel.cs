@@ -17,6 +17,7 @@ using System.Buffers.Text;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Data.Common;
 using System.Linq;
 //using CommunityToolkit.Mvvm.Input;
@@ -50,9 +51,12 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 
 
 
-    public ObservableCollection<BaseItem> Items { get; set; }
-        
-    
+    public ObservableCollection<PersonDataRecord> PersonRecords { get; }
+
+    [ObservableProperty] 
+    private PersonDataRecord selectedRecord;
+
+
 
 
     #region Constructor
@@ -61,24 +65,49 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
        
         DeviceDisplay.Current.MainDisplayInfoChanged += Current_MainDisplayInfoChanged;
 
-        Items = new ObservableCollection<BaseItem>
+        PersonRecords = new ObservableCollection<PersonDataRecord>
         {
-            new TextItem { Name = "Benutzername", Value = "Roland" },
-            new BooleanItem { Name = "Dark Mode", Value = true },
-            new DateItem { Name = "Geburtsdatum", Value = DateTime.Today }
+             new PersonDataRecord
+             {
+                 Items =
+                 {
+                     new TextItem   { Name = "firstName", LabelText = "Vorname", Value = "Max" },
+                     new TextItem   { Name = "lastnameName", LabelText = "Nachname", Value = "Mustermann" },
+                     new DateItem   { Name = "birthDate", LabelText = "Geburtstag",  Value = DateTime.Today },
+                     new BooleanItem {Name = "isAdult", LabelText = "Erwachsener", Value = true },        
+                 }
+             },
+             new PersonDataRecord
+             {
+                 Items =
+                 {
+                     new TextItem   { Name = "firstName", LabelText = "Vorname", Value = "Monika" },
+                     new TextItem   { Name = "lastnameName", LabelText = "Nachname", Value = "Musterfrau" },
+                     new DateItem   { Name = "birthDate", LabelText = "Geburtstag",  Value = DateTime.Today },
+                     new BooleanItem {Name = "isAdult", LabelText = "Erwachsener", Value = true },
+                 }
+             }
         };
 
-        // var Item = Items.FirstOrDefault();
+       
 
-        BaseItem Item0 = Items[0];
-        BaseItem Item1 = Items[1];
-        BaseItem Item2 = Items[2];
+        
 
-        Items.Add(new TextItem
-        {
-            Name = "Benutzername",
-            Value = "Monika"
+        PersonRecords.Add(new PersonDataRecord
+        { 
+            Items =
+            {
+                    new TextItem   { Name = "firstName", LabelText = "Vorname", Value = "Lisa" },
+                     new TextItem   { Name = "lastnameName", LabelText = "Nachname", Value = "Musterkind" },
+                     new DateItem   { Name = "birthDate", LabelText = "Geburtstag",  Value = DateTime.Today },
+                     new BooleanItem {Name = "isAdult", LabelText = "Erwachsener", Value = true },
+            }
+
         });
+
+        selectedRecord = PersonRecords.FirstOrDefault();
+
+
 
        
 
@@ -151,7 +180,7 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 
         string sender = nameof(MainPage);
         var navigationParameter = new Dictionary<string, object>() {
-                    { nameof(MainPage), Items }
+                    { nameof(MainPage), PersonRecords }
             };
 
         //await Shell.Current.GoToAsync($"///{nameof(SettingsPage)}?Parameter={sender}", navigationParameter);

@@ -7,5 +7,7 @@ namespace Maui_DynamischesFormular.Models
     {
         [ObservableProperty]
         private string name;
+        [ObservableProperty]
+        private string labelText;
     }
 }

@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Maui;
-using Maui_DynamischesFormular.PageModels;
+using Maui_DynamischesFormular.ViewModels;
 using Microsoft.Extensions.Logging;
 
 namespace Maui_DynamischesFormular
@@ -23,9 +23,9 @@ namespace Maui_DynamischesFormular
 #endif
             builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
             builder.Services.AddSingleton<MainPage>();
-            builder.Services.AddSingleton<PageModels.MainPageViewModel>();
+            builder.Services.AddSingleton<ViewModels.MainPageViewModel>();
             builder.Services.AddSingleton<Pages.SettingsPage>();
-            builder.Services.AddSingleton<PageModels.SettingsViewModel>();
+            builder.Services.AddSingleton<ViewModels.SettingsViewModel>();
             //builder.Services.AddSingleton<Pages.ProfilesPage>();
             //builder.Services.AddSingleton<ViewModels.ProfilesViewModel>();
             //builder.Services.AddSingleton<Pages.ProfileDetailPage>();

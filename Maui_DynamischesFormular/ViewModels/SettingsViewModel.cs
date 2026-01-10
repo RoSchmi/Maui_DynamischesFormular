@@ -2,14 +2,14 @@
 using CommunityToolkit.Maui;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Maui_DynamischesFormular.Models;
-using Maui_DynamischesFormular.PageModels;
+using Maui_DynamischesFormular.ViewModels;
 using Maui_DynamischesFormular.Pages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 
-namespace Maui_DynamischesFormular.PageModels
+namespace Maui_DynamischesFormular.ViewModels
 {
 
     public partial class SettingsViewModel : ObservableObject, IQueryAttributable

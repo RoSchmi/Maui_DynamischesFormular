@@ -1,6 +1,6 @@
 namespace Maui_DynamischesFormular.Pages;
 
-using Maui_DynamischesFormular.PageModels;
+using Maui_DynamischesFormular.ViewModels;
 
 public partial class SettingsPage : ContentPage
 {

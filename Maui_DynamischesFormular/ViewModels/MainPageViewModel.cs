@@ -29,7 +29,7 @@ using System.Xml;
 //using static Java.Util.Jar.Attributes;
 
 
-namespace Maui_DynamischesFormular.PageModels;
+namespace Maui_DynamischesFormular.ViewModels;
 
 // String message from the sending page
 //[QueryProperty("SenderMessage", "Parameter")]

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maui_DynamischesFormular.Pages.SettingsPage"
+             xmlns:viewmodel="clr-namespace:Maui_DynamischesFormular.PageModels"
+             xmlns:local="clr-namespace:Maui_DynamischesFormular"
+             xmlns:models="clr-namespace:Maui_DynamischesFormular.Models"             
+             x:DataType="viewmodel:SettingsViewModel">
+
+    <ContentPage.Resources>
+        <!-- Text Template -->
+        <DataTemplate x:Key="TextTemplate">
+            <Grid ColumnDefinitions="*,2*" Padding="10">
+                <Label Text="{Binding Name}" VerticalOptions="Center"/>
+                <Entry Text="{Binding StringValue}" Grid.Column="1"/>
+            </Grid>
+        </DataTemplate>
+        <!-- Boolean Template -->
+        <DataTemplate x:Key="BoolTemplate">
+            <Grid ColumnDefinitions="*,2*" Padding="10">
+                <Label Text="{Binding Name}" VerticalOptions="Center"/>
+                <CheckBox IsChecked="{Binding BoolValue}" Grid.Column="1" VerticalOptions="Center"/>
+            </Grid>
+        </DataTemplate>
+        <!-- Date Template -->
+        <DataTemplate x:Key="DateTemplate">
+            <Grid ColumnDefinitions="*,2*" Padding="10">
+                <Label Text="{Binding Name}" VerticalOptions="Center"/>
+                <DatePicker Date="{Binding DateValue}" Grid.Column="1"/>
+            </Grid>
+        </DataTemplate>
+        <!-- Template Selector -->
+        <local:SettingTemplateSelector x:Key="SettingSelector" TextTemplate="{StaticResource TextTemplate}" BoolTemplate="{StaticResource BoolTemplate}" DateTemplate="{StaticResource DateTemplate}" />
+
+        <!-- Template Selector -->
+        <local:SettingTemplateSelector x:Key="SettingSelector" TextTemplate="{StaticResource TextTemplate}" BoolTemplate="{StaticResource BoolTemplate}" DateTemplate="{StaticResource DateTemplate}" />
+
+
+
+    </ContentPage.Resources>
+
+    <!-- xmlns:templates="clr-namespace:DataTemplates"-->
+    
+    <ScrollView>
+        <CollectionView ItemsSource="{Binding Items}" ItemTemplate="{StaticResource SettingSelector}" />
+    </ScrollView>
+    <!--
+    <VerticalStackLayout>
+        <Label 
+            Text="Welcome to my .NET MAUI!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+        
+    </VerticalStackLayout>
+    
+    -->
+</ContentPage>
+
+<!--
+x:Class="ChartSluuk.Pages.SettingsPage"
+xmlns:local="clr-namespace:ChartSluuk"
+xmlns:templates="clr-namespace:DataTemplates"
+xmlns:viewmodel="clr-namespace:ChartSluuk.PageModels"
+xmlns:controls="clr-namespace:ChartSluuk.Controls"
+xmlns:models="clr-namespace:ChartSluuk.Models"
+x:DataType="viewmodel:SettingsViewModel"
+Title="{Binding SelectedProfileExtended}">
+    -->

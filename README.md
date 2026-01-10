@@ -1,2 +1,2 @@
 ## Maui-DynamischesFormular
-Zeigt als Beispiel für CommunityToolkit.MMvvm die Bindung von ObservableCollection an CoolectionView unter Verwendung von DataTemplates
+Zeigt als eigenes Beispiel für CommunityToolkit.Mvvm die Bindung von ObservableCollection an CollectionView unter Verwendung von DataTemplates

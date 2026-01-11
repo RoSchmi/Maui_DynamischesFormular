@@ -69,18 +69,26 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
         {
              new PersonDataRecord
              {
+                 PersonIndex = 0,
+                 PersonGuid = Guid.NewGuid().ToString("D"),
+
                  Items =
                  {
+                     //new TextItem   {Name = "personGuid", LabelText = "GUID", Value = Guid.NewGuid().ToString("D") },
                      new TextItem   { Name = "firstName", LabelText = "Vorname", Value = "Max" },
                      new TextItem   { Name = "lastnameName", LabelText = "Nachname", Value = "Mustermann" },
                      new DateItem   { Name = "birthDate", LabelText = "Geburtstag",  Value = DateTime.Today },
-                     new BooleanItem {Name = "isAdult", LabelText = "Erwachsener", Value = true },        
+                     new BooleanItem {Name = "isAdult", LabelText = "Erwachsener", Value = true },
                  }
              },
              new PersonDataRecord
              {
+                 PersonIndex = 1,
+                 PersonGuid = Guid.NewGuid().ToString("D"),
+
                  Items =
                  {
+                     //new TextItem   {Name = "personGuid", LabelText = "GUID", Value = Guid.NewGuid().ToString("D") },
                      new TextItem   { Name = "firstName", LabelText = "Vorname", Value = "Monika" },
                      new TextItem   { Name = "lastnameName", LabelText = "Nachname", Value = "Musterfrau" },
                      new DateItem   { Name = "birthDate", LabelText = "Geburtstag",  Value = DateTime.Today },
@@ -95,9 +103,12 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 
         PersonRecords.Add(new PersonDataRecord
         { 
+            PersonIndex = 2,
+            PersonGuid = Guid.NewGuid().ToString("D"),
             Items =
             {
-                    new TextItem   { Name = "firstName", LabelText = "Vorname", Value = "Lisa" },
+                     //new TextItem   {Name = "personGuid", LabelText = "GUID", Value = Guid.NewGuid().ToString("D") },
+                     new TextItem   { Name = "firstName", LabelText = "Vorname", Value = "Lisa" },
                      new TextItem   { Name = "lastnameName", LabelText = "Nachname", Value = "Musterkind" },
                      new DateItem   { Name = "birthDate", LabelText = "Geburtstag",  Value = DateTime.Today },
                      new BooleanItem {Name = "isAdult", LabelText = "Erwachsener", Value = true },

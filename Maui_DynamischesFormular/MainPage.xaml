@@ -18,21 +18,21 @@
         <DataTemplate x:Key="TextTemplate" x:DataType="models:TextItem">
             <Grid ColumnDefinitions="*,2*" Padding="10">
                 <Label Text="{Binding LabelText}" />
-                <Entry Text="{Binding Value}" Grid.Column="1" />
+                <Entry Text="{Binding Value}" IsReadOnly="False"  Grid.Column="1" />
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="BoolTemplate" x:DataType="models:BooleanItem">
             <Grid ColumnDefinitions="*,2*" Padding="10">
                 <Label Text="{Binding LabelText}" />
-                <CheckBox IsChecked="{Binding Value}" Grid.Column="1" />
+                <CheckBox IsChecked="{Binding Value}" IsEnabled="True" Grid.Column="1" />
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="DateTemplate" x:DataType="models:DateItem">
             <Grid ColumnDefinitions="*,2*" Padding="10">
                 <Label Text="{Binding LabelText}" />
-                <DatePicker Date="{Binding Value}" Grid.Column="1" />
+                <DatePicker Date="{Binding Value}"  FontAttributes="Bold" IsEnabled="True" Grid.Column="1" />
             </Grid>
         </DataTemplate>
 
@@ -78,16 +78,15 @@
                     Command="{Binding Button2ClickedCommand}"
                     CommandParameter="true"/>
             <HorizontalStackLayout>
-                <Label Text="Name:" />
-                <Entry Text="{Binding TableName}" Placeholder="Enter Tablename here" IsTextPredictionEnabled="False" MinimumWidthRequest="200"/>
-            </HorizontalStackLayout>
-            <HorizontalStackLayout FlowDirection ="RightToLeft">
-                <Picker ItemsSource="{Binding PersonRecords}"
-                    SelectedItem="{Binding SelectedRecord}" />
                 
             </HorizontalStackLayout>
-
-      
+            <Grid ColumnDefinitions="*,2*" Padding="10">
+                <Label Text="Auswahl" FontAttributes="Bold"/>
+                <Picker Grid.Column="1" MaximumWidthRequest="400" HorizontalOptions="Start" ItemsSource="{Binding PersonRecords}"
+    SelectedItem="{Binding SelectedRecord}"  
+    ItemDisplayBinding="{Binding PersonGuid}"/>
+            </Grid>
+            
 
             <CollectionView ItemsSource="{Binding SelectedRecord.Items}" ItemTemplate="{StaticResource ItemSelector}"/>
 

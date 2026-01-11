@@ -9,5 +9,6 @@ namespace Maui_DynamischesFormular.Models
         private string name;
         [ObservableProperty]
         private string labelText;
+        
     }
 }

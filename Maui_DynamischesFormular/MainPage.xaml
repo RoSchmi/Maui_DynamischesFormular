@@ -15,31 +15,56 @@
 
     <ContentPage.Resources>
 
-        <DataTemplate x:Key="TextTemplate" x:DataType="models:TextItem">
+       <!-- <DataTemplate x:Key="TextTemplate" x:DataType="models:TextItem">
             <Grid ColumnDefinitions="*,2*" Padding="10">
                 <Label Text="{Binding LabelText}" />
-                <Entry Text="{Binding Value}" IsReadOnly="False"  Grid.Column="1" />
+                <Entry Text="{Binding Value}" Grid.Column="1" />
+            </Grid> 
+        </DataTemplate> --> 
+        <DataTemplate x:Key="TextTemplateReadOnly" x:DataType="models:TextItem">
+            <Grid ColumnDefinitions="*,2*" Padding="10">
+                <Label Text="{Binding LabelText}" />
+                <Entry Text="{Binding Value}" IsReadOnly="True"  Grid.Column="1" />
+            </Grid>
+        </DataTemplate>
+        <!--<DataTemplate x:Key="BoolTemplate" x:DataType="models:BooleanItem">
+            <Grid ColumnDefinitions="*,2*" Padding="10">
+                <Label Text="{Binding LabelText}" />
+                <CheckBox IsChecked="{Binding Value}" Grid.Column="1" />
+            </Grid>
+        </DataTemplate> -->
+        <DataTemplate x:Key="BoolTemplateReadOnly" x:DataType="models:BooleanItem">
+            <Grid ColumnDefinitions="*,2*" Padding="10">
+                <Label Text="{Binding LabelText}" />
+                <CheckBox IsChecked="{Binding Value}" IsEnabled="false" Grid.Column="1" />
             </Grid>
         </DataTemplate>
 
-        <DataTemplate x:Key="BoolTemplate" x:DataType="models:BooleanItem">
+        <!-- <DataTemplate x:Key="DateTemplate" x:DataType="models:DateItem">
             <Grid ColumnDefinitions="*,2*" Padding="10">
                 <Label Text="{Binding LabelText}" />
-                <CheckBox IsChecked="{Binding Value}" IsEnabled="True" Grid.Column="1" />
+                <DatePicker Date="{Binding Value}"  FontAttributes="Bold" Grid.Column="1" />
+            </Grid>
+        </DataTemplate> -->
+        <DataTemplate x:Key="DateTemplateReadOnly" x:DataType="models:DateItem">
+            <Grid ColumnDefinitions="*,2*" Padding="10">
+                <Label Text="{Binding LabelText}" />
+                <DatePicker Date="{Binding Value}"  FontAttributes="Bold" IsEnabled="False" Grid.Column="1" />
             </Grid>
         </DataTemplate>
 
-        <DataTemplate x:Key="DateTemplate" x:DataType="models:DateItem">
-            <Grid ColumnDefinitions="*,2*" Padding="10">
-                <Label Text="{Binding LabelText}" />
-                <DatePicker Date="{Binding Value}"  FontAttributes="Bold" IsEnabled="True" Grid.Column="1" />
-            </Grid>
-        </DataTemplate>
+        <local:ItemTemplateSelector x:Key="ReadOnlyItemSelector"
+                TextTemplate="{StaticResource TextTemplateReadOnly}"
+                BoolTemplate="{StaticResource BoolTemplateReadOnly}"
+                DateTemplate="{StaticResource DateTemplateReadOnly}" />
+        <!-- 
+        <local:ItemTemplateSelector x:Key="EditableItemSelector"
+        TextTemplate="{StaticResource TextTemplate}"
+        BoolTemplate="{StaticResource BoolTemplate}"
+        DateTemplate="{StaticResource DateTemplate}" /> 
+        -->
 
-        <local:ItemTemplateSelector x:Key="ItemSelector"
-                                TextTemplate="{StaticResource TextTemplate}"
-                                BoolTemplate="{StaticResource BoolTemplate}"
-                                DateTemplate="{StaticResource DateTemplate}" />
+
 
     </ContentPage.Resources>
 
@@ -70,29 +95,35 @@
                 Text="Congratulations: Use Hamburger Menue on the upper left side to navigate" 
                 SemanticProperties.Hint="Counts the number of times you clicks"             
                 HorizontalOptions="Fill" />
-            <Button
-                x:Name="Btn2"
+            <Grid  ColumnDefinitions="*,*,*,*,*">
+                <Button
+                    x:Name="Btn2"
+                    Grid.Column="1"
                     Text="Go to Settings Page" 
                     SemanticProperties.Hint="Going to Settings Page"             
                     HorizontalOptions="Center"
                     Command="{Binding Button2ClickedCommand}"
                     CommandParameter="true"/>
+                <Button
+                    x:Name="Btn3"
+                    Grid.Column="3"
+                    Text="Go to Persons Edit Page" 
+                    SemanticProperties.Hint="Going to Person Edit Page"             
+                    HorizontalOptions="Center"
+                    Command="{Binding Button3ClickedCommand}"
+                    CommandParameter="true"/>
+            </Grid>
+            
             <HorizontalStackLayout>
                 
             </HorizontalStackLayout>
             <Grid ColumnDefinitions="*,2*" Padding="10">
                 <Label Text="Auswahl" FontAttributes="Bold"/>
                 <Picker Grid.Column="1" MaximumWidthRequest="400" HorizontalOptions="Start" ItemsSource="{Binding PersonRecords}"
-    SelectedItem="{Binding SelectedRecord}"  
-    ItemDisplayBinding="{Binding PersonGuid}"/>
+                    SelectedItem="{Binding SelectedRecord}"  
+                    ItemDisplayBinding="{Binding PersonGuid}"/>
             </Grid>
-            
-
-            <CollectionView ItemsSource="{Binding SelectedRecord.Items}" ItemTemplate="{StaticResource ItemSelector}"/>
-
-            <!--   <CollectionView ItemsSource="{Binding Items}" ItemTemplate="{StaticResource ItemTemplateSelector}" /> -->
-
-
+            <CollectionView ItemsSource="{Binding SelectedRecord.Items}" ItemTemplate="{StaticResource ReadOnlyItemSelector}" />
         </VerticalStackLayout>
     </ScrollView>
 

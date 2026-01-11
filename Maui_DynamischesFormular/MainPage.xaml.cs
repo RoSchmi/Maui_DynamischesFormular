@@ -22,12 +22,15 @@ public partial class MainPage : ContentPage
     // in 'App.xaml.cs'
 
     //private readonly MainPageViewModel vm;
-    private MainPageViewModel vm;
+    private readonly MainPageViewModel vm;
 
-    public MainPage()
+    //public MainPage()
+    public MainPage(MainPageViewModel viewModel)
     {
         InitializeComponent();
-        vm = new MainPageViewModel();
+
+        vm = viewModel;
+        //vm = new MainPageViewModel();
 
         BindingContext = vm;
     }

@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:Maui_DynamischesFormular"
     xmlns:view="clr-namespace:Maui_DynamischesFormular.Pages"
-    xmlns:viewmodels="clr-namespace:Maui_DynamischesFormular.PageModels"
+    xmlns:viewmodels="clr-namespace:Maui_DynamischesFormular.ViewModels"
     x:DataType="viewmodels:SettingsViewModel"
     FlyoutBehavior="Flyout">
 
@@ -19,7 +19,13 @@
             Title="SettingsPage"
             ContentTemplate="{DataTemplate view:SettingsPage}"
             Route="SettingsPage" 
-            FlyoutItemIsVisible="True"/> 
+            FlyoutItemIsVisible="True"/>
+    <!-- <ShellContent
+            Title="Persons Edit Page"
+            ContentTemplate="{DataTemplate view:PersonEditPage}"
+            Route="PersonEditPage"
+            FlyoutItemIsVisible="False"/> -->
+
 </Shell>
     
 

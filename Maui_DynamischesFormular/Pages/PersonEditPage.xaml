@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Maui_DynamischesFormular.Models"
+             xmlns:local="clr-namespace:Maui_DynamischesFormular"
+             x:Class="Maui_DynamischesFormular.Pages.PersonEditPage"
+             Shell.FlyoutBehavior="Disabled"
+             Title="PersonEditPage">
+    
+    <ContentPage.Resources>
+        <DataTemplate x:Key="TextTemplate" x:DataType="models:TextItem">
+            <Grid ColumnDefinitions="*,2*" Padding="10">
+                <Label Text="{Binding LabelText}" />
+                <Entry Text="{Binding Value}" IsReadOnly="False"  Grid.Column="1" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="TextTemplateReadOnly" x:DataType="models:TextItem">
+            <Grid ColumnDefinitions="*,2*" Padding="10">
+                <Label Text="{Binding LabelText}" />
+                <Entry Text="{Binding Value}" IsReadOnly="True"  Grid.Column="1" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="BoolTemplate" x:DataType="models:BooleanItem">
+            <Grid ColumnDefinitions="*,2*" Padding="10">
+                <Label Text="{Binding LabelText}" />
+                <CheckBox IsChecked="{Binding Value}" IsEnabled="True" Grid.Column="1" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="BoolTemplateReadOnly" x:DataType="models:BooleanItem">
+            <Grid ColumnDefinitions="*,2*" Padding="10">
+                <Label Text="{Binding LabelText}" />
+                <CheckBox IsChecked="{Binding Value}" IsEnabled="True" Grid.Column="1" />
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DateTemplate" x:DataType="models:DateItem">
+            <Grid ColumnDefinitions="*,2*" Padding="10">
+                <Label Text="{Binding LabelText}" />
+                <DatePicker Date="{Binding Value}"  FontAttributes="Bold" IsEnabled="True" Grid.Column="1" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="DateTemplateReadOnly" x:DataType="models:DateItem">
+            <Grid ColumnDefinitions="*,2*" Padding="10">
+                <Label Text="{Binding LabelText}" />
+                <DatePicker Date="{Binding Value}"  FontAttributes="Bold" IsEnabled="True" Grid.Column="1" />
+            </Grid>
+        </DataTemplate>
+
+        <!--
+        <local:ItemTemplateSelector x:Key="ReadOnlyItemSelector"
+                        TextTemplate="{StaticResource TextTemplateReadOnly}"
+                        BoolTemplate="{StaticResource BoolTemplateReadOnly}"
+                        DateTemplate="{StaticResource BoolTemplateReadOnly}" />
+       -->
+        <local:ItemTemplateSelector x:Key="EditableItemSelector"
+                TextTemplate="{StaticResource TextTemplate}"
+                BoolTemplate="{StaticResource BoolTemplate}"
+                DateTemplate="{StaticResource DateTemplate}" />
+        
+        
+
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout>
+            <Label 
+        Text="Welcome to .NET MAUI!"
+        VerticalOptions="Center" 
+        HorizontalOptions="Center" />
+            
+            <CollectionView ItemsSource="{Binding SelectedRecord.Items}" ItemTemplate="{StaticResource EditableItemSelector}" />
+        </VerticalStackLayout>
+        
+        
+    </ScrollView>
+</ContentPage>

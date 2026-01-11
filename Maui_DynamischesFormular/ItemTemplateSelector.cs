@@ -12,6 +12,8 @@ namespace Maui_DynamischesFormular
         public DataTemplate BoolTemplate { get; set; }
         public DataTemplate DateTemplate { get; set; }
 
+      
+
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
             return item switch

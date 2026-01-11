@@ -26,6 +26,9 @@ namespace Maui_DynamischesFormular
             builder.Services.AddSingleton<ViewModels.MainPageViewModel>();
             builder.Services.AddSingleton<Pages.SettingsPage>();
             builder.Services.AddSingleton<ViewModels.SettingsViewModel>();
+            builder.Services.AddSingleton<Pages.PersonEditPage>();
+            //builder.Services.AddSingleton<ViewModels.SettingsViewModel>();
+
             //builder.Services.AddSingleton<Pages.ProfilesPage>();
             //builder.Services.AddSingleton<ViewModels.ProfilesViewModel>();
             //builder.Services.AddSingleton<Pages.ProfileDetailPage>();

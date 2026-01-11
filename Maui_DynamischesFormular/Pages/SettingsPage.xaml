@@ -32,10 +32,7 @@
         <!-- Template Selector -->
         <local:SettingTemplateSelector x:Key="SettingSelector" TextTemplate="{StaticResource TextTemplate}" BoolTemplate="{StaticResource BoolTemplate}" DateTemplate="{StaticResource DateTemplate}" />
 
-        <!-- Template Selector -->
-        <local:SettingTemplateSelector x:Key="SettingSelector" TextTemplate="{StaticResource TextTemplate}" BoolTemplate="{StaticResource BoolTemplate}" DateTemplate="{StaticResource DateTemplate}" />
-
-
+        
 
     </ContentPage.Resources>
 

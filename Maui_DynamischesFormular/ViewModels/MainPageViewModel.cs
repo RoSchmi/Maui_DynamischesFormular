@@ -100,7 +100,7 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
        
 
         
-
+        // Add one more person
         PersonRecords.Add(new PersonDataRecord
         { 
             PersonIndex = 2,
@@ -116,7 +116,7 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 
         });
 
-        selectedRecord = PersonRecords.FirstOrDefault();
+        selectedRecord = PersonRecords.First();
 
 
 
@@ -162,8 +162,11 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
     #endregion
 
 
+
+
+
     [RelayCommand]
-    private async Task Button2Clicked(object s)         // Back-Button is pressed
+    private async Task Button2Clicked(object s)     
     {
        // Dictionary<string, TransportItem> transportItemDictionary = Wrapper.WorkItemsToTransportItems(TableDetailCollection);
 
@@ -198,6 +201,14 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
         await Shell.Current.GoToAsync($"///{nameof(SettingsPage)}?Sender={sender}", navigationParameter);
         
     }
+
+
+    [RelayCommand]
+    private async Task Button3Clicked(object s)
+    {
+        await Shell.Current.GoToAsync(nameof(PersonEditPage));
+    }
+   
 
     public void OnNavigatedFrom(NavigatedFromEventArgs e)
     {

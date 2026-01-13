@@ -32,7 +32,7 @@ namespace Maui_DynamischesFormular
             //builder.Services.AddSingleton<Pages.ProfilesPage>();
             //builder.Services.AddSingleton<ViewModels.ProfilesViewModel>();
             //builder.Services.AddSingleton<Pages.ProfileDetailPage>();
-            //builder.Services.AddSingleton<PageModels.ProfileDetailViewModel>();
+            builder.Services.AddSingleton<ViewModels.ProfileDetailViewModel>();
             //builder.Services.AddSingleton<Pages.TestPage>();
             //builder.Services.AddSingleton<Pages.ShadowFilePage>();
             //builder.Services.AddSingleton<PageModels.ShadowFileViewModel>();

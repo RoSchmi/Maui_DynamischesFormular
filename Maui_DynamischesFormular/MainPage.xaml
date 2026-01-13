@@ -68,8 +68,12 @@
 
     </ContentPage.Resources>
 
-
-    <ScrollView>
+    <Grid RowDefinitions="40,*">
+        <HorizontalStackLayout Grid.Row="0">
+            <Label Text="Navigation State:" VerticalOptions="Center" FontAttributes="Bold" Margin="0,0,10,0"/>
+            <Entry Text="{Binding NavigationState}" BackgroundColor="Beige" IsReadOnly="True"/>
+        </HorizontalStackLayout>
+        <ScrollView Grid.Row="1">
         <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
@@ -92,7 +96,7 @@
 
             <Button
                 x:Name="CounterBtn"
-                Text="Congratulations: Use Hamburger Menue on the upper left side to navigate" 
+                Text="Use Hamburger Menue at the upper left corner to navigate" 
                 SemanticProperties.Hint="Counts the number of times you clicks"             
                 HorizontalOptions="Fill" />
             <Grid  ColumnDefinitions="*,*,*,*,*">
@@ -126,5 +130,6 @@
             <CollectionView ItemsSource="{Binding SelectedRecord.Items}" ItemTemplate="{StaticResource ReadOnlyItemSelector}" />
         </VerticalStackLayout>
     </ScrollView>
+    </Grid>
 
 </ContentPage>

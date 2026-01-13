@@ -12,8 +12,8 @@ namespace Maui_DynamischesFormular.Models
         private int? personIndex;
 
         [ObservableProperty]
-
         private string personGuid;
+
         public ObservableCollection<BaseItem> Items { get; } = 
         new ObservableCollection<BaseItem>();
     }

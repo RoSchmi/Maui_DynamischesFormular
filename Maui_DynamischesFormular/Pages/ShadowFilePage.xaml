@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--   
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ChartSluuk.Pages.ShadowFilePage"
+             Title="ShadowFilePage">
+    <VerticalStackLayout>
+        <Label 
+            Text="Welcome to .NET MAUI!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+    </VerticalStackLayout>
+</ContentPage>
+    
+    -->
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Maui_DynamischesFormular.Pages.ShadowFilePage"        
+             Title="ShadowFilePage">
+
+ <!--   xmlns:models="clr-namespace:Common.Models"
+xmlns:chartsluukmodels="clr-namespace:Maui_DynamischesFormular.Models"
+-->
+
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding BackCommand}" CommandParameter="Hallo" IsVisible="True" IsEnabled="True"/>
+    </Shell.BackButtonBehavior>
+    <ContentPage.Content>
+        <VerticalStackLayout>
+            <VerticalStackLayout Grid.Row="0" IsVisible="{Binding NavStateIsVisible}">
+                <Label Text="NavState: " Padding="5,0"  HorizontalOptions="Start" VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold" MaximumHeightRequest="25"/>
+                <Label Text="{Binding NavigationState}"  Grid.ColumnSpan="4" Margin="5,0,0,0" MinimumWidthRequest="300" BackgroundColor="DarkGray" VerticalOptions="Center" MaximumHeightRequest="25"/>
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+                <VerticalStackLayout>
+                    <Grid RowDefinitions="Auto, Auto, Auto, Auto, 380, 100">
+                        <VerticalStackLayout Grid.Row="1" IsVisible="{Binding UpperPartIsVisible}">
+                            <HorizontalStackLayout >
+                                <Label Text="Account:" FontAttributes="Bold"/>
+                                <Label Text="{Binding CloudStorageAccount}" TextColor="Gray" Margin="5,0,0,0"/>
+                            </HorizontalStackLayout>
+                            <Label Text="Table/Column:" Margin="0,10,0,0" FontAttributes="Bold"/>
+                            <HorizontalStackLayout>
+                                <Label Text="{Binding TableName}" TextColor="Gray" />
+                                <Label Text="(" Margin="5,0,0,0" TextColor="Gray"/>
+                                <Label Text="{Binding TableYearString}" TextColor="Gray"/>
+                                <Label Text=")" TextColor="Gray"/>
+                                <Label Text="{Binding ColumnName}" TextColor="Gray" Margin="15,0,0,0"/>
+                            </HorizontalStackLayout>
+                            <HorizontalStackLayout  Margin="0,10,0,0">
+                                <Label Text="ShadowCreationDate:" FontAttributes="Bold"/>
+                                <Label Text="{Binding ShadowOriginalCreationDateUtc}" Margin="15,0,0,0" TextColor="Gray"/>
+                            </HorizontalStackLayout>
+
+                            <VerticalStackLayout Margin=" 0,5,0,5">
+                                <Grid ColumnDefinitions="33*,33*,33*">
+                                    <Button Text="Load Cloud" Grid.Column="0" Command="{Binding LoadCloudValuesCommand}"/>
+                                    <Button Text="Refresh Shadow-Values" Grid.Column="1" Grid.ColumnSpan="2" Margin="10,0,0,0" Command="{Binding CopyCloudToShadowCommand}"/>
+                                </Grid>
+                            </VerticalStackLayout>
+
+                            <VerticalStackLayout>
+                                <Grid ColumnDefinitions="33*,35*,31*">
+                                    <Button Text="Delete Shadow" Grid.Column="0" Command="{Binding DeleteShadowValuesFileCommand}"/>
+                                    <Button Text="Store Changes" Grid.Column="1" Command="{Binding StoreChangesCommand}" Margin="10,0,0,0"/>
+                                    <Button Text="Debug" Grid.Column="2" Command="{Binding DebugCommand}" Margin="10,0,0,0"/>
+                                </Grid>
+                            </VerticalStackLayout>
+                        </VerticalStackLayout>
+                        <Grid Margin="5,10,0,0" ColumnDefinitions="23*, 13*, 15*, 17*, 18*, 13*" Grid.Row="3" BackgroundColor="DeepSkyBlue">
+                            <Label Text="Date" Grid.Column="0" Margin="10,0,0,0"/>
+                            <Label Text="Cloud" Grid.Column="1"/>
+                            <Label Text="Shadow" Grid.Column="2"/>
+                            <Label Text="Changed" Grid.Column="3"/>
+                            <Label Text="Replace" Grid.Column="4"/>
+                            <Label Text="Select" Grid.Column="5"/>
+                        </Grid>
+                        <Grid RowDefinitions="*" Grid.Row="4">
+                            <CollectionView x:Name="collectionView" ItemsSource="{Binding Path = YearTableValueCollection}" SelectionMode="None" x:FieldModifier="public" VerticalOptions="Start" HeightRequest="320">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Frame Margin="5,0,0,0" HeightRequest="60">
+                                            <Grid ColumnDefinitions="23*, 16*, 16*, 16*, 17*, 15*" >
+                                                <Label Text="{Binding Path=Date}" FontSize="Micro" Grid.Column="0"  Margin="0,-10, 0, -10" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                <Label Text="{Binding Path= CloudValue}" FontSize="Micro" Grid.Column="1"  Margin="0,-10, 0, -10" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                <Label Text="{Binding Path= ShadowValue}" FontSize="Micro" Grid.Column="2"  Margin="0,-10, 0, -10" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                <Label Text="{Binding Path= ShadowValueCorrected}" FontSize="Micro" Grid.Column="3"  Margin="0,-10, 0, -10" HorizontalOptions="Start" VerticalOptions="Center"/>
+                                                <Entry Text="{Binding Path= CorrectValue}" FontSize="Micro"  Grid.Column="4" BackgroundColor="DarkGray" Unfocused="Entry_Unfocused"  Focused="Entry_Focused"   MaximumHeightRequest="30" HorizontalTextAlignment="Start" Margin="0,-10, 0, -10" MinimumWidthRequest="100" VerticalOptions="Center"/>
+                                                <CheckBox IsChecked="{Binding IsCorrected}"   Grid.Column="5" MinimumWidthRequest="15" MinimumHeightRequest="15" Margin="15,-10, 0, -10"  VerticalOptions="Center" />
+                                            </Grid>
+                                        </Frame>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </Grid>
+                        <ActivityIndicator x:Name="ActivityIndicator" Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="1" VerticalOptions="Center" HorizontalOptions="Center" Scale="1.0" Color="OrangeRed" BackgroundColor="Transparent"  IsVisible="True" MinimumHeightRequest="5" IsRunning="{Binding ActivityIndicatorIsRunning}"/>
+                        <Grid Grid.Row="5" HeightRequest="100">
+                            <BoxView Color="Grey" />
+                        </Grid>
+                    </Grid>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ContentPage.Content>
+</ContentPage>   

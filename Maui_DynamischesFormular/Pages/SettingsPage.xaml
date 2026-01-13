@@ -4,62 +4,405 @@
              x:Class="Maui_DynamischesFormular.Pages.SettingsPage"
              xmlns:viewmodel="clr-namespace:Maui_DynamischesFormular.ViewModels"
              xmlns:local="clr-namespace:Maui_DynamischesFormular"
+             xmlns:templates="clr-namespace:DataTemplates"
+             xmlns:controls="clr-namespace:Maui_DynamischesFormular.Controls"
              xmlns:models="clr-namespace:Maui_DynamischesFormular.Models"             
              x:DataType="viewmodel:SettingsViewModel">
-
+    
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior Command="{Binding BackCommand}" CommandParameter="Hallo" IsVisible="False" IsEnabled="False"/>
+    </Shell.BackButtonBehavior>
     <ContentPage.Resources>
-        <!-- Text Template -->
-        <DataTemplate x:Key="TextTemplate">
-            <Grid ColumnDefinitions="*,2*" Padding="10">
-                <Label Text="{Binding Name}" VerticalOptions="Center"/>
-                <Entry Text="{Binding StringValue}" Grid.Column="1"/>
+        <Style TargetType="SwipeView">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" >
+                            <VisualState.Setters>
+                                <Setter TargetName="myboxview" Property="BoxView.Color" Value="DarkGray" />
+                                <Setter TargetName="myframe" Property="Frame.BorderColor" Value="DarkGray" />
+                            </VisualState.Setters>
+                        </VisualState>
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter TargetName="myboxview" Property="BoxView.Color" Value="Red" />
+                                <Setter TargetName="myframe" Property="Frame.BorderColor" Value="Red" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+        <ControlTemplate x:Key="CardViewFlatControlTemplate">
+            <Frame BindingContext="{Binding Source={RelativeSource TemplatedParent}}"
+                   BackgroundColor="{Binding CardColor}"
+                   Opacity="0.8"
+                   BorderColor="{Binding BorderColor}"               
+                   CornerRadius="5"
+                   HasShadow="True"
+                   Padding="8"
+                   HorizontalOptions="Fill"                 
+                   VerticalOptions="Center">
+                <!-- HorizontalOptions="Center" -->
+                <!-- WidthRequest="400"-->
+                <Grid ColumnDefinitions="30*, 70*" MinimumHeightRequest="15">
+                    <Label Text="{Binding CardTitle}"
+                           FontAttributes="Bold"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Start" Grid.Column="0"/>
+                    <Label Text="{Binding CardDescription}"
+                           FontAttributes="Bold"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Start" Grid.Column="1"/>
+                </Grid>
+
+            </Frame>
+        </ControlTemplate>
+        <ControlTemplate x:Key="CardViewControlTemplate">
+            <Frame BindingContext="{Binding Source={RelativeSource TemplatedParent}}"
+                   BackgroundColor="{Binding CardColor}"
+                   Opacity="0.8"
+                   BorderColor="{Binding BorderColor}"               
+                   CornerRadius="5"
+                   HasShadow="True"
+                   Padding="8"
+                   HorizontalOptions="Fill"                 
+                   VerticalOptions="Center">
+                <!-- HorizontalOptions="Center" -->
+                <!-- WidthRequest="400"-->
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="75" />
+                        <RowDefinition Height="4" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label Text="{Binding CardTitle}"
+                           FontAttributes="Bold"
+                           FontSize="20"
+                           VerticalTextAlignment="Center"
+                           HorizontalTextAlignment="Start" />
+                    <BoxView Grid.Row="1"
+                             BackgroundColor="{Binding BorderColor}"
+                             HeightRequest="2"
+                             HorizontalOptions="Fill" />
+                    <Label Grid.Row="2"
+                           Text="{Binding CardDescription}"
+                           VerticalTextAlignment="Start"
+                           VerticalOptions="Fill"
+                           HorizontalOptions="Fill" />
+                </Grid>
+            </Frame>
+        </ControlTemplate>
+
+        <DataTemplate x:Key="stringTypeTemplate">
+            <Grid Padding="10">
+                <Frame HeightRequest="70">
+                    <Grid>
+                        <HorizontalStackLayout VerticalOptions="Center" Grid.Column="0" Padding="0">
+                            <!--<Label Text="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=Name}" VerticalOptions="Center" FontAttributes="Bold"/>
+                            <Entry Text="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=StringValue}" Margin="20, 0, 0, 0" BackgroundColor ="Bisque" TextColor="Black"  FontAttributes="Bold" />-->
+                            <Label Text="String" Margin="20, 0, 0, 0" FontSize="15"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Frame>
             </Grid>
         </DataTemplate>
-        <!-- Boolean Template -->
-        <DataTemplate x:Key="BoolTemplate">
-            <Grid ColumnDefinitions="*,2*" Padding="10">
-                <Label Text="{Binding Name}" VerticalOptions="Center"/>
-                <CheckBox IsChecked="{Binding BoolValue}" Grid.Column="1" VerticalOptions="Center"/>
-            </Grid>
+        <DataTemplate x:Key="stringTypeReadOnlyTemplate">
+            <controls:CardView BorderColor="DarkGray"
+                               CardColor="Transparent"
+                               CardTitle="{Binding Name}" 
+                               CardDescription="{Binding StringValue}"
+                               Padding="10, 0"
+                               ControlTemplate="{StaticResource CardViewFlatControlTemplate}">
+
+            </controls:CardView>
+
+            <!-- <Grid Padding="10" ColumnDefinitions="50*, 50*"> -->
+            <!--   <Frame HeightRequest="70"> -->
+            <!--       <Grid> -->
+            <!--            <HorizontalStackLayout VerticalOptions="Center" Grid.Column="0" Padding="0"> -->
+            <!--                <Label Text="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=Name}" VerticalOptions="Center" FontAttributes="Bold" TextColor="DeepSkyBlue"/> -->
+            <!--                <Entry Text="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=StringValue}" Margin="20, 0, 0, 0" TextColor="DarkGray" IsReadOnly="True" FontAttributes="Bold" /> -->
+            <!--                <Label Text="String" Margin="20, 0, 0, 0" FontSize="15"/> -->
+            <!--                </HorizontalStackLayout> -->
+            <!--                                        -->
+            <!-- </Grid> -->
+            <!-- </Frame> -->
+            <!-- </Grid> -->
+
         </DataTemplate>
-        <!-- Date Template -->
-        <DataTemplate x:Key="DateTemplate">
-            <Grid ColumnDefinitions="*,2*" Padding="10">
-                <Label Text="{Binding Name}" VerticalOptions="Center"/>
-                <DatePicker Date="{Binding DateValue}" Grid.Column="1"/>
-            </Grid>
+
+         <!--
+         <DataTemplate x:Key="stringTypeSwipeTemplate">
+            <SwipeView x:Name="myswipeview" Margin="5,0,5,0">
+
+                <Border
+            x:Name="myborder"
+            HeightRequest="70"
+            StrokeThickness="0"
+            BackgroundColor="White">
+
+                    <Border.Shadow>
+                        <Shadow Brush="DarkRed" Opacity="0.3" Offset="0,9" Radius="6" />
+                    </Border.Shadow>
+
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer 
+                                NumberOfTapsRequired="1"
+                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SettingsViewModel}}, Path=TapCommand}"
+                                CommandParameter="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}}" />
+                    </Border.GestureRecognizers>
+
+                    <VerticalStackLayout Padding="0">
+
+                        <Grid ColumnDefinitions="60*, 35*, 5*">
+                            <Label Text="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=Name}" Grid.Column="0" HorizontalOptions="Start"
+                                TextColor="DarkGoldenrod"
+                                FontAttributes="Bold" />
+                            <Label Text="Set Details  >" Grid.Column="1"  HorizontalOptions="End" TextColor="DeepSkyBlue" FontAttributes="Bold"/>
+
+
+                        </Grid>
+
+                        <HorizontalStackLayout>
+                            <Label Text="CloudTableName:" 
+                           HorizontalOptions="Start" 
+                           FontAttributes="Bold" />
+
+                            <Label 
+                        Text="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=StringValue}"
+                        HorizontalOptions="Start"
+                        Margin="5,0,0,0"
+                        TextColor="Gray" />
+                        </HorizontalStackLayout>
+
+                        <BoxView x:Name="myboxview"
+                         HeightRequest="3"
+                         HorizontalOptions="Fill" />
+                    </VerticalStackLayout>
+
+                </Border>
+            </SwipeView>
         </DataTemplate>
-        <!-- Template Selector -->
-        <local:SettingTemplateSelector x:Key="SettingSelector" TextTemplate="{StaticResource TextTemplate}" BoolTemplate="{StaticResource BoolTemplate}" DateTemplate="{StaticResource DateTemplate}" />
+        -->
+        
 
         
+        <DataTemplate x:Key="stringTypeSwipeTemplate">
+            <SwipeView x:Name="myswipeview"  Margin ="5,0,5,0">
+                <Frame HeightRequest="70" HasShadow="True" x:Name="myframe">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1"                       
+                                                               Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SettingsViewModel}}, 
+                                                               Path=TapCommand}"
+                                                               CommandParameter="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}}"/>
+                    </Frame.GestureRecognizers>
+                    <VerticalStackLayout>
+                        <Grid ColumnDefinitions="60*, 35*, 5*">
+                            <Label Text="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=Name}" Grid.Column="0"  HorizontalOptions="Start" TextColor="DarkGoldenrod" FontAttributes="Bold"/>
+                            <Label Text="Set Details  >" Grid.Column="1"  HorizontalOptions="End" TextColor="DeepSkyBlue" FontAttributes="Bold"/>
+                        </Grid>
+                        <HorizontalStackLayout>
+                            <Label Text="CloudTableName:" HorizontalOptions="Start" FontAttributes="Bold"/>
+                            <Label Text="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=StringValue}" HorizontalOptions="Start" Margin="5, 0, 0, 0" TextColor="Gray" />
+                        </HorizontalStackLayout>
+                        <BoxView x:Name="myboxview" HeightRequest="3" HorizontalOptions="Fill" />
+                    </VerticalStackLayout>
+                </Frame>
+            </SwipeView>
+        </DataTemplate>
+        
+
+
+        <DataTemplate x:Key="stringTypeDontShowTemplate">
+            <Grid Padding="0,0">
+
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="boolTypeTemplate">
+            <Grid Padding="10">
+                <Frame HeightRequest="80">
+                    <Grid>
+                        <HorizontalStackLayout VerticalOptions="Center" Grid.Column="0" Padding="0">
+                            <!--<Label Text="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=Name}" FontAttributes="Bold" />
+                            <CheckBox IsChecked="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=BoolValue}" Margin="20, 0, 0, 0"/>-->
+                            <Label Text="Bool" Margin="20, 0, 0, 0" FontSize="15"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Frame>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="boolTypeReadOnlyTemplate">
+            <Grid Padding="10">
+                <Frame HeightRequest="80">
+                    <Grid>
+                        <HorizontalStackLayout VerticalOptions="Center" Grid.Column="0" Padding="0">
+                            <!--<Label Text="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=Name}" FontAttributes="Bold" />
+                            <CheckBox IsChecked="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=BoolValue}" IsEnabled="False" Margin="20, 0, 0, 0"/>-->
+                            <Label Text="Bool" Margin="20, 0, 0, 0" FontSize="15"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Frame>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="boolTypeDontShowTemplate">
+            <Grid   Padding="0,0">
+
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="dateTypeTemplate">
+            <Grid Padding="10">
+                <Frame HeightRequest="70">
+                    <Grid>
+                        <HorizontalStackLayout VerticalOptions="Center" Grid.Column="0" Padding="0">
+                            <!--<Label Text="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=Name}" FontAttributes="Bold" />
+                            <DatePicker Date="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=DateValue}" Margin="20, 0, 0, 0"/>-->
+                            <Label Text="Date" Margin="20, 0, 0, 0" FontSize="15"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Frame>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="dateTypeReadOnlyTemplate">
+            <Grid Padding="10">
+                <Frame HeightRequest="70">
+                    <Grid>
+                        <HorizontalStackLayout VerticalOptions="Center" Grid.Column="0" Padding="0">
+                            <!--<Label Text="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=Name}" FontAttributes="Bold" />
+                            <DatePicker Date="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=DateValue}" IsEnabled="False" Margin="20, 0, 0, 0"/>-->
+                            <Label Text="Date" Margin="20, 0, 0, 0" FontSize="15"/>
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Frame>
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="dateTypeDontShowTemplate">
+            <Grid Padding="0,0">
+
+            </Grid>
+        </DataTemplate>
+
+        <templates:TypeDataTemplateSelector x:Key="typeDataTemplateSelector"
+                                          StringTypeTemplate="{StaticResource stringTypeTemplate}"
+                                          StringTypeReadOnlyTemplate="{StaticResource stringTypeReadOnlyTemplate}" 
+                                          StringTypeDontShowTemplate="{StaticResource stringTypeDontShowTemplate}"
+                                          StringTypeSwipeTemplate="{StaticResource stringTypeSwipeTemplate}"
+                                          BoolTypeTemplate="{StaticResource boolTypeTemplate}"
+                                          BoolTypeReadOnlyTemplate="{StaticResource boolTypeReadOnlyTemplate}"
+                                          BoolTypeDontShowTemplate="{StaticResource boolTypeDontShowTemplate}"                                           
+                                          DateTypeTemplate="{StaticResource dateTypeTemplate}"
+                                          DateTypeDontShowTemplate="{StaticResource dateTypeDontShowTemplate}"   
+                                          DateTypeReadOnlyTemplate="{StaticResource dateTypeReadOnlyTemplate}"/>
 
     </ContentPage.Resources>
+    <ContentPage.Content>
+        <VerticalStackLayout>
+            <Grid ColumnDefinitions="*, *, *" Margin="0,2,0,0" RowDefinitions="40, 4">
 
-    <!-- xmlns:templates="clr-namespace:DataTemplates"-->
-    
-    <ScrollView>
-        <CollectionView ItemsSource="{Binding Items}" ItemTemplate="{StaticResource SettingSelector}" />
-    </ScrollView>
-    <!--
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to my .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-        
-    </VerticalStackLayout>
-    
-    -->
+                <Button Text="{Binding SettingsPageRightCommand}" IsVisible="{Binding SettingsPageRightCommandIsVisible}"  TextColor="DeepSkyBlue" FontAttributes="Bold"  BackgroundColor="Transparent" BorderWidth="0"  Command="{Binding ButtonSettingsRightCommandClickedCommand}" MaximumHeightRequest="40" Grid.Column="2"  HorizontalOptions="End"/>
+                <Button Text="Debug"  Margin="10,0,0,0" BorderWidth="0" Command="{Binding Button_Debug_clicked_Command}" TextColor="DeepSkyBlue" MaximumHeightRequest="40" FontAttributes="Bold"  BackgroundColor="Transparent" Grid.Column="1" HorizontalOptions="Start"/>
+                <Button Text="{Binding SettingsPageLeftCommand}" IsVisible="{Binding SettingsPageLeftCommandIsVisible}" TextColor="DeepSkyBlue" FontAttributes="Bold" BackgroundColor="Transparent" BorderWidth="0" Command="{Binding ButtonSettingsLeftCommandClickedCommand}" MaximumHeightRequest="40" Grid.Column="0" HorizontalOptions="Start"/>
+
+                <HorizontalStackLayout Grid.Column="1">
+
+
+                </HorizontalStackLayout>
+                <Entry Grid.Row="1" Grid.ColumnSpan="3"  HorizontalOptions= "FillAndExpand" BackgroundColor="LightGray" IsReadOnly="True" IsEnabled="False"/>
+            </Grid>
+            <VerticalStackLayout x:Name="AccountsStacklayout"  Margin="10,0,0,0" IsVisible="{Binding AccountsStacklayoutVisible}">
+                <Label Text="New Storage Account" Margin="0,10,0,0" HorizontalOptions="Start" FontSize="Micro"/>
+                <Grid MinimumHeightRequest="40">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="98*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Entry Text="{Binding AccountEntry}" Placeholder="Enter Account here" IsTextPredictionEnabled="False" BackgroundColor="AliceBlue" TextColor="DarkGray" FontSize="Small" Grid.Column="0" HorizontalOptions="Fill"/>
+                    <Button Text="" Grid.Column="1" HorizontalOptions="Fill" FontSize="Micro" Margin="0,0,0,0" BackgroundColor="LightGray" />
+                </Grid>
+                <!--<Entry Text="{Binding Account}" FontSize="Small" TextColor="DarkGray" MinimumHeightRequest="60" BackgroundColor="AliceBlue"/>-->
+                <Label Text="New Storage Key" HorizontalOptions="Start" Margin="0,10,0,0" FontSize="Micro"/>
+                <Grid MinimumHeightRequest="40" ColumnDefinitions="80*,20*">
+
+                    <Entry Text="{Binding KeyEntry}" Placeholder="Enter Key here" IsTextPredictionEnabled="False" BackgroundColor="AliceBlue" TextColor="DarkGray" FontSize="Small" Grid.Column="0" HorizontalOptions="Fill" />
+                    <Button Text="Help"  Command="{Binding Button_Tip_clicked_Command}"  Grid.Column="1" HorizontalOptions="Fill" FontSize="Micro" Margin="0,0,3,0" BackgroundColor="OrangeRed" />
+                </Grid>
+                <Button Text="Add arbitrary Credentials" IsVisible="false" HorizontalOptions="Start" Command="{Binding Button_AddAbitrary_clicked_Command}"  BorderColor="Gray" BorderWidth="1"/>
+                <Button Text="Apply entered Credentials" Margin=" 0,5,0,0" HorizontalOptions="Start" Command="{Binding Button_AddCredentials_clicked_Command}"  BorderColor="Gray" BorderWidth="1"/>
+                <Button Text="{Binding AppearCounter}" Padding="5, 5" HorizontalOptions="Start" Command="{Binding Button_PupulateCommand}"  BorderColor="Gray" BorderWidth="1"/>
+                <HorizontalStackLayout>
+                    <Label  Text="Selected Account: " VerticalOptions="Center"/>
+                    <Label  Text="{Binding SelectedAccount}" TextColor="DarkGray" Padding="5, 5" VerticalOptions="Center"/>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Grid HorizontalOptions="StartAndExpand" RowDefinitions="40,Auto" MaximumWidthRequest="300">
+                        <Button Text="Test Connection" Grid.Row="0" Frame="0, -4, 0, 0" HorizontalOptions="Start" MaximumHeightRequest="35" Command="{Binding ButtonTestConnectionClickedCommand}" TextColor="DeepSkyBlue" BackgroundColor="Transparent" BorderWidth="0"/>
+                        <Label  Grid.Row="1"  HeightRequest="6" Frame="0, -4, 0, 0"  BackgroundColor="{Binding ConnectionOKBackGround}"/>
+                    </Grid>
+                </HorizontalStackLayout>
+                <!-- <Label Text="Credentials: Select / Delete" Margin="0, 10, 0, 0" FontAttributes="Bold" HorizontalOptions="Start"/> -->
+                <VerticalStackLayout>
+                    <Grid RowDefinitions="300, 1" VerticalOptions="FillAndExpand">
+                        <TableView  x:Name="TableViewAccounts" >
+                        </TableView>
+                    </Grid>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+            <VerticalStackLayout x:Name="SettingStacklayout" IsVisible="{Binding SettingsStacklayoutVisible}">
+                <Grid RowDefinitions="Auto, 20, Auto, 400">
+                    <VerticalStackLayout Grid.Row="0">
+                        <HorizontalStackLayout IsVisible="{Binding NavStateRowIsVisible}">
+                            <Label Text="Injected: " FontSize="Medium" Margin="10, 10, 0, 0"/>
+                            <Label Text="{Binding SenderMessage}" FontAttributes="Bold" TextColor="DarkViolet" FontSize="Medium" Margin="10, 10, 0, 0"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout IsVisible="{Binding NavStateRowIsVisible}">
+                            <Label Text="NavState: " Padding="5,0"  HorizontalOptions="Start" VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold" MaximumHeightRequest="25"/>
+                            <Label Text="{Binding NavigationState}" Margin="0,0,0,5" MinimumWidthRequest="200" BackgroundColor="DarkGray" MaximumHeightRequest="25"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout IsVisible="{Binding NavStateRowIsVisible}">
+                            <Button Text="&lt; Show Graphs" HorizontalOptions="Start"  Command="{Binding ShowGraphsCommand}" />
+                            <Button Text="Save Changes" Command="{Binding ButtonSaveChangesClickedCommand}" Margin="5,0,10,0" BorderWidth ="{Binding SaveButtonBorderWidth}" HorizontalOptions="End" TextColor="Blue" />
+                        </HorizontalStackLayout>
+                        <Grid ColumnDefinitions="30*, 20*, 20*,20*, 20*" RowDefinitions="Auto, Auto, Auto">
+                            <Label Text="Click to Select Profile" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0"/>
+                            <Label Text="Rename, Add or Delete" Grid.Column="2" Grid.ColumnSpan="3" Margin="0,10,0,0"/>
+                            <Picker Margin="0,5,10,5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="Red" MinimumWidthRequest="200" ItemsSource="{Binding ProfileNames}" SelectedIndex="{Binding SelectedProfileIndex}" />
+                            <Button Text="Ren" Margin="5,5,10,5" MinimumWidthRequest="70" Grid.Column="2" Grid.Row="1" Command="{Binding ButtonRenProfileClickedCommand}"/>
+                            <Button Text="Add" Margin="5,5,10,5" MinimumWidthRequest="70" Grid.Column="3" Grid.Row="1" Command="{Binding ButtonAddProfileClickedCommand}"/>
+                            <Button Text="Del" Margin="5,5,10,5" MinimumWidthRequest="70" Grid.Column="4" Grid.Row="1" Command="{Binding ButtonDelProfileClickedCommand}"/>
+                        </Grid>
+                        <Grid ColumnDefinitions="*" Grid.Row="2">
+                            <Label Text=" " BackgroundColor="LightGray" HorizontalOptions="FillAndExpand" MaximumHeightRequest="6"/>
+                        </Grid>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout Grid.Row="2" x:Name="Rename_StackLauout" IsVisible="{Binding Rename_StackLayout_IsVisible}">
+                        <Label Text="{Binding Rename_Command_Header}" VerticalOptions="End"  TextColor="Red" HorizontalOptions="CenterAndExpand" FontSize="Header" IsEnabled="False"/>
+                        <Label Text="Actual Profilename:" HorizontalOptions="StartAndExpand" FontSize="Micro" TextColor="Red"/>
+                        <Entry Text="{Binding SelectedProfile}" IsReadOnly="True"/>
+                        <Label Text="New Profilename:" HorizontalOptions="StartAndExpand" FontSize="Micro" TextColor="Red"/>
+                        <Entry Text="{Binding NewProfileName}" Placeholder="Enter new Profilename"/>
+                        <HorizontalStackLayout>
+                            <Button Text=" Cancel " Margin="20,0,20,0" BorderWidth="1" BorderColor="DarkGray" HorizontalOptions="CenterAndExpand" Command="{Binding Button_RenProfile_Cancel_clicked_Command}"/>
+                            <Button Text=" Accept " Margin="20,0,20,0" BorderWidth="1" BorderColor="DarkGray" HorizontalOptions="CenterAndExpand" Command="{Binding Button_RenProfile_Accept_clicked_Command}"/>
+                        </HorizontalStackLayout>
+
+                        <Label HeightRequest="4" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand" IsEnabled="False"/>
+                        <Label Text="" HorizontalOptions="StartAndExpand" Margin="0,100,0,100"/>
+                    </VerticalStackLayout>
+                    <Grid RowDefinitions="*" ColumnDefinitions="*"  Grid.Row="3">
+                        <VerticalStackLayout Padding="7,0" >
+                            <CollectionView x:Name="collectionView" ItemsSource="{Binding Path=WorkItemCollection}"  SelectionMode="None" ItemTemplate="{StaticResource typeDataTemplateSelector}"/>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                </Grid>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ContentPage.Content>
+
 </ContentPage>
-
-<!--
-x:Class="ChartSluuk.Pages.SettingsPage"
-xmlns:local="clr-namespace:ChartSluuk"
-xmlns:templates="clr-namespace:DataTemplates"
-xmlns:viewmodel="clr-namespace:ChartSluuk.PageModels"
-xmlns:controls="clr-namespace:ChartSluuk.Controls"
-xmlns:models="clr-namespace:ChartSluuk.Models"
-x:DataType="viewmodel:SettingsViewModel"
-Title="{Binding SelectedProfileExtended}">
-    -->

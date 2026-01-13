@@ -20,11 +20,18 @@
             ContentTemplate="{DataTemplate view:SettingsPage}"
             Route="SettingsPage" 
             FlyoutItemIsVisible="True"/>
-    <!-- <ShellContent
-            Title="Persons Edit Page"
-            ContentTemplate="{DataTemplate view:PersonEditPage}"
-            Route="PersonEditPage"
-            FlyoutItemIsVisible="False"/> -->
+    <ShellContent
+            Title="ProfileDetailPage"
+            ContentTemplate="{DataTemplate view:ProfileDetailPage}"
+            Route="ProfileDetailPage"    
+            FlyoutItemIsVisible="False"
+            IsVisible="False"/>
+    <ShellContent
+            Title="ShadowFilePage"
+            ContentTemplate="{DataTemplate view:ShadowFilePage}"
+            Route="ShadowFilePage"    
+            FlyoutItemIsVisible="False"/>
+    
 
 </Shell>
     

@@ -25,15 +25,12 @@
 
         <DataTemplate x:Key="stringTypeReadOnlyTemplate" x:DataType="models:WorkItem">
             <Grid Padding="10">
-                <Frame HeightRequest="70">
-                    <Grid>
-                        <HorizontalStackLayout VerticalOptions="Center" Grid.Column="0" Padding="0">
-                            <Label Text="{Binding Name}" VerticalOptions="Center" FontAttributes="Bold" />
-                            <Entry Text="{Binding StringValue}" Margin="20, 0, 0, 0" TextColor="DarkGray" IsReadOnly="True" FontAttributes="Bold" />
-                            <Label Text="String" Margin="20, 0, 0, 0" FontSize="15"/>
-                        </HorizontalStackLayout>
+                <Border HeightRequest="35">
+                    <Grid ColumnDefinitions="2*, 4*">
+                        <Label Text="{Binding Name}" Grid.Column="0" VerticalOptions="Center" FontAttributes="Bold" />
+                        <Entry Text="{Binding StringValue}" Grid.Column="1" Margin="20, 0, 0, 0" TextColor="DarkGray" IsReadOnly="True" FontAttributes="Bold" />
                     </Grid>
-                </Frame>
+                </Border>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="stringTypeSwipeTemplate">
@@ -198,7 +195,7 @@
             <VerticalStackLayout>
                 <Grid RowDefinitions="Auto, Auto, Auto, 400, 200">
                     <Label Text="Edit Table Details" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center" />
-                    <HorizontalStackLayout Grid.Row="1">
+                    <HorizontalStackLayout Grid.Row="1" Margin="10,0,0,0">
                         <Button Text="&lt; go back"   HorizontalOptions = "Start" Command="{Binding GoBackCommand}"/>
                         <Button Text="Debug" HorizontalOptions="Start" Margin="20,0,0,0"  Command="{Binding ClickToDebugCommand}"/>
                         <Button Text="ShadowPage" HorizontalOptions="Start" Margin="20,0,0,0"  Command="{Binding GoToShadowsCommand}" CommandParameter="{Binding ShadowFileProperties}"/>

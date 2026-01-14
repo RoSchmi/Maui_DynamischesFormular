@@ -36,6 +36,9 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
 
     // ItemCollection = new ObservableCollection<string>() { "Name in Azure Table", "Display Name" };
 
+  
+
+
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
 
@@ -52,6 +55,10 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
             // transportItemDictionary = LocalSuitCaseProperties.PropertiesDictionary;
 
             TableDetailCollection = Wrapper.TransportItemsToWorkItems(LocalSuitCaseProperties.PropertiesDictionary);
+
+
+
+            //TableDetailCollection = Wrapper.TransportItemsToWorkItems(LocalSuitCaseProperties.PropertiesDictionary);
 
 
             ShadowFileProperties = new ShadowFileSettingItems()

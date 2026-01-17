@@ -24,19 +24,20 @@ namespace Maui_DynamischesFormular
             builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<ViewModels.MainPageViewModel>();
+            builder.Services.AddSingleton<Pages.PersonEditPage>();
             builder.Services.AddSingleton<Pages.SettingsPage>();
             builder.Services.AddSingleton<ViewModels.SettingsViewModel>();
-            builder.Services.AddSingleton<Pages.PersonEditPage>();
-            //builder.Services.AddSingleton<ViewModels.SettingsViewModel>();
-
-            //builder.Services.AddSingleton<Pages.ProfilesPage>();
-            //builder.Services.AddSingleton<ViewModels.ProfilesViewModel>();
-            //builder.Services.AddSingleton<Pages.ProfileDetailPage>();
+            builder.Services.AddSingleton<Pages.ProfileDetailPage>();
             builder.Services.AddSingleton<ViewModels.ProfileDetailViewModel>();
-            //builder.Services.AddSingleton<Pages.TestPage>();
-            //builder.Services.AddSingleton<Pages.ShadowFilePage>();
-            //builder.Services.AddSingleton<PageModels.ShadowFileViewModel>();
+            builder.Services.AddSingleton<Pages.ShadowFilePage>();
+            builder.Services.AddSingleton<ViewModels.ShadowFileViewModel>();
 
+
+            
+            //builder.Services.AddSingleton<Pages.TestPage>();
+            //builder.Services.AddSingleton<Pages.ProfilesPage>();
+
+           
 
             return builder.Build();
         }

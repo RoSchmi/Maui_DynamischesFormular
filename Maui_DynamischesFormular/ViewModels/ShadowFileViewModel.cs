@@ -158,6 +158,7 @@ public partial class ShadowFileViewModel : ObservableObject, IQueryAttributable
     {
         string state = Shell.Current.CurrentState.Location.ToString();
         int breakpoint66 = 1;
+        
         try
         {
             await Shell.Current.GoToAsync($"///MainPage/SettingsPage/ProfileDetailPage");
@@ -166,6 +167,7 @@ public partial class ShadowFileViewModel : ObservableObject, IQueryAttributable
         {
             int breakpoint56 = 1;
         }
+        
     }
     #endregion
 
@@ -661,11 +663,13 @@ public partial class ShadowFileViewModel : ObservableObject, IQueryAttributable
     #endregion
 
     #region Region OnNavigatedFrom
+    /*
     public void OnNavigatingFrom(NavigatingFromEventArgs e)
     {
         string state = Shell.Current.CurrentState.Location.ToString();
 
         int breakpoint_1 = 1;
     }
+    */
     #endregion
 }

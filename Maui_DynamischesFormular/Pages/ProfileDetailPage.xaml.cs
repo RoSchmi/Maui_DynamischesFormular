@@ -14,15 +14,9 @@ public partial class ProfileDetailPage : ContentPage
         BindingContext = viewModel;
         vm = viewModel;
     }
-    /*
-    BackButtonBehavior backButtonBehavior = new BackButtonBehavior();
-    backButtonBehavior.
-        */
-    protected override async void OnNavigatedFrom(NavigatedFromEventArgs e)
-    {
-        base.OnNavigatedFrom(e);
-        vm.OnProfileDetailPageNavigatedFromCommand();
-    }
+   
+
+    
 
     protected override async void OnNavigatedTo(NavigatedToEventArgs e)
     {
@@ -30,25 +24,30 @@ public partial class ProfileDetailPage : ContentPage
         vm.OnProfileDetailPageNavigatedToCommand();
     }
 
-
-    protected override async void OnNavigatingFrom(NavigatingFromEventArgs e)
-    {
-        //RoSchmi        
-        //var newArgs = new NavigatingFromEventArgs(e.DestinationPage, e.NavigationType);
-
-        base.OnNavigatingFrom(e);
-        vm.OnProfileDetailPageNavigatedToCommand();
-    }
-
+    #region Region not used and outcommented events 
 
     /*
-    protected override async void OnBackButtonPressed()e.
+    protected override bool OnBackButtonPressed()
     {
-        base.OnBackButtonPressed();
-        vm.OnProfileDetailPageBackButtonPressedCommand();
+        vm.BackCommand.Execute(null);
+        return true; // verhindert Shell-Standardnavigation
     }
     */
 
+
+    /*
+    protected override async void OnNavigatingFrom(NavigatingFromEventArgs e)
+    {
+        base.OnNavigatingFrom(e);
+    }
+    */
+
+    /*
+    protected override async void OnNavigatedFrom(NavigatedFromEventArgs e)
+    {
+        base.OnNavigatedFrom(e)
+    }
+    */
 
     /*
     protected override async void OnAppearing()
@@ -57,4 +56,6 @@ public partial class ProfileDetailPage : ContentPage
         vm.GraphPageOnAppearingCommand();
     }
     */
+    #endregion
+
 }

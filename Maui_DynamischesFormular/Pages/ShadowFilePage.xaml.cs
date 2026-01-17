@@ -1,10 +1,6 @@
 using Maui_DynamischesFormular.ViewModels;
 
-
 namespace Maui_DynamischesFormular.Pages;
-
-
-
 
 public partial class ShadowFilePage : ContentPage
 {
@@ -33,6 +29,8 @@ public partial class ShadowFilePage : ContentPage
     }
     */
 
+    
+
 
     #region OnNavigatedTo
     protected override void OnNavigatedTo(NavigatedToEventArgs e)
@@ -42,11 +40,40 @@ public partial class ShadowFilePage : ContentPage
     }
     #endregion
 
-    protected override void OnNavigatingFrom(NavigatingFromEventArgs args)
+    #region Region not used and outcommented events 
+
+    /*
+    protected override bool OnBackButtonPressed()
     {
-        base.OnNavigatingFrom(args);
-        vm.OnNavigatingFrom(args);
+        vm.BackCommand.Execute(null);
+        return true; // verhindert Shell-Standardnavigation
     }
+    */
+
+
+    /*
+    protected override async void OnNavigatingFrom(NavigatingFromEventArgs e)
+    {
+        base.OnNavigatingFrom(e);
+        vm.OnNavigatingFrom(e);
+    }
+    */
+
+    /*
+    protected override async void OnNavigatedFrom(NavigatedFromEventArgs e)
+    {
+        base.OnNavigatedFrom(e)
+    }
+    */
+
+    /*
+    protected override async void OnAppearing()
+    {
+        base.OnAppearing();
+        vm.GraphPageOnAppearingCommand();
+    }
+    */
+    #endregion
 
     private void Entry_Focused(object sender, FocusEventArgs e)
     {

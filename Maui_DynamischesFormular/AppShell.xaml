@@ -26,11 +26,11 @@
             Route="ProfileDetailPage"    
             FlyoutItemIsVisible="False"
             IsVisible="False"/>
-    <ShellContent
+   <!-- <ShellContent
             Title="ShadowFilePage"
             ContentTemplate="{DataTemplate view:ShadowFilePage}"
             Route="ShadowFilePage"    
-            FlyoutItemIsVisible="False"/>
+            FlyoutItemIsVisible="False"/> -->
     
 
 </Shell>

@@ -177,12 +177,7 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
         ItemCollection = new ObservableCollection<string>() { "Name in Azure Table", "Display Name" };
 }
     */
-
-    public async void OnProfileDetailPageNavigatedFromCommand()
-    {
-        int breakpoint79 = 1;
-    }
-
+   
 
     public async void OnProfileDetailPageNavigatedToCommand()
     {

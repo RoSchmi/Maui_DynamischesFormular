@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Maui;
 using Maui_DynamischesFormular.ViewModels;
 using Microsoft.Extensions.Logging;
+using RoSchmi.Maui.Interfaces;
+using RoSchmi.Maui.Services;
 
 namespace Maui_DynamischesFormular
 {
@@ -22,6 +24,7 @@ namespace Maui_DynamischesFormular
     		builder.Logging.AddDebug();
 #endif
             builder.Services.AddSingleton<IConnectivity>(Connectivity.Current);
+            builder.Services.AddSingleton<INavigationService, NavigationService>();           
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<ViewModels.MainPageViewModel>();
             builder.Services.AddSingleton<Pages.PersonEditPage>();

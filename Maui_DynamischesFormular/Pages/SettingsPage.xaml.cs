@@ -4,11 +4,17 @@ using Maui_DynamischesFormular.ViewModels;
 
 public partial class SettingsPage : ContentPage
 {
-    SettingsViewModel vm = new();
-    public SettingsPage()
+    //SettingsViewModel vm = new();
+    SettingsViewModel vm;
+
+    public SettingsPage(SettingsViewModel viewModel)
 	{
 		InitializeComponent();
-        BindingContext = vm;
+        BindingContext = viewModel;
+        vm = viewModel;
+
+
+      //  BindingContext = vm;
     }
 
     #region OnNavigatedTo

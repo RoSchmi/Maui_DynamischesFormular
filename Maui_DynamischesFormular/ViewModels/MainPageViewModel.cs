@@ -35,6 +35,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Security.Principal;
 using System.Text.Json;
+using RoSchmi.Maui.Interfaces;
+using RoSchmi.Maui.Services;
 using System.Threading;
 using System.Xml;
 //using static Android.Media.Audiofx.DynamicsProcessing;
@@ -50,6 +52,7 @@ namespace Maui_DynamischesFormular.ViewModels;
 
 public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 {
+    private INavigationService _navigation;
 
     // https://github.com/beto-rodriguez/LiveCharts2/blob/master/docs/cartesianChart/columnseries.md
 
@@ -197,8 +200,9 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 
 
     #region Constructor
-    public MainPageViewModel()
+    public MainPageViewModel(INavigationService navigation)
     {
+        _navigation = navigation;
        
         DeviceDisplay.Current.MainDisplayInfoChanged += Current_MainDisplayInfoChanged;
 
@@ -342,21 +346,28 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
     {
         string sender = nameof(MainPage);
         object appState = (object)AppState;
+
+
         var navigationParameter = new Dictionary<string, object>() {
-                    { nameof(MainPage), appState }
+                {"sender", nameof(MainPage)},       
+                { nameof(MainPage), appState }
             };
        
 
         
-        await Shell.Current.GoToAsync($"///{nameof(SettingsPage)}?Sender={sender}", navigationParameter);
-        
+       // await Shell.Current.GoToAsync($"///{nameof(SettingsPage)}?Sender={sender}", navigationParameter);
+
+        await _navigation.GoToAsync(nameof(SettingsPage), navigationParameter);
+
     }
 
 
     [RelayCommand]
     private async Task Button3Clicked(object s)
     {
-        await Shell.Current.GoToAsync(nameof(PersonEditPage));
+        await _navigation.GoToAsync(nameof(PersonEditPage), null);
+        
+       // await Shell.Current.GoToAsync(nameof(PersonEditPage));
     }
    
 

@@ -1,17 +1,4 @@
-﻿/*
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MauiBeispielDynamischesFormular.Interfaces
-{
-    internal class ISettingsService
-    {
-    }
-}
-*/
-
-using System;
+﻿using System;
 
 
 namespace Common.Interfaces;

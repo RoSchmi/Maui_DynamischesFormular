@@ -7,7 +7,8 @@
              xmlns:templates="clr-namespace:DataTemplates"
              xmlns:controls="clr-namespace:Maui_DynamischesFormular.Controls"
              xmlns:models="clr-namespace:Maui_DynamischesFormular.Models"             
-             x:DataType="viewmodel:SettingsViewModel">
+             x:DataType="viewmodel:SettingsViewModel"
+             Shell.FlyoutBehavior="Disabled">
     
     <Shell.BackButtonBehavior>
         <BackButtonBehavior Command="{Binding BackCommand}" CommandParameter="Hallo" IsVisible="False" IsEnabled="False"/>
@@ -186,12 +187,35 @@
             </SwipeView>
         </DataTemplate>
         -->
-        
 
-        
+        <DataTemplate x:Key="stringTypeSwipeTemplate">
+            <SwipeView x:Name="myswipeview"  Margin ="5,0,15,0">
+                <Frame HeightRequest="98" x:Name="myframe">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="1"                       
+                                                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SettingsViewModel}}, 
+                                                        Path=TapCommand}"
+                                                        CommandParameter="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}}"/>
+                    </Frame.GestureRecognizers>
+                    <VerticalStackLayout>
+                        <Grid ColumnDefinitions="60*, 35*, 5*" RowDefinitions="*,*,*">
+                            <Label Text="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=Name}" Grid.Column="0" Grid.Row="0"  HorizontalOptions="Start" TextColor="DarkGoldenrod" FontAttributes="Bold"/>
+                            <Label Text="Set Details  >" Grid.Column="1" Grid.Row="1" VerticalOptions="Center" HorizontalOptions="End" TextColor="DeepSkyBlue" FontAttributes="Bold"/>
+                        
+                            <HorizontalStackLayout Grid.Row="2">
+                                <Label Text="CloudTableName:" HorizontalOptions="Start" FontAttributes="Bold"/>
+                                <Label Text="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=StringValue}" HorizontalOptions="Start" Margin="5, 0, 0, 0" TextColor="Gray" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                        <BoxView x:Name="myboxview" Color="LightGray" HeightRequest="3" HorizontalOptions="Fill" />
+                    </VerticalStackLayout>
+                </Frame>
+            </SwipeView>
+        </DataTemplate>
+        <!--
         <DataTemplate x:Key="stringTypeSwipeTemplate">
             <SwipeView x:Name="myswipeview"  Margin ="5,0,5,0">
-                <Frame HeightRequest="70" HasShadow="True" x:Name="myframe">
+                <Frame HeightRequest="80" HasShadow="True" x:Name="myframe">
                     <Frame.GestureRecognizers>
                         <TapGestureRecognizer NumberOfTapsRequired="1"                       
                                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SettingsViewModel}}, 
@@ -211,7 +235,7 @@
                     </VerticalStackLayout>
                 </Frame>
             </SwipeView>
-        </DataTemplate>
+        </DataTemplate>  -->
         
 
 
@@ -307,13 +331,11 @@
                 <Button Text="{Binding SettingsPageRightCommand}" IsVisible="{Binding SettingsPageRightCommandIsVisible}"  TextColor="DeepSkyBlue" FontAttributes="Bold"  BackgroundColor="Transparent" BorderWidth="0"  Command="{Binding ButtonSettingsRightCommandClickedCommand}" MaximumHeightRequest="40" Grid.Column="2"  HorizontalOptions="End"/>
                 <Button Text="Debug"  Margin="10,0,0,0" BorderWidth="0" Command="{Binding Button_Debug_clicked_Command}" TextColor="DeepSkyBlue" MaximumHeightRequest="40" FontAttributes="Bold"  BackgroundColor="Transparent" Grid.Column="1" HorizontalOptions="Start"/>
                 <Button Text="{Binding SettingsPageLeftCommand}" IsVisible="{Binding SettingsPageLeftCommandIsVisible}" TextColor="DeepSkyBlue" FontAttributes="Bold" BackgroundColor="Transparent" BorderWidth="0" Command="{Binding ButtonSettingsLeftCommandClickedCommand}" MaximumHeightRequest="40" Grid.Column="0" HorizontalOptions="Start"/>
-
-                <HorizontalStackLayout Grid.Column="1">
-
-
-                </HorizontalStackLayout>
-                <Entry Grid.Row="1" Grid.ColumnSpan="3"  HorizontalOptions= "FillAndExpand" BackgroundColor="LightGray" IsReadOnly="True" IsEnabled="False"/>
+        
+                <BoxView Grid.Row="1" Grid.ColumnSpan="3" Color="LightGray" HeightRequest="3" HorizontalOptions="Fill" />
+               
             </Grid>
+            
             <VerticalStackLayout x:Name="AccountsStacklayout"  Margin="10,0,0,0" IsVisible="{Binding AccountsStacklayoutVisible}">
                 <Label Text="New Storage Account" Margin="0,10,0,0" HorizontalOptions="Start" FontSize="Micro"/>
                 <Grid MinimumHeightRequest="40">
@@ -352,32 +374,42 @@
                     </Grid>
                 </VerticalStackLayout>
             </VerticalStackLayout>
+            
             <VerticalStackLayout x:Name="SettingStacklayout" IsVisible="{Binding SettingsStacklayoutVisible}">
-                <Grid RowDefinitions="Auto, 20, Auto, 400">
+                <Grid RowDefinitions="Auto, Auto, Auto, Auto">
                     <VerticalStackLayout Grid.Row="0">
                         <HorizontalStackLayout IsVisible="{Binding NavStateRowIsVisible}">
                             <Label Text="Injected: " FontSize="Medium" Margin="10, 10, 0, 0"/>
                             <Label Text="{Binding SenderMessage}" FontAttributes="Bold" TextColor="DarkViolet" FontSize="Medium" Margin="10, 10, 0, 0"/>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout IsVisible="{Binding NavStateRowIsVisible}">
-                            <Label Text="NavState: " Padding="5,0"  HorizontalOptions="Start" VerticalOptions="Center" FontSize="Medium" FontAttributes="Bold" MaximumHeightRequest="25"/>
+                            <Label Text="NavState: " Padding="5,0"  HorizontalOptions="Start" VerticalOptions="Start" FontSize="Small" FontAttributes="None" MaximumHeightRequest="25"/>
                             <Label Text="{Binding NavigationState}" Margin="0,0,0,5" MinimumWidthRequest="200" BackgroundColor="DarkGray" MaximumHeightRequest="25"/>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout IsVisible="{Binding NavStateRowIsVisible}">
-                            <Button Text="&lt; Show Graphs" HorizontalOptions="Start"  Command="{Binding ShowGraphsCommand}" />
+                            <Button Text="&lt; ShowGraphs" HorizontalOptions="Start"  Command="{Binding ShowGraphsCommand}" />
                             <Button Text="Save Changes" Command="{Binding ButtonSaveChangesClickedCommand}" Margin="5,0,10,0" BorderWidth ="{Binding SaveButtonBorderWidth}" HorizontalOptions="End" TextColor="Blue" />
+                            <Button Text="Debug" Command="{Binding Button_Debug_clicked_Command}" Margin="5,0,10,0" HorizontalOptions="End" TextColor="Blue" />
+
                         </HorizontalStackLayout>
-                        <Grid ColumnDefinitions="30*, 20*, 20*,20*, 20*" RowDefinitions="Auto, Auto, Auto">
+                        
+                        <Grid Grid.Row="3" ColumnDefinitions="30*, 20*, 20*,20*, 20*" RowDefinitions="Auto, Auto, Auto, Auto">
                             <Label Text="Click to Select Profile" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0"/>
                             <Label Text="Rename, Add or Delete" Grid.Column="2" Grid.ColumnSpan="3" Margin="0,10,0,0"/>
                             <Picker Margin="0,5,10,5" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="Red" MinimumWidthRequest="200" ItemsSource="{Binding ProfileNames}" SelectedIndex="{Binding SelectedProfileIndex}" />
                             <Button Text="Ren" Margin="5,5,10,5" MinimumWidthRequest="70" Grid.Column="2" Grid.Row="1" Command="{Binding ButtonRenProfileClickedCommand}"/>
                             <Button Text="Add" Margin="5,5,10,5" MinimumWidthRequest="70" Grid.Column="3" Grid.Row="1" Command="{Binding ButtonAddProfileClickedCommand}"/>
                             <Button Text="Del" Margin="5,5,10,5" MinimumWidthRequest="70" Grid.Column="4" Grid.Row="1" Command="{Binding ButtonDelProfileClickedCommand}"/>
+                            <BoxView Grid.Row="2" Grid.ColumnSpan="5" Color="LightGray" HeightRequest="3" HorizontalOptions="Fill" />
+                            
                         </Grid>
-                        <Grid ColumnDefinitions="*" Grid.Row="2">
-                            <Label Text=" " BackgroundColor="LightGray" HorizontalOptions="FillAndExpand" MaximumHeightRequest="6"/>
-                        </Grid>
+                        <ScrollView Grid.Row="3" Background="CadetBlue"  VerticalScrollBarVisibility="Always" HorizontalScrollBarVisibility="Always">
+                            <VerticalStackLayout BackgroundColor="LightGreen" Padding="5,5" >
+                                <CollectionView x:Name="collectionView" ItemsSource="{Binding Path=WorkItemCollection}"  SelectionMode="Single" ItemTemplate="{StaticResource typeDataTemplateSelector}"/>
+                            </VerticalStackLayout>
+                        </ScrollView>
+
+
                     </VerticalStackLayout>
 
                     <VerticalStackLayout Grid.Row="2" x:Name="Rename_StackLauout" IsVisible="{Binding Rename_StackLayout_IsVisible}">
@@ -392,14 +424,9 @@
                         </HorizontalStackLayout>
 
                         <Label HeightRequest="4" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand" IsEnabled="False"/>
-                        <Label Text="" HorizontalOptions="StartAndExpand" Margin="0,100,0,100"/>
+                        <Label Text="" HorizontalOptions="StartAndExpand" Margin="0,10,0,10"/>
                     </VerticalStackLayout>
-                    <Grid RowDefinitions="*" ColumnDefinitions="*"  Grid.Row="3">
-                        <VerticalStackLayout Padding="7,0" >
-                            <CollectionView x:Name="collectionView" ItemsSource="{Binding Path=WorkItemCollection}"  SelectionMode="None" ItemTemplate="{StaticResource typeDataTemplateSelector}"/>
-                        </VerticalStackLayout>
-                    </Grid>
-
+                    
                 </Grid>
             </VerticalStackLayout>
         </VerticalStackLayout>

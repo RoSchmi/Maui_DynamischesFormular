@@ -2,12 +2,13 @@
 using CommunityToolkit.Maui;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Maui_DynamischesFormular.Cells;
 using Maui_DynamischesFormular.Common;
+using Maui_DynamischesFormular.Helpers;
 using Maui_DynamischesFormular.Models;
 using Maui_DynamischesFormular.Pages;
-using Maui_DynamischesFormular.Helpers;
-using Maui_DynamischesFormular.Cells;
 using Maui_DynamischesFormular.ViewModels;
+using RoSchmi.Maui.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,13 +25,15 @@ namespace Maui_DynamischesFormular.ViewModels
 {
     // String message from the sending page
     //[QueryProperty("InjectedSender", "Parameter")]
-    [QueryProperty("InjectedSender", "Sender")]
+    [QueryProperty("InjectedSender", "sender")]
 
 
     public partial class SettingsViewModel : ObservableObject, IQueryAttributable
     {
         // Don't forget to register the viewmodel in 'MauiProgram.cs'
         // Don't forget to set the reference in 'SettingsPage.xaml.cs'
+
+        private INavigationService _navigation;
 
         private const string accountsFileName = "Accounts.txt";
         private const string appFolder = "ChartSluuk";
@@ -155,7 +158,7 @@ namespace Maui_DynamischesFormular.ViewModels
                                                                                     // Binding to ComboBox
 
         [ObservableProperty]
-        private static ObservableCollection<WorkItem> workItemCollection = new();   // Is the Binding source of CollectionView of the SettingsPage
+        private static ObservableCollection<WorkItem> workItemCollection;   // Is the Binding source of CollectionView of the SettingsPage
 
         //[ObservableProperty]
         //private static ObservableCollection<WorkItem> workItemShowCollection = new();
@@ -178,7 +181,7 @@ namespace Maui_DynamischesFormular.ViewModels
         private bool settingsPageRightCommandIsVisible = true;
 
         [ObservableProperty]
-        private bool navStateRowIsVisible = false;
+        private bool navStateRowIsVisible = true;
 
         [ObservableProperty]
         private bool profilePickerIsVisible = true;
@@ -224,10 +227,10 @@ namespace Maui_DynamischesFormular.ViewModels
 
             //SenderMessage = query["Parameter"].ToString();
 
-            if (query.ContainsKey("Sender"))
+            if (query.ContainsKey("sender"))
             {
 
-                SenderMessage = query["Sender"].ToString();
+                SenderMessage = query["sender"].ToString();
 
                 if (query.ContainsKey(nameof(ProfileDetailPage)))
                 {
@@ -241,7 +244,7 @@ namespace Maui_DynamischesFormular.ViewModels
                     }
                     else
                     {
-                        Application.Current.MainPage.DisplayAlert("Alert", "SelectedProfileIndex was < 0", "OK");
+                        Application.Current.MainPage.DisplayAlertAsync("Alert", "SelectedProfileIndex was < 0", "OK");
                     }
 
                     ActualizeProfilesXmlFile(WorkItemCollection, profilesDictionary, profileAndAccount, appFolder, profilesFileName);
@@ -265,7 +268,7 @@ namespace Maui_DynamischesFormular.ViewModels
 
                 {
                     //SenderMessage = query["Parameter"].ToString() + ",   AppState: " + query[nameof(MainPage)].ToString();
-                    SenderMessage = query["Sender"].ToString() + ",   AppState: " + query[nameof(MainPage)].ToString();
+                    SenderMessage = query["sender"].ToString() + ",   AppState: " + query[nameof(MainPage)].ToString();
 
                     int appState = (int)query["MainPage"];
 
@@ -504,8 +507,9 @@ namespace Maui_DynamischesFormular.ViewModels
 
 
         #region constructor
-        public SettingsViewModel()
+        public SettingsViewModel(INavigationService navigation)
         {
+            _navigation = navigation;
             //PopulateAccountFilesAction();  // This sets ActAccount
             //switchCellSource.SwitchCellSourceSend += SwitchCellSource_SwitchCellSourceSend;
 
@@ -589,6 +593,7 @@ namespace Maui_DynamischesFormular.ViewModels
             Rename_Command_Header = AddProfileHeader;
             NewProfileName = string.Empty;
             Rename_StackLayout_IsVisible = true;
+            SettingsStacklayoutVisible = false;
         }
         #endregion
 
@@ -599,6 +604,7 @@ namespace Maui_DynamischesFormular.ViewModels
             NewProfileName = "";
             Rename_Command_Header = RenameProfileHeader;
             Rename_StackLayout_IsVisible = true;
+            SettingsStacklayoutVisible = false;
         }
         #endregion
 
@@ -609,6 +615,7 @@ namespace Maui_DynamischesFormular.ViewModels
             string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{ProfileNames[SelectedProfileIndex]}");
 
             Rename_StackLayout_IsVisible = false;
+            SettingsStacklayoutVisible = false;
 
             SelectedProfile = ProfileNames[SelectedProfileIndex];  // can be deleted ?
 
@@ -1522,21 +1529,10 @@ namespace Maui_DynamischesFormular.ViewModels
                 {nameof(SettingsPage), new object()}
 
             };
-            //await Shell.Current.GoToAsync($"///{nameof(MainPage)}?Parameter={nameof(SettingsPage)}", false, navigationParameter);
-            await Shell.Current.GoToAsync($"///{nameof(MainPage)}?Sender={nameof(SettingsPage)}", false, navigationParameter);
 
+           // await _navigation.GoToAsync(nameof(MainPage), navigationParameter);
 
-            //await Shell.Current.Navigation.PopToRootAsync();
-
-
-
-
-
-
-            //await Shell.Current.Navigation.PushAsync(thePage);
-            //theState = Shell.Current.CurrentState;
-            //await Shell.Current.GoToAsync($"//MainPage");
-
+            await Shell.Current.GoToAsync($"///{nameof(MainPage)}?sender={nameof(SettingsPage)}", false, navigationParameter);
         }
 
         #region Task WriteListToFile
@@ -1581,10 +1577,13 @@ namespace Maui_DynamischesFormular.ViewModels
 
             Sender = InjectedSender;
             InjectedSender = string.Empty;
+
+            /*
             if (queryHandle != null)
             {
                 queryHandle.Clear();
             }
+            */
 
 
             ConnectionOKBackGround = Colors.LightGrey;

@@ -86,6 +86,7 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
         Selected = "1",
         Profile = "Profile-1",
         Table1Account = "",
+        
         // The Variablenames above may not be changed and my not be used for naming other variables, only the content can be changed
 
         // From the following variables the names and the content can be changed
@@ -860,10 +861,3 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
     }
 
     }
-
-
-
-
-   
-
-

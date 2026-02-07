@@ -18,13 +18,10 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
-//using static Android.Media.Audiofx.DynamicsProcessing;
-//using static Android.Media.Audiofx.DynamicsProcessing;
 
 namespace Maui_DynamischesFormular.ViewModels
 {
-    // String message from the sending page
-    //[QueryProperty("InjectedSender", "Parameter")]
+   
     [QueryProperty("InjectedSender", "sender")]
 
 
@@ -204,8 +201,8 @@ namespace Maui_DynamischesFormular.ViewModels
         [ObservableProperty]
         private bool settingsStacklayoutVisible = true;
 
-        [ObservableProperty]
-        private int appearCounter = 0;
+    //    [ObservableProperty]
+    //    private int appearCounter = 0;
 
         [ObservableProperty]
         private Color connectionOKBackGround = Colors.LightGrey;
@@ -250,7 +247,10 @@ namespace Maui_DynamischesFormular.ViewModels
                     ActualizeProfilesXmlFile(WorkItemCollection, profilesDictionary, profileAndAccount, appFolder, profilesFileName);
 
                     profilesDictionary = DictionaryXML.GetProfilesDictionaryFromXmlFile(appFolder, profilesFileName);
-                    WorkItemCollection = Wrapper.TransportItemsToWorkItems(profilesDictionary[profileAndAccount].PropertiesDictionary);
+
+                    //RoSchmi
+                    // Inactivated since noc storage
+                    //WorkItemCollection = Wrapper.TransportItemsToWorkItems(profilesDictionary[profileAndAccount].PropertiesDictionary);
 
                     // Copy to ObservableCollection with less items to avoid empty space in CollectionView
                     /*
@@ -406,6 +406,7 @@ namespace Maui_DynamischesFormular.ViewModels
             string columnName = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["ColumnName"]).StringValue;
             string sortField = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["SortField"]).StringValue;
             string factor = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["Factor"]).StringValue;
+            string offset = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["Offset"]).StringValue;
             string type = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["Type"]).StringValue;
             string unit = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["Unit"]).StringValue;
 
@@ -418,16 +419,24 @@ namespace Maui_DynamischesFormular.ViewModels
                     {
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Account").StringValue = tableAccount;
 
-                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable1").StringValue = cloudTableName;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiDataSourceTable1"]).StringValue = cloudTableName;
+                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable1").StringValue = cloudTableName;
 
-                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Property").StringValue = columnName;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiTable1ColumnName"]).StringValue = columnName;
+
+                     //   string theTempString = cloudTableName;
+
+                     //   pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Property").StringValue = "Hallo";
+
+
+                    //    pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiDataSourceTable1"]).StringValue = cloudTableName;
+
+                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Property").StringValue = columnName;
+                     //   pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiTable1ColumnName"]).StringValue = columnName;
 
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table1SortField").StringValue = sortField;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Type").StringValue = type;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Unit").StringValue = unit;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Factor").StringValue = factor;
+                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Offset").StringValue = offset;
 
                         break;
                     }
@@ -435,48 +444,51 @@ namespace Maui_DynamischesFormular.ViewModels
                     {
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Account").StringValue = tableAccount;
 
-                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable2").StringValue = cloudTableName;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiDataSourceTable2"]).StringValue = cloudTableName;
+                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable2").StringValue = cloudTableName;
+                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiDataSourceTable2"]).StringValue = cloudTableName;
 
-                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Property").StringValue = columnName;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiTable2ColumnName"]).StringValue = columnName;
+                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Property").StringValue = columnName;
+                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiTable2ColumnName"]).StringValue = columnName;
 
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table2SortField").StringValue = sortField;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Type").StringValue = type;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Unit").StringValue = unit;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Factor").StringValue = factor;
+                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Offset").StringValue = offset;
                         break;
                     }
                 case "DataSourceTable3":
                     {
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Account").StringValue = tableAccount;
 
-                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable3").StringValue = cloudTableName;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiDataSourceTable3"]).StringValue = cloudTableName;
+                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable3").StringValue = cloudTableName;
+                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiDataSourceTable3"]).StringValue = cloudTableName;
 
-                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Property").StringValue = columnName;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiTable3ColumnName"]).StringValue = columnName;
+                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Property").StringValue = columnName;
+                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiTable3ColumnName"]).StringValue = columnName;
 
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table3SortField").StringValue = sortField;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Type").StringValue = type;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Unit").StringValue = unit;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Factor").StringValue = factor;
+                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Offset").StringValue = offset;
                         break;
                     }
                 case "DataSourceTable4":
                     {
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Account").StringValue = tableAccount;
 
-                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable4").StringValue = cloudTableName;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiDataSourceTable4"]).StringValue = cloudTableName;
+                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable4").StringValue = cloudTableName;
+                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiDataSourceTable4"]).StringValue = cloudTableName;
 
-                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Property").StringValue = columnName;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiTable4ColumnName"]).StringValue = columnName;
+                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Property").StringValue = columnName;
+                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiTable4ColumnName"]).StringValue = columnName;
 
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table4SortField").StringValue = sortField;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Type").StringValue = type;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Unit").StringValue = unit;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Factor").StringValue = factor;
+                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Offset").StringValue = offset;
                         break;
                     }
                 default:
@@ -763,6 +775,7 @@ namespace Maui_DynamischesFormular.ViewModels
             string columnName = string.Empty;
             string sortField = string.Empty;
             string factor = string.Empty;
+            string offset = string.Empty;
             string type = string.Empty;
             string unit = string.Empty;
 
@@ -778,8 +791,10 @@ namespace Maui_DynamischesFormular.ViewModels
                         type = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Type") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Type").StringValue : string.Empty;
                         unit = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Unit") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Unit").StringValue : string.Empty;
                         factor = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Factor") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Factor").StringValue : string.Empty;
+                        offset = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Offset") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Offset").StringValue : string.Empty;
 
 
+                       
 
                         break;
                     }
@@ -793,6 +808,8 @@ namespace Maui_DynamischesFormular.ViewModels
                         type = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table2Type") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Type").StringValue : string.Empty;
                         unit = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table2Unit") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Unit").StringValue : string.Empty;
                         factor = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table2Factor") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Factor").StringValue : string.Empty;
+                        offset = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table´2Offset") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Offset").StringValue : string.Empty;
+
 
                         break;
                     }
@@ -806,6 +823,7 @@ namespace Maui_DynamischesFormular.ViewModels
                         type = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table3Type") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Type").StringValue : string.Empty;
                         unit = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table3Unit") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Unit").StringValue : string.Empty;
                         factor = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table3Factor") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Factor").StringValue : string.Empty;
+                        offset = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table3Offset") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Offset").StringValue : string.Empty;
 
                         break;
                     }
@@ -819,6 +837,7 @@ namespace Maui_DynamischesFormular.ViewModels
                         type = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table4Type") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Type").StringValue : string.Empty;
                         unit = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table4Unit") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Unit").StringValue : string.Empty;
                         factor = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table4Factor") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Factor").StringValue : string.Empty;
+                        offset = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table4Offset") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Offset").StringValue : string.Empty;
 
                         break;
                     }
@@ -841,6 +860,7 @@ namespace Maui_DynamischesFormular.ViewModels
                     { "CloudTableName", new TransportItem() { Name = "CloudTableName", TypeIdentifier = WorkItem.TypeID.RsString, Content = new StringTypeContent() { Value = tableName } } },
                     { "ColumnName", new TransportItem() { Name = "ColumnName", TypeIdentifier = WorkItem.TypeID.RsString, Content = new StringTypeContent() { Value = columnName } } },
                     { "Factor", new TransportItem() { Name = "Factor", TypeIdentifier = WorkItem.TypeID.RsString, Content = new StringTypeContent() { Value = factor } } },
+                    { "Offset", new TransportItem() { Name = "Offset", TypeIdentifier = WorkItem.TypeID.RsString, Content = new StringTypeContent() { Value = factor } } },
                     { "Unit", new TransportItem() { Name = "Unit", TypeIdentifier = WorkItem.TypeID.RsString, Content = new StringTypeContent() { Value = unit } } },
                     { "Type", new TransportItem() { Name = "Type", TypeIdentifier = WorkItem.TypeID.RsStringPi, Content = new StringTypeContent() { Value = type } } },
                     { "SortField", new TransportItem() { Name = "SortField", TypeIdentifier = WorkItem.TypeID.RsString, Content = new StringTypeContent() { Value = sortField } } },
@@ -906,6 +926,7 @@ namespace Maui_DynamischesFormular.ViewModels
         }
         #endregion
 
+        #region Region SaveProfile
         async void SaveProfile(SaveCmdMode saveCmdMode = SaveCmdMode.NoChange)
         {
             switch (saveCmdMode)
@@ -953,6 +974,8 @@ namespace Maui_DynamischesFormular.ViewModels
             //profilesDictionary = MyDictionaryXML.GetDictionaryFromXML("Profiles.xml");
             //int dummy3 = 1;
         }
+        #endregion
+
 
         [RelayCommand]
         private async void Button_Debug_clicked_()
@@ -965,6 +988,7 @@ namespace Maui_DynamischesFormular.ViewModels
         }
 
 
+        #region Region RelayCommand ButtonSaveChangesClicked
         [RelayCommand]
         private async void ButtonSaveChangesClicked()
         {
@@ -1009,9 +1033,10 @@ namespace Maui_DynamischesFormular.ViewModels
                 string mess = ex.Message;
             }
         }
+        #endregion
 
 
-        #region ButtonTestConnectionClicked()
+        #region ButtonTestConnectionClicked()  outcommented
         /*
         [RelayCommand]
         private async void ButtonTestConnectionClicked()
@@ -1535,7 +1560,7 @@ namespace Maui_DynamischesFormular.ViewModels
             await Shell.Current.GoToAsync($"///{nameof(MainPage)}?sender={nameof(SettingsPage)}", false, navigationParameter);
         }
 
-        #region Task WriteListToFile
+        #region Region Task WriteListToFile
         // Writes the Account list to a file
         private static async Task WriteListToFile(List<string> pNames, string pFolderName, string pFileName)
         {
@@ -1567,9 +1592,7 @@ namespace Maui_DynamischesFormular.ViewModels
         }
         #endregion
 
-        private async void Create_Sample_Tables_Action(object obj)
-        { }
-
+        
 
         public void OnNavigatedTo(NavigatedToEventArgs e)
         {
@@ -1584,23 +1607,11 @@ namespace Maui_DynamischesFormular.ViewModels
                 queryHandle.Clear();
             }
             */
-
-
-            ConnectionOKBackGround = Colors.LightGrey;
-            if (AppearCounter == 0)
-            {
-               // PopulateAccountFilesAction();  // This sets ActAccount
-            }
-
-            AppearCounter++;
-
             int dummy45 = 1;
         }
 
 
-        public void SettingsPageOnAppearingCommand()
-        {
-        }
+        
 
         #region EventArgs
         public class DisplayAlertEventArgs : EventArgs

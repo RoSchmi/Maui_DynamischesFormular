@@ -33,8 +33,11 @@ public partial class WorkItem : ObservableObject
         RsShort,
     };
 
-    public string Name { get; set; }
+    public string? Name { get; set; }
     public TypeID TypeIdentifier { get; set; }
+
+    [ObservableProperty]
+    private string displayName;
 
     [ObservableProperty]
     private string stringValue;

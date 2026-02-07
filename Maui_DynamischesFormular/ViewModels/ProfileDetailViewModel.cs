@@ -1,11 +1,11 @@
 ﻿//using AndroidX.Navigation;
+//using Common.Models;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Maui_DynamischesFormular.Common;
 using Maui_DynamischesFormular.Models;
 using Maui_DynamischesFormular.Pages;
 using Maui_DynamischesFormular.ViewModels;
-//using Common.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
@@ -16,6 +16,7 @@ using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+
 //using static ChartSluuk.PageModels.ProfileDetailViewModel;
 
 namespace Maui_DynamischesFormular.ViewModels;
@@ -301,7 +302,7 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
     [RelayCommand]
     private async Task GoBack()         // Back-Button is pressed
     {
-        string sender = nameof(ProfileDetailPage);
+        string sendingPage = nameof(ProfileDetailPage);
 
         Dictionary<string, TransportItem> transportItemDictionary = Wrapper.WorkItemsToTransportItems(TableDetailCollection);
 
@@ -314,8 +315,13 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
                     { nameof(ProfileDetailPage), suitCaseProperties }
             };
 
-        //await Shell.Current.GoToAsync($"///{nameof(SettingsPage)}?Parameter={sender}", navigationParameter);
-        await Shell.Current.GoToAsync($"///{nameof(SettingsPage)}?Sender={sender}", navigationParameter);
+      //await Shell.Current.GoToAsync($"///{nameof(SettingsPage)}?Parameter={sender}", navigationParameter);
+        await Shell.Current.GoToAsync($"///{nameof(SettingsPage)}?sender={sendingPage}", navigationParameter);
+        //await _navigation.GoToAsync(nameof(SettingsPage), navigationParameter);
+
+       // var navigationParameter = new Dictionary<string, object>() {
+       //        {"sender", nameof(MainPage)},
+       //         { nameof(MainPage), appState }
     }
 }
 

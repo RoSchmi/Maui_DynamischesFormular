@@ -4,7 +4,6 @@ using Maui_DynamischesFormular.ViewModels;
 
 public partial class SettingsPage : ContentPage
 {
-    //SettingsViewModel vm = new();
     SettingsViewModel vm;
 
     public SettingsPage(SettingsViewModel viewModel)
@@ -12,9 +11,6 @@ public partial class SettingsPage : ContentPage
 		InitializeComponent();
         BindingContext = viewModel;
         vm = viewModel;
-
-
-      //  BindingContext = vm;
     }
 
     #region OnNavigatedTo
@@ -25,13 +21,13 @@ public partial class SettingsPage : ContentPage
     }
     #endregion
 
-    #region OnAppearing
-    protected override async void OnAppearing()
-    {
-        base.OnAppearing();
-        vm.SettingsPageOnAppearingCommand();
-    }
-    #endregion
-    //protected override async void On
 
-}
+    #region Region nicht verwendete Events
+        //protected override void OnAppearing()
+        //protected override void OnDisappearing()
+        //protected override void OnNavigatedFrom(NavigatedFromEventArgs args)
+    #endregion
+
+
+
+    }

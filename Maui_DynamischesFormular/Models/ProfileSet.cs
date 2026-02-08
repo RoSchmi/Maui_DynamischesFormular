@@ -20,13 +20,15 @@ namespace Maui_DynamischesFormular.Models
             public string DataSourceTable4 { get; set; }
 
             //RoSchmi
-            // public StringTypeContent Table1Property { get; set; }
+            //public StringTypeContent Table1Property { get; set; }
 
 
             public string Table1Property { get; set; }
             public string Table2Property { get; set; }
             public string Table3Property { get; set; }
             public string Table4Property { get; set; }
+
+           
 
 
             public bool Table1AutomaticYear { get; set; }
@@ -40,6 +42,7 @@ namespace Maui_DynamischesFormular.Models
             public DateTime Table1EndDate { get; set; }
             public string Table1Account { get; set; }
 
+            public string Table1CloudTable { get; set; }
             //public string T1Ph2 { get; set; }
             public string Table1SortField { get; set; }
             public string T1Ph3 { get; set; }
@@ -56,8 +59,10 @@ namespace Maui_DynamischesFormular.Models
             //public string T2Ph1 { get; set; }
             public string Table2Account { get; set; }
 
-            //public string T2Ph2 { get; set; }
-            public string Table2SortField { get; set; }
+            public string Table2CloudTable { get; set; }
+
+        //public string T2Ph2 { get; set; }
+        public string Table2SortField { get; set; }
             public string T2Ph3 { get; set; }
 
             public bool Table3AutomaticYear { get; set; }
@@ -71,7 +76,9 @@ namespace Maui_DynamischesFormular.Models
             public DateTime Table3EndDate { get; set; }
             //public string T3Ph1 { get; set; }
             public string Table3Account { get; set; }
-            //public string T3Ph2 { get; set; }
+
+            public string Table3CloudTable { get; set; }
+        //public string T3Ph2 { get; set; }
             public string Table3SortField { get; set; }
             public string T3Ph3 { get; set; }
 
@@ -86,6 +93,7 @@ namespace Maui_DynamischesFormular.Models
             public DateTime Table4StartDate { get; set; }
             public DateTime Table4EndDate { get; set; }
             public string Table4Account { get; set; }
+            public string Table4CloudTable { get; set; }
 
             //public string T4Ph2 { get; set; }
             public string Table4SortField { get; set; }
@@ -99,11 +107,6 @@ namespace Maui_DynamischesFormular.Models
             public string Selected { get; set; }
         
     }
-    public class TextValue
-    {
-        public TextValue() { }
-        string displayName { get; set; }
-        string value { get; set; }
-    }
+   
 }
 

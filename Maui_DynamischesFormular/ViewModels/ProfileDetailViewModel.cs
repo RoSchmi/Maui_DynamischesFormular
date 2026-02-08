@@ -67,11 +67,14 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
                 AccountName = TableDetailCollection.First(WorkItem => WorkItem.Name == "TableAccount").StringValue,
                 TableName = TableDetailCollection.First(WorkItem => WorkItem.Name == "CloudTableName").StringValue,
                 TableAccount = TableDetailCollection.First(WorkItem => WorkItem.Name == "TableAccount").StringValue,
-                ColumnName = TableDetailCollection.First(WorkItem => WorkItem.Name == "ColumnName").StringValue,
                 ColumnType = TableDetailCollection.First(WorkItem => WorkItem.Name == "Type").StringValue,
                 Factor = TableDetailCollection.First(WorkItem => WorkItem.Name == "Factor").StringValue,
                 Sender = nameof(ProfileDetailPage),
             };
+
+            var testThing = tableDetailCollection.First(WorkItem => WorkItem.Name == "ColumnName").StringValue;
+
+            //ColumnName = TableDetailCollection.First(WorkItem => WorkItem.Name == "ColumnName").StringValue,
 
             //TableDetailCollection.First(WorkItem => WorkItem.Name == "CloudTableName").StringValue = factor;
 

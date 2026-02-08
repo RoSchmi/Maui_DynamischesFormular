@@ -15,7 +15,7 @@
             <Grid Padding="10">
                 <Border HeightRequest="35">
                     <Grid ColumnDefinitions="2*, 4*">
-                        <Label Text="{Binding Name}" Grid.Column="0" VerticalOptions="Center" FontAttributes="Bold" />
+                        <Label Text="{Binding DisplayName}" Grid.Column="0" VerticalOptions="Center" FontAttributes="Bold" />
                             <!-- <Entry Text="{Binding StringValue}" Margin="20, 0, 0, 0" BackgroundColor="{Binding CardViewEntryBackGroundColor}"  FontAttributes="Bold" /> -->
                         <Entry Text="{Binding StringValue}" Grid.Column="1"   Margin="20, 0, 0, 0" BackgroundColor ="Bisque" TextColor="Black" MinimumWidthRequest="150" FontAttributes="Bold" />
                     </Grid>

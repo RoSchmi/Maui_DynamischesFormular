@@ -107,7 +107,7 @@ public static class Wrapper
                 case WorkItem.TypeID.RsStringSw:
                 case WorkItem.TypeID.RsStringPi:
                     {
-                        workItemsList.Add(new WorkItem() { Name = property.Value.Name, TypeIdentifier = property.Value.TypeIdentifier, StringValue = ((StringTypeContent)property.Value.Content).Value });
+                        workItemsList.Add(new WorkItem() { Name = property.Value.Name, DisplayName = property.Value.DisplayName, TypeIdentifier = property.Value.TypeIdentifier, StringValue = ((StringTypeContent)property.Value.Content).Value });
                         //SettingPropertyCollection.Add(new WorkItem() { Name = property.Value.Name, TypeIdentifier = property.Value.TypeIdentifier, StringValue = ((StringTypeContent)property.Value.Content).Value });
                         break;
                     }
@@ -117,7 +117,7 @@ public static class Wrapper
                 case WorkItem.TypeID.RsBooleanNo:
 
                     {
-                        workItemsList.Add(new WorkItem() { Name = property.Value.Name, TypeIdentifier = property.Value.TypeIdentifier, BoolValue = ((BoolTypeContent)property.Value.Content).Value });
+                        workItemsList.Add(new WorkItem() { Name = property.Value.Name, DisplayName = property.Value.DisplayName, TypeIdentifier = property.Value.TypeIdentifier, BoolValue = ((BoolTypeContent)property.Value.Content).Value });
 
                         // SettingPropertyCollection.Add(new WorkItem() { Name = property.Value.Name, TypeIdentifier = property.Value.TypeIdentifier, BoolValue = ((BoolTypeContent)property.Value.Content).Value });
                         break;
@@ -127,7 +127,7 @@ public static class Wrapper
                 case WorkItem.TypeID.RsDateTimeRo:
                 case WorkItem.TypeID.RsDateTimeNo:
                     {
-                        workItemsList.Add(new WorkItem() { Name = property.Value.Name, TypeIdentifier = property.Value.TypeIdentifier, DateValue = ((DateTimeTypeContent)property.Value.Content).Value });
+                        workItemsList.Add(new WorkItem() { Name = property.Value.Name, DisplayName = property.Value.DisplayName, TypeIdentifier = property.Value.TypeIdentifier, DateValue = ((DateTimeTypeContent)property.Value.Content).Value });
 
                         // SettingPropertyCollection.Add(new WorkItem() { Name = property.Value.Name, TypeIdentifier = property.Value.TypeIdentifier, DateValue = ((DateTimeTypeContent)property.Value.Content).Value });
                         break;
@@ -159,7 +159,7 @@ public static class Wrapper
            /* 0 */  {nameof(profSet.Account),            new TransportItem() { Name = nameof(ProfileSet.Account),            TypeIdentifier = WorkItem.TypeID.RsStringRo,   Content = new StringTypeContent()   { Value = profSet.Account } } },
            /* 1 */  {nameof(profSet.Profile),            new TransportItem() { Name = nameof(ProfileSet.Profile),            TypeIdentifier = WorkItem.TypeID.RsStringRo,   Content = new StringTypeContent()   { Value = profSet.Profile } } },
 
-           /* 2 */  {nameof(profSet.DataSourceTable1),   new TransportItem() { Name = nameof(ProfileSet.DataSourceTable1),   TypeIdentifier = WorkItem.TypeID.RsStringSw,   Content = new StringTypeContent()   { Value = profSet.DataSourceTable1 } } },
+           /* 2 */  {nameof(profSet.DataSourceTable1),   new TransportItem() { Name = nameof(ProfileSet.DataSourceTable1), DisplayName = nameof(ProfileSet.DataSourceTable1),  TypeIdentifier = WorkItem.TypeID.RsStringSw,     Content = new StringTypeContent()   { Value = profSet.DataSourceTable1 } } },
            /* 3 */  {nameof(profSet.DataSourceTable2),   new TransportItem() { Name = nameof(ProfileSet.DataSourceTable2),   TypeIdentifier = WorkItem.TypeID.RsStringSw,     Content = new StringTypeContent()   { Value = profSet.DataSourceTable2 } } },
            /* 4 */  {nameof(profSet.DataSourceTable3),   new TransportItem() { Name = nameof(ProfileSet.DataSourceTable3),   TypeIdentifier = WorkItem.TypeID.RsStringSw,     Content = new StringTypeContent()   { Value = profSet.DataSourceTable3 } } },
            /* 5 */  {nameof(profSet.DataSourceTable4),   new TransportItem() { Name = nameof(ProfileSet.DataSourceTable4),   TypeIdentifier = WorkItem.TypeID.RsStringSw,     Content = new StringTypeContent()   { Value = profSet.DataSourceTable4 } } },
@@ -167,8 +167,7 @@ public static class Wrapper
                   //  {nameof(profSet.Table1Property),     new TransportItem() { Name = nameof(ProfileSet.Table1Property),     TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent() { Value = profSet.Table1Property.Value, DisplayName = profSet.Table1Property.DisplayName} } },
           
 
-           /* 6 */  {nameof(profSet.Table1Property),     new TransportItem() { Name = nameof(ProfileSet.Table1Property),     TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.Table1Property } } },
-                                                                                                                                                                                                             
+           /* 6 */  {nameof(profSet.Table1Property),     new TransportItem() { Name = nameof(ProfileSet.Table1Property),     DisplayName = "Property",    TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.Table1Property } } },                                                                                                                                                                                                        
            /* 7 */  {nameof(profSet.Table2Property),     new TransportItem() { Name = nameof(ProfileSet.Table2Property),     TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.Table2Property } } },
            /* 8 */  {nameof(profSet.Table3Property),     new TransportItem() { Name = nameof(ProfileSet.Table3Property),     TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.Table3Property } } },
            /* 9 */  {nameof(profSet.Table4Property),     new TransportItem() { Name = nameof(ProfileSet.Table4Property),     TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.Table4Property } } },
@@ -183,7 +182,9 @@ public static class Wrapper
            /* 17 */ {nameof(profSet.Table1StartDate),    new TransportItem() { Name = nameof(ProfileSet.Table1StartDate),    TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.Table1StartDate } } },
            /* 18 */ {nameof(profSet.Table1EndDate),      new TransportItem() { Name = nameof(ProfileSet.Table1EndDate),      TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.Table1EndDate } } },
            /* 19 */ {nameof(profSet.Table1Account),      new TransportItem() { Name = nameof(ProfileSet.Table1Account),      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.Table1Account } } },
-           /* 20 */ {nameof(profSet.Table1SortField),    new TransportItem() { Name = nameof(ProfileSet.Table1SortField),    TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.Table1SortField } } },
+           /* 20 */ {nameof(profSet.Table1CloudTable),   new TransportItem() { Name = "Azure Table Name",   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.Table1CloudTable } } },
+           /* 20 */ 
+                    {nameof(profSet.Table1SortField),    new TransportItem() { Name = nameof(ProfileSet.Table1SortField),    TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.Table1SortField } } },
            /* 21 */ {nameof(profSet.T1Ph3),              new TransportItem() { Name = nameof(ProfileSet.T1Ph3),              TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.T1Ph3 } } },
 
            /* 22 */ {nameof(profSet.Table2AutomaticYear),new TransportItem() { Name = nameof(ProfileSet.Table2AutomaticYear),TypeIdentifier = WorkItem.TypeID.RsBooleanNo,  Content = new BoolTypeContent()     { Value = profSet.Table2AutomaticYear } } },

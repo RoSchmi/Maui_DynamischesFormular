@@ -61,7 +61,8 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
 
             //TableDetailCollection = Wrapper.TransportItemsToWorkItems(LocalSuitCaseProperties.PropertiesDictionary);
 
-
+            //RoSchmi
+            /*
             ShadowFileProperties = new ShadowFileSettingItems()
             {
                 AccountName = TableDetailCollection.First(WorkItem => WorkItem.Name == "TableAccount").StringValue,
@@ -71,8 +72,9 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
                 Factor = TableDetailCollection.First(WorkItem => WorkItem.Name == "Factor").StringValue,
                 Sender = nameof(ProfileDetailPage),
             };
+            */
 
-            var testThing = tableDetailCollection.First(WorkItem => WorkItem.Name == "ColumnName").StringValue;
+           // var testThing = tableDetailCollection.First(WorkItem => WorkItem.Name == "ColumnName").StringValue;
 
             //ColumnName = TableDetailCollection.First(WorkItem => WorkItem.Name == "ColumnName").StringValue,
 

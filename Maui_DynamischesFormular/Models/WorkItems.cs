@@ -36,6 +36,8 @@ public partial class WorkItem : ObservableObject
     public string? Name { get; set; }
     public TypeID TypeIdentifier { get; set; }
 
+    public int TabNo { get; set; }
+    
     [ObservableProperty]
     private string displayName;
 

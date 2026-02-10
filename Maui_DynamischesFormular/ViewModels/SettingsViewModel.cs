@@ -1,4 +1,5 @@
 ﻿//using AndroidX.Navigation;
+//using AndroidX.Fragment.App.StrictMode;
 using CommunityToolkit.Maui;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -18,6 +19,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
+
 
 namespace Maui_DynamischesFormular.ViewModels
 {
@@ -53,7 +55,7 @@ namespace Maui_DynamischesFormular.ViewModels
             Index = "0",
             Selected = "1",
             Profile = "Profile-1",
-            Table1Account = "",
+            TableAccount1 = "",
             // The Variablenames above may not be changed and my not be used for naming other variables, only the content can be changed
 
             // From the following variables the names and the content can be changed
@@ -397,7 +399,7 @@ namespace Maui_DynamischesFormular.ViewModels
                 return false;
             }
         }
-
+        #region Region ActualizeProfilesWithValuesFromDetailPage
         private void ActualizeProfilesWithValuesFromDetailPage(ObservableCollection<WorkItem> pWorkItemCollection, Dictionary<string, TransportItem> pPropertiesDictionary)
         {
             string tableIDName = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["Table-ID"]).StringValue;
@@ -497,7 +499,9 @@ namespace Maui_DynamischesFormular.ViewModels
                     }
             }
         }
+        #endregion
 
+        #region Region ActualizeProfilesXmlFile
         private void ActualizeProfilesXmlFile(ObservableCollection<WorkItem> pWorkItemCollection, Dictionary<string, SuitCaseProperties> pProfilesDictionary, string pProfileAndAccount, string pAppFolder, string pProfilesFileName)
         {
             Dictionary<string, TransportItem> transportItemDictionary = Wrapper.WorkItemsToTransportItems(pWorkItemCollection);
@@ -514,7 +518,7 @@ namespace Maui_DynamischesFormular.ViewModels
             //WorkItemCollection = Wrapper.TransportItemsToWorkItems(pProfilesDictionary.First().Value.PropertiesDictionary);
             // WorkItemCollection = Wrapper.TransportItemsToWorkItems(WorkItemCollection, pProfilesDictionary.First().Value.PropertiesDictionary);
         }
-
+        #endregion
 
 
 
@@ -780,58 +784,153 @@ namespace Maui_DynamischesFormular.ViewModels
             string type = string.Empty;
             string unit = string.Empty;
             */
-            
 
-            (string Name, string DisplayName) tableAccount = (string.Empty, string.Empty);
-            (string Name, string DisplayName) tableName = (string.Empty, string.Empty);
-            (string Name, string DisplayName) columnName= (string.Empty, string.Empty);
-            (string Name, string DisplayName) sortField = (string.Empty, string.Empty);
-            (string Name, string DisplayName) factor = (string.Empty, string.Empty);
-            (string Name, string DisplayName) offset = (string.Empty, string.Empty);
-            (string Name, string DisplayName) type = (string.Empty, string.Empty);
-            (string Name, string DisplayName) unit = (string.Empty, string.Empty);
+            // List<(string Key, string Name, string DisplayName)> itemList = new List<(string, string, string)>();
 
-            WorkItem? actItem = null;
+            /*
+            var selectedItems = new Dictionary<string, (string Name, string DisplayName)>();
+
+            selectedItems["Account"] = (Name: string.Empty, DisplayName: string.Empty); 
+            selectedItems["DataSourceTable"] = (Name: string.Empty, DisplayName: string.Empty); 
+            selectedItems["TableProperty"] = (Name: string.Empty, DisplayName: string.Empty);
+            selectedItems["TableSortField"] = (Name: string.Empty, DisplayName: string.Empty);
+            selectedItems["TableFactor"] = (Name: string.Empty, DisplayName: string.Empty);
+            selectedItems["TableOffset"] = (Name: string.Empty, DisplayName: string.Empty);
+            selectedItems["TableType"] = (Name: string.Empty, DisplayName: string.Empty);
+            selectedItems["TableUnit"] = (Name: string.Empty, DisplayName: string.Empty);
+            */
+
+
+            var theItem = new TransportItem() { Name = string.Empty, DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsStringNo, Content = new object() };
+
+            var ID = Guid.NewGuid().ToString();
+
+            var selectedItems = new Dictionary<string, TransportItem>()
+            {
+                { "SettingsID", new TransportItem() { Name = nameof(actWorkItem.Name), DisplayName = "SettingsID", TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = ID } } },
+                { "Table-ID", new TransportItem() { Name = string.Empty, DisplayName = "Table-ID", TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = actWorkItem.Name } } },
+                        
+                {"Account", new TransportItem()        {Name = "Account",    DisplayName = "Account", TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsString, Content = new StringTypeContent() { Value = string.Empty } } },
+                {"DataSourceTable", new TransportItem(){Name = string.Empty,    DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsStringNo, Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableProperty", new TransportItem()  {Name = string.Empty,    DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsString, Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableSortField", new TransportItem() {Name = string.Empty,    DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsString, Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableFactor", new TransportItem()    {Name = string.Empty,    DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsString, Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableOffset", new TransportItem()    {Name = string.Empty,    DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsString, Content = new StringTypeContent() { Value = string.Empty } } },
+                //{"TableType", new TransportItem()      {Name = string.Empty,    DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsString, Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableUnit", new TransportItem()      {Name = string.Empty,    DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsString, Content = new StringTypeContent() { Value = string.Empty } } },
+               //{"SettingsState", new TransportItem()  {Name = "SettingsState", DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsBoolean, Content = new BoolTypeContent()  { Value = null } } },
+               // {"SettingsDate", new TransportItem()   {Name = "SettingsDate",  DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsDateTime, Content = new DateTimeTypeContent() { Value = null } } },
+             };
+
+            //itemList.Add((nameof(tableAccount), string.Empty, string.Empty));
+
+
+            /*
+            (string Key, string Name, string DisplayName) tableAccount = (nameof(tableAccount), string.Empty, string.Empty);
+            (string Key, string Name, string DisplayName) tableName = (nameof(tableAccount), string.Empty, string.Empty);
+            (string Key, string Name, string DisplayName) columnName= (nameof(tableAccount), string.Empty, string.Empty);
+            (string Key, string Name, string DisplayName) sortField = (nameof(tableAccount), string.Empty, string.Empty);
+            (string Key, string Name, string DisplayName) factor = (nameof(tableAccount), string.Empty, string.Empty);
+            (string Key, string Name, string DisplayName) offset = (nameof(tableAccount), string.Empty, string.Empty);
+            (string Key, string Name, string DisplayName) type = (nameof(tableAccount), string.Empty, string.Empty);
+            (string Key, string Name, string DisplayName) unit = (nameof(tableAccount), string.Empty, string.Empty);
+
+            itemList.Add(tableAccount);
+            itemList.Add(tableName);
+            itemList.Add(columnName);
+            itemList.Add(sortField); itemList.Add(factor); 
+            itemList.Add(offset);
+            itemList.Add(type);
+            itemList.Add(unit);
+
+            itemList[tableAccount]
+            */
+
+            //WorkItem? actItem = null;
 
             switch (actWorkItem.Name)
             {
                 case "DataSourceTable1":
                     {
-                        actItem = WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Account");
-                        tableAccount.Name = actItem?.Name ?? string.Empty;
-                        tableAccount.DisplayName = string.IsNullOrEmpty(actItem?.DisplayName) ? actItem?.Name ?? string.Empty : actItem.DisplayName;
+                        foreach (var actItem in WorkItemCollection)  
+                        {
+                            if (actItem.TabNo != 1)
+                                continue;
 
-                        //tableAccount.Name = WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Account")?.StringValue ?? string.Empty;
-                        //tableAccount.DisplayName = WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Account") is var wi && wi != null ? (!string.IsNullOrEmpty(wi.DisplayName) ? wi.DisplayName : wi.Name) : string.Empty;
+                            var baseName = string.IsNullOrEmpty(actItem.Name) ? string.Empty : actItem.Name[..^1];
 
-                        //tableAccount.DisplayName = tableAccount.DisplayName = !string.IsNullOrEmpty(item?.DisplayName) ? item.DisplayName : item?.Name ?? string.Empty;
-                        //tableAccount.Name = item?.StringValue ?? string.Empty;
-                        //tableAccount.Name = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Account") ? WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Account")?.StringValue ?? string.Empty : "";
-
-                        //tableAccount.DisplayName = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Account") ? WorkItemCollection.First(WorkItem => WorkItem.DisplayName == String.IsNullOrEmpty) .StringValue : string.Empty;
-
-                        //tableName = WorkItemCollection.Any(WorkItem => WorkItem.Name == "DataSourceTable1") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable1").StringValue : string.Empty;
-
-                        actItem = WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Property");
-                        columnName.Name = actItem?.Name ?? string.Empty;
-                        columnName.DisplayName = string.IsNullOrEmpty(actItem?.DisplayName) ? actItem?.Name ?? string.Empty : actItem.DisplayName;
-
-
-                        //columnName = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Property") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Property").StringValue : string.Empty;
-
-                        /*
-
-                        //sortField = WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1SortField").StringValue;
-                        sortField = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1SortField") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1SortField").StringValue : string.Empty;
-                        type = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Type") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Type").StringValue : string.Empty;
-                        unit = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Unit") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Unit").StringValue : string.Empty;
-                        factor = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Factor") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Factor").StringValue : string.Empty;
-                        offset = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Offset") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Offset").StringValue : string.Empty;
-                        */
+                            if(selectedItems.TryGetValue(baseName, out var cop))
+                            {
+                                cop.TabNo = actItem.TabNo;
+                                cop.Name = actItem.Name;
+                                cop.DisplayName = actItem.DisplayName;
+                                cop.Content = new StringTypeContent() { Value = actItem.StringValue };
+                            }
+                        }
 
                        
 
-                        break;
+
+
+
+
+
+                            /*
+                            foreach (var key in selectedItems.Keys.ToList())
+                            {
+                                actItem = WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Account");
+
+                                var name = actItem?.Name ?? string.Empty; 
+                                var display = string.IsNullOrEmpty(actItem?.DisplayName) ? name : actItem.DisplayName;
+                                selectedItems[key] = (name, display);                          
+
+                            }
+                            */
+
+                            /*
+                            actItem = WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Account");
+                            tableAccount.Name = actItem?.Name ?? string.Empty;
+                            tableAccount.DisplayName = string.IsNullOrEmpty(actItem?.DisplayName) ? actItem?.Name ?? string.Empty : actItem.DisplayName;
+
+                            actItem = WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Property");
+                            columnName.Name = actItem?.Name ?? string.Empty;
+                            columnName.DisplayName = string.IsNullOrEmpty(actItem?.DisplayName) ? actItem?.Name ?? string.Empty : actItem.DisplayName;
+
+                            actItem = WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Factor");
+                            factor.Name = actItem?.Name ?? string.Empty;
+                            factor.DisplayName = string.IsNullOrEmpty(actItem?.DisplayName) ? actItem?.Name ?? string.Empty : actItem.DisplayName;
+                            */
+
+
+                            //tableAccount.Name = WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Account")?.StringValue ?? string.Empty;
+                            //tableAccount.DisplayName = WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Account") is var wi && wi != null ? (!string.IsNullOrEmpty(wi.DisplayName) ? wi.DisplayName : wi.Name) : string.Empty;
+
+                            //tableAccount.DisplayName = tableAccount.DisplayName = !string.IsNullOrEmpty(item?.DisplayName) ? item.DisplayName : item?.Name ?? string.Empty;
+                            //tableAccount.Name = item?.StringValue ?? string.Empty;
+                            //tableAccount.Name = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Account") ? WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Account")?.StringValue ?? string.Empty : "";
+
+                            //tableAccount.DisplayName = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Account") ? WorkItemCollection.First(WorkItem => WorkItem.DisplayName == String.IsNullOrEmpty) .StringValue : string.Empty;
+
+                            //tableName = WorkItemCollection.Any(WorkItem => WorkItem.Name == "DataSourceTable1") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable1").StringValue : string.Empty;
+
+
+
+
+                            //columnName = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Property") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Property").StringValue : string.Empty;
+
+                            /*
+
+                            //sortField = WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1SortField").StringValue;
+                            sortField = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1SortField") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1SortField").StringValue : string.Empty;
+                            type = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Type") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Type").StringValue : string.Empty;
+                            unit = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Unit") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Unit").StringValue : string.Empty;
+                            factor = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Factor") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Factor").StringValue : string.Empty;
+                            offset = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Offset") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Offset").StringValue : string.Empty;
+                            */
+
+
+
+                            break;
                     }
                 case "DataSourceTable2":
                     {
@@ -885,12 +984,22 @@ namespace Maui_DynamischesFormular.ViewModels
                     }
             }
 
-            var ID = Guid.NewGuid().ToString();
+            //var ID = Guid.NewGuid().ToString();
 
             tableDetailProperties = new SuitCaseProperties()
             {
+                PropertiesDictionary = new Dictionary<string, TransportItem>(selectedItems)
+            };
                 // properties get wrapped in this inner Dictionary
 
+                /*
+                PropertiesDictionary = new Dictionary<string, TransportItem>()
+                {
+                    { "ColumnName", new TransportItem() { Name = "ColumnName", DisplayName =  selectedItems["columnName"].DisplayName, TypeIdentifier = WorkItem.TypeID.RsString, Content = new StringTypeContent() { Value = selectedItems["columnName"].Name } } },
+
+                }
+                */
+                /*
                 PropertiesDictionary = new Dictionary<string, TransportItem>() {
                     { "SettingsID", new TransportItem() { Name = "SettingsID", TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = ID } } },
                     { "Table-ID", new TransportItem() { Name = "Table-ID", TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = actWorkItem.Name } } },
@@ -905,7 +1014,9 @@ namespace Maui_DynamischesFormular.ViewModels
                     { "SettingsState", new TransportItem() { Name = "SettingsState", TypeIdentifier = WorkItem.TypeID.RsBoolean, Content = new BoolTypeContent() { Value = null } } },
                     { "SettingsDate", new TransportItem() { Name = "SettingsDate", TypeIdentifier = WorkItem.TypeID.RsDateTime, Content = new DateTimeTypeContent() { Value = null } } },
                 }
-            };
+                */
+
+            
 
             var navigationParameter = new Dictionary<string, object>();
 

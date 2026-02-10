@@ -85,7 +85,7 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
         Index = "0",
         Selected = "1",
         Profile = "Profile-1",
-        Table1Account = "",
+        TableAccount1 = "",
         
         // The Variablenames above may not be changed and my not be used for naming other variables, only the content can be changed
 

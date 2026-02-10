@@ -10,6 +10,7 @@ namespace Maui_DynamischesFormular.Models;
 
 public class TransportItem
 {
+    public int TabNo { get; set; }
     public string Name { get; set; }
 
     public string DisplayName { get; set; }

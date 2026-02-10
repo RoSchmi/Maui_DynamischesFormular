@@ -309,7 +309,7 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
     {
         string sendingPage = nameof(ProfileDetailPage);
 
-        Dictionary<string, TransportItem> transportItemDictionary = Wrapper.WorkItemsToTransportItems(TableDetailCollection);
+        Dictionary<string, TransportItem> transportItemDictionary = Wrapper.WorkItemsToTransportItems(TableDetailCollection, true);
 
         var suitCaseProperties = new SuitCaseProperties()
         {

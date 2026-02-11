@@ -47,8 +47,11 @@ public static class Wrapper
                 case WorkItem.TypeID.RsStringPi:
                     {
                         String? baseName = clipDigit && (workItem.TabNo > 0) ? string.IsNullOrEmpty(workItem.Name) ? string.Empty : workItem.Name[..^1] : workItem.Name;
-                        PropertiesDictionary.Add(baseName, new TransportItem() { Name = workItem.Name, TypeIdentifier = workItem.TypeIdentifier, Content = new StringTypeContent() { Value = workItem.StringValue } });
-                        break;
+                        if (baseName != string.Empty)
+                        {
+                            PropertiesDictionary.Add(baseName, new TransportItem() { Name = workItem.Name, TypeIdentifier = workItem.TypeIdentifier, Content = new StringTypeContent() { Value = workItem.StringValue } });
+                        }
+                            break;
                     }
 
                 case WorkItem.TypeID.RsBoolean:
@@ -56,8 +59,11 @@ public static class Wrapper
                 case WorkItem.TypeID.RsBooleanRo:
                     {
                         String? baseName = clipDigit && (workItem.TabNo > 0) ? string.IsNullOrEmpty(workItem.Name) ? string.Empty : workItem.Name[..^1] : workItem.Name;
-                        PropertiesDictionary.Add(baseName, new TransportItem() { Name = workItem.Name, TypeIdentifier = workItem.TypeIdentifier, Content = new BoolTypeContent() { Value = workItem.BoolValue } });
-                        break;
+                        if (baseName != string.Empty)
+                        {
+                            PropertiesDictionary.Add(baseName, new TransportItem() { Name = workItem.Name, TypeIdentifier = workItem.TypeIdentifier, Content = new BoolTypeContent() { Value = workItem.BoolValue } });
+                        }
+                            break;
                     }
 
 
@@ -66,8 +72,11 @@ public static class Wrapper
                 case WorkItem.TypeID.RsDateTimeNo:
                     {
                         String? baseName = clipDigit && (workItem.TabNo > 0) ? string.IsNullOrEmpty(workItem.Name) ? string.Empty : workItem.Name[..^1] : workItem.Name;
-                        PropertiesDictionary.Add(baseName, new TransportItem() { Name = workItem.Name, TypeIdentifier = workItem.TypeIdentifier, Content = new DateTimeTypeContent() { Value = workItem.DateValue } });
-                        break;
+                        if (baseName != string.Empty)
+                        {
+                            PropertiesDictionary.Add(baseName, new TransportItem() { Name = workItem.Name, TypeIdentifier = workItem.TypeIdentifier, Content = new DateTimeTypeContent() { Value = workItem.DateValue } });
+                        }
+                            break;
                     }
                 /*
             case WorkItem.TypeID.RsDateTimeRo:
@@ -166,13 +175,13 @@ public static class Wrapper
                     {nameof(profSet.Account),            new TransportItem() { TabNo = 0, Name = nameof(ProfileSet.Account),            DisplayName =  "Logged-In-To",                      TypeIdentifier = WorkItem.TypeID.RsStringRo,   Content = new StringTypeContent()   { Value = profSet.Account } } },
                     {nameof(profSet.Profile),            new TransportItem() { TabNo = 0, Name = nameof(ProfileSet.Profile),            DisplayName =  nameof(ProfileSet.Profile),          TypeIdentifier = WorkItem.TypeID.RsStringRo,   Content = new StringTypeContent()   { Value = profSet.Profile } } },
 
-                    {nameof(profSet.DataSourceTable1),   new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.DataSourceTable1),   DisplayName = "Storage Table",  TypeIdentifier = WorkItem.TypeID.RsStringSw,     Content = new StringTypeContent()   { Value = profSet.DataSourceTable1 } } },
-                    {nameof(profSet.DataSourceTable2),   new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.DataSourceTable2),   DisplayName = "Storage Table",  TypeIdentifier = WorkItem.TypeID.RsStringSw,     Content = new StringTypeContent()   { Value = profSet.DataSourceTable3 } } },
-                    {nameof(profSet.DataSourceTable3),   new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.DataSourceTable3),   DisplayName = "Storage Table",  TypeIdentifier = WorkItem.TypeID.RsStringSw,     Content = new StringTypeContent()   { Value = profSet.DataSourceTable4 } } },
-                    {nameof(profSet.DataSourceTable4),   new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.DataSourceTable4),   DisplayName = "Storage Table",  TypeIdentifier = WorkItem.TypeID.RsStringSw,     Content = new StringTypeContent()   { Value = profSet.DataSourceTable4 } } },
+                    {nameof(profSet.DataSourceTable1),   new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.DataSourceTable1),   DisplayName = "Storage Table",                      TypeIdentifier = WorkItem.TypeID.RsStringSw,     Content = new StringTypeContent()   { Value = profSet.DataSourceTable1 } } },
+                    {nameof(profSet.DataSourceTable2),   new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.DataSourceTable2),   DisplayName = "Storage Table",                      TypeIdentifier = WorkItem.TypeID.RsStringSw,     Content = new StringTypeContent()   { Value = profSet.DataSourceTable3 } } },
+                    {nameof(profSet.DataSourceTable3),   new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.DataSourceTable3),   DisplayName = "Storage Table",                      TypeIdentifier = WorkItem.TypeID.RsStringSw,     Content = new StringTypeContent()   { Value = profSet.DataSourceTable4 } } },
+                    {nameof(profSet.DataSourceTable4),   new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.DataSourceTable4),   DisplayName = "Storage Table",                      TypeIdentifier = WorkItem.TypeID.RsStringSw,     Content = new StringTypeContent()   { Value = profSet.DataSourceTable4 } } },
 
-                 
-                    {nameof(profSet.TableProperty1),     new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableProperty1),     DisplayName = "Tabellenspalte",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableProperty1 } } },                                                                                                                                                                                                        
+
+                    {nameof(profSet.TableProperty1),     new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableProperty1),     DisplayName = "Tabellenspalte",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableProperty1 } } },
                     {nameof(profSet.TableProperty2),     new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableProperty2),     DisplayName = "Tabellenspalte",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableProperty2 } } },
                     {nameof(profSet.TableProperty3),     new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableProperty3),     DisplayName = "Tabellenspalte",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableProperty3 } } },
                     {nameof(profSet.TableProperty4),     new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableProperty4),     DisplayName = "Tabellenspalte",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableProperty4 } } },
@@ -181,16 +190,16 @@ public static class Wrapper
                     {nameof(profSet.TableAutomaticYear2),new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableAutomaticYear2),DisplayName = "Jahr-Suffix?",                       TypeIdentifier = WorkItem.TypeID.RsBooleanNo,  Content = new BoolTypeContent()     { Value = profSet.TableAutomaticYear2 } } },
                     {nameof(profSet.TableAutomaticYear3),new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableAutomaticYear3),DisplayName = "Jahr-Suffix?",                       TypeIdentifier = WorkItem.TypeID.RsBooleanNo,  Content = new BoolTypeContent()     { Value = profSet.TableAutomaticYear3 } } },
                     {nameof(profSet.TableAutomaticYear4),new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableAutomaticYear4),DisplayName = "Jahr-Suffix?",                       TypeIdentifier = WorkItem.TypeID.RsBooleanNo,  Content = new BoolTypeContent()     { Value = profSet.TableAutomaticYear4 } } },
-                    
+
                     {nameof(profSet.TableProvider1),     new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableProvider1),     DisplayName = "Data-Provider",                      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableProvider1 } } },
                     {nameof(profSet.TableProvider2),     new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableProvider2),     DisplayName = "Data-Provider",                      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableProvider2 } } },
                     {nameof(profSet.TableProvider3),     new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableProvider3),     DisplayName = "Data-Provider",                      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableProvider3 } } },
                     {nameof(profSet.TableProvider4),     new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableProvider4),     DisplayName = "Data-Provider",                      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableProvider4 } } },
 
-                    {nameof(profSet.TableType1),         new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableType1),         DisplayName = "Typ der Werte",                      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableType1 } } },
-                    {nameof(profSet.TableType2),         new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableType2),         DisplayName = "Typ der Werte",                      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableType2 } } },
-                    {nameof(profSet.TableType3),         new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableType3),         DisplayName = "Typ der Werte",                      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableType3 } } },
-                    {nameof(profSet.TableType4),         new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableType4),         DisplayName = "Typ der Werte",                      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableType4 } } },
+                    {nameof(profSet.TableType1),         new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableType1),         DisplayName = "Typ der Werte",                      TypeIdentifier = WorkItem.TypeID.RsStringPi,   Content = new StringTypeContent()   { Value = profSet.TableType1 } } },
+                    {nameof(profSet.TableType2),         new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableType2),         DisplayName = "Typ der Werte",                      TypeIdentifier = WorkItem.TypeID.RsStringPi,   Content = new StringTypeContent()   { Value = profSet.TableType2 } } },
+                    {nameof(profSet.TableType3),         new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableType3),         DisplayName = "Typ der Werte",                      TypeIdentifier = WorkItem.TypeID.RsStringPi,   Content = new StringTypeContent()   { Value = profSet.TableType3 } } },
+                    {nameof(profSet.TableType4),         new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableType4),         DisplayName = "Typ der Werte",                      TypeIdentifier = WorkItem.TypeID.RsStringPi,   Content = new StringTypeContent()   { Value = profSet.TableType4 } } },
 
 
                     {nameof(profSet.TableDisplacement1), new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableDisplacement1), DisplayName = "Ersatzwert",                         TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableDisplacement1 } } },
@@ -215,21 +224,21 @@ public static class Wrapper
                     {nameof(profSet.TableOffset3),       new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableOffset3),       TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableOffset3 } } },
                     {nameof(profSet.TableOffset4),       new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableOffset4),       TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableOffset4 } } },
 
-                    {nameof(profSet.TableStartDate1),    new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableStartDate1),    DisplayName = "Start Datum",                        TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableStartDate1 } } },
-                    {nameof(profSet.TableStartDate2),    new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableStartDate2),    TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableStartDate2 } } },
-                    {nameof(profSet.TableStartDate3),    new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableStartDate3),    TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableStartDate3 } } },
-                    {nameof(profSet.TableStartDate4),    new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableStartDate4),    TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableStartDate4 } } },
+                    {nameof(profSet.TableStartDate1),    new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableStartDate1),    DisplayName = "Start Datum",      TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableStartDate1 } } },
+                    {nameof(profSet.TableStartDate2),    new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableStartDate2),                                      TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableStartDate2 } } },
+                    {nameof(profSet.TableStartDate3),    new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableStartDate3),                                      TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableStartDate3 } } },
+                    {nameof(profSet.TableStartDate4),    new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableStartDate4),                                      TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableStartDate4 } } },
 
 
-                    {nameof(profSet.TableEndDate1),      new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableEndDate1),      DisplayName = "End Datum",                          TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableEndDate1 } } },
-                    {nameof(profSet.TableEndDate2),      new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableEndDate2),      TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableEndDate2 } } },
-                    {nameof(profSet.TableEndDate3),      new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableEndDate3),      TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableEndDate3 } } },
-                    {nameof(profSet.TableEndDate4),      new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableEndDate4),      TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableEndDate4 } } },
+                    {nameof(profSet.TableEndDate1),      new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableEndDate1),      DisplayName = "End Datum",       TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableEndDate1 } } },
+                    {nameof(profSet.TableEndDate2),      new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableEndDate2),                                       TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableEndDate2 } } },
+                    {nameof(profSet.TableEndDate3),      new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableEndDate3),                                       TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableEndDate3 } } },
+                    {nameof(profSet.TableEndDate4),      new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableEndDate4),                                       TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableEndDate4 } } },
 
-                    {nameof(profSet.TableAccount1),      new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableAccount1),      DisplayName = "TableAccount",                          TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount1 } } },
-                    {nameof(profSet.TableAccount2),      new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableAccount2),      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount2 } } },
-                    {nameof(profSet.TableAccount3),      new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableAccount3),      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount3 } } },
-                    {nameof(profSet.TableAccount4),      new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableAccount4),      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount4 } } },
+                    {nameof(profSet.TableAccount1),      new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableAccount1),      DisplayName = "Storage Account", TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount1 } } },
+                    {nameof(profSet.TableAccount2),      new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableAccount2),      DisplayName = "Storage Account", TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount2 } } },
+                    {nameof(profSet.TableAccount3),      new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableAccount3),      DisplayName = "Storage Account", TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount3 } } },
+                    {nameof(profSet.TableAccount4),      new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableAccount4),      DisplayName = "Storage Account", TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount4 } } },
 
                     {nameof(profSet.TableCloudTable1),   new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableCloudTable1),   DisplayName = "Azure Table Name",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableCloudTable1 } } },
                     {nameof(profSet.TableCloudTable2),   new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableCloudTable2),   DisplayName = "Azure Table Name",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableCloudTable1 } } },
@@ -251,116 +260,7 @@ public static class Wrapper
                     {nameof(profSet.SettingsID),         new TransportItem() { Name = nameof(ProfileSet.SettingsID),       TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.SettingsID } } },
                     {nameof(profSet.Index),              new TransportItem() { Name = nameof(ProfileSet.Index),            TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.Index } } },
                     {nameof(profSet.Selected),           new TransportItem() { Name = nameof(ProfileSet.Selected),         TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.Selected } } },
-                    
 
-
-
-
-                    /*
-                    1{nameof(profSet.TableDisplacement1), new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableDisplacement1), DisplayName = "Ersatzwert",                         TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableDisplacement1 } } },
-                    5{nameof(profSet.TableUnit1),         new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableUnit1),         DisplayName = "Einheit",                            TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableUnit1 } } },
-                    9{nameof(profSet.TableFactor1),       new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableFactor1),       DisplayName = "Faktor",                             TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableFactor1 } } },
-                    13{nameof(profSet.TableOffset1),       new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableOffset1),       DisplayName = "Offset",                             TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableOffset1 } } },
-                    17{nameof(profSet.TableStartDate1),    new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableStartDate1),    DisplayName = "Start Datum",                        TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableStartDate1 } } },
-                    21{nameof(profSet.TableEndDate1),      new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableEndDate1),      DisplayName = "End Datum",                          TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableEndDate1 } } },
-                    25{nameof(profSet.TableAccount1),      new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableAccount1),      DisplayName = "End Datum",                          TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount1 } } },
-                    29{nameof(profSet.TableCloudTable1),   new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableCloudTable1),   DisplayName = "Azure Table Name",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableCloudTable1 } } },
-                    33{nameof(profSet.TableSortField1),    new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableSortField1),      DisplayName = "Sortierspalte",                      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableSortField1 } } },
-                    37{nameof(profSet.TablePh31),          new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TablePh31),            DisplayName = "freie Verfügung",                    TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TablePh31 } } },
-
-                    2{nameof(profSet.TableDisplacement2), new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableDisplacement2), TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableDisplacement2 } } },
-                    6{nameof(profSet.TableUnit2),         new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableUnit2),         TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableUnit2 } } },
-                    10{nameof(profSet.TableFactor2),       new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableFactor2),       TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableFactor2 } } },
-                    14{nameof(profSet.TableOffset2),       new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableOffset2),       TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableOffset2 } } },
-                    18{nameof(profSet.TableStartDate2),    new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableStartDate2),    TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableStartDate2 } } },
-                    22{nameof(profSet.TableEndDate2),      new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableEndDate2),      TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableEndDate2 } } },
-                    26{nameof(profSet.TableAccount2),      new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableAccount2),      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount2 } } },
-                    30{nameof(profSet.TableCloudTable2),   new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableCloudTable2),   DisplayName = "Azure Table Name",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableCloudTable1 } } },
-                    34{nameof(profSet.TableSortField2),    new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableSortField2),    TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableSortField2 } } },
-                    38{nameof(profSet.TablePh32),          new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TablePh32),              TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TablePh32 } } },
-
-
-                    3{nameof(profSet.TableDisplacement3), new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableDisplacement3), TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableDisplacement3 } } },
-                    7{nameof(profSet.TableUnit3),         new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableUnit3),         TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableUnit3 } } },
-                    11{nameof(profSet.TableFactor3),       new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableFactor3),       TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableFactor3 } } },
-                    15{nameof(profSet.TableOffset3),       new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableOffset3),       TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableOffset3 } } },
-                    19{nameof(profSet.TableStartDate3),    new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableStartDate3),    TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableStartDate3 } } },
-                    23{nameof(profSet.TableEndDate3),      new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableEndDate3),      TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableEndDate3 } } },
-                    27{nameof(profSet.TableAccount3),      new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableAccount3),      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount3 } } },
-                    31{nameof(profSet.TableCloudTable3),   new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableCloudTable3),   DisplayName = "Azure Table Name",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableCloudTable3 } } },
-                    35{nameof(profSet.TableSortField3),    new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableSortField3),    TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableSortField3 } } },
-                    39{nameof(profSet.TablePh33),          new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TablePh33),      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TablePh33 } } },
-
-
-                    4{nameof(profSet.TableDisplacement4), new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableDisplacement4), TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableDisplacement4 } } },
-                    8{nameof(profSet.TableUnit4),         new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableUnit4),         TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableUnit4 } } },
-                    12{nameof(profSet.TableFactor4),       new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableFactor4),       TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableFactor4 } } },
-                    16{nameof(profSet.TableOffset4),       new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableOffset4),       TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableOffset4 } } },
-                    20{nameof(profSet.TableStartDate4),    new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableStartDate4),    TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableStartDate4 } } },
-                    24{nameof(profSet.TableEndDate4),      new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableEndDate4),      TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableEndDate4 } } },
-                    28{nameof(profSet.TableAccount4),      new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableAccount4),      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount4 } } },
-                    32{nameof(profSet.TableCloudTable4),   new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableCloudTable3),   DisplayName = "Azure Table Name",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableCloudTable3 } } },
-                    36{nameof(profSet.TableSortField4),    new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableSortField4),    TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableSortField4 } } },
-                    40{nameof(profSet.TablePh34),          new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TablePh34),              TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TablePh34 } } },
-
-
-
-
-
-
-
-                    1{nameof(profSet.TableDisplacement1), new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableDisplacement1), DisplayName = "Ersatzwert",                         TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableDisplacement1 } } },
-                    5{nameof(profSet.TableUnit1),         new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableUnit1),         DisplayName = "Einheit",                            TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableUnit1 } } },
-                    9{nameof(profSet.TableFactor1),       new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableFactor1),       DisplayName = "Faktor",                             TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableFactor1 } } },
-                    13{nameof(profSet.TableOffset1),       new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableOffset1),       DisplayName = "Offset",                             TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableOffset1 } } },
-                    17{nameof(profSet.TableStartDate1),    new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableStartDate1),    DisplayName = "Start Datum",                        TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableStartDate1 } } },
-                    21{nameof(profSet.TableEndDate1),      new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableEndDate1),      DisplayName = "End Datum",                          TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableEndDate1 } } },
-                    25{nameof(profSet.TableAccount1),      new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableAccount1),      DisplayName = "End Datum",                          TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount1 } } },
-                    29{nameof(profSet.TableCloudTable1),   new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableCloudTable1),   DisplayName = "Azure Table Name",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableCloudTable1 } } },      
-                    33{nameof(profSet.TableSortField1),    new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TableSortField1),      DisplayName = "Sortierspalte",                      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableSortField1 } } },
-                    37{nameof(profSet.TablePh31),          new TransportItem() { TabNo = 1, Name = nameof(ProfileSet.TablePh31),            DisplayName = "freie Verfügung",                    TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TablePh31 } } },
-
-                    2{nameof(profSet.TableDisplacement2), new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableDisplacement2), TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableDisplacement2 } } },
-                    6{nameof(profSet.TableUnit2),         new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableUnit2),         TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableUnit2 } } },
-                    10{nameof(profSet.TableFactor2),       new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableFactor2),       TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableFactor2 } } },
-                    14{nameof(profSet.TableOffset2),       new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableOffset2),       TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableOffset2 } } },
-                    18{nameof(profSet.TableStartDate2),    new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableStartDate2),    TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableStartDate2 } } },
-                    22{nameof(profSet.TableEndDate2),      new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableEndDate2),      TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableEndDate2 } } },
-                    26{nameof(profSet.TableAccount2),      new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableAccount2),      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount2 } } },
-                    30{nameof(profSet.TableCloudTable2),   new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableCloudTable2),   DisplayName = "Azure Table Name",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableCloudTable1 } } },
-                    34{nameof(profSet.TableSortField2),    new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TableSortField2),    TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableSortField2 } } },
-                    38{nameof(profSet.TablePh32),          new TransportItem() { TabNo = 2, Name = nameof(ProfileSet.TablePh32),              TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TablePh32 } } },
-
-
-                    3{nameof(profSet.TableDisplacement3), new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableDisplacement3), TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableDisplacement3 } } },
-                    7{nameof(profSet.TableUnit3),         new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableUnit3),         TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableUnit3 } } },
-                    11{nameof(profSet.TableFactor3),       new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableFactor3),       TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableFactor3 } } },
-                    15{nameof(profSet.TableOffset3),       new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableOffset3),       TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableOffset3 } } },
-                    19{nameof(profSet.TableStartDate3),    new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableStartDate3),    TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableStartDate3 } } },
-                    23{nameof(profSet.TableEndDate3),      new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableEndDate3),      TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableEndDate3 } } },
-                    27{nameof(profSet.TableAccount3),      new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableAccount3),      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount3 } } },
-                    31{nameof(profSet.TableCloudTable3),   new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableCloudTable3),   DisplayName = "Azure Table Name",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableCloudTable3 } } },
-                    35{nameof(profSet.TableSortField3),    new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableSortField3),    TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableSortField3 } } },
-                    39{nameof(profSet.TablePh33),          new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TablePh33),      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TablePh33 } } },
-
-
-                    4{nameof(profSet.TableDisplacement4), new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableDisplacement4), TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableDisplacement4 } } },
-                    8{nameof(profSet.TableUnit4),         new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableUnit4),         TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableUnit4 } } },
-                    12{nameof(profSet.TableFactor4),       new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableFactor4),       TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableFactor4 } } },
-                    16{nameof(profSet.TableOffset4),       new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableOffset4),       TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableOffset4 } } },
-                    20{nameof(profSet.TableStartDate4),    new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableStartDate4),    TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableStartDate4 } } },
-                    24{nameof(profSet.TableEndDate4),      new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableEndDate4),      TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent()   { Value = profSet.TableEndDate4 } } },
-                    28{nameof(profSet.TableAccount4),      new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableAccount4),      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount4 } } },
-                    32{nameof(profSet.TableCloudTable4),   new TransportItem() { TabNo = 3, Name = nameof(ProfileSet.TableCloudTable3),   DisplayName = "Azure Table Name",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableCloudTable3 } } },
-                    36{nameof(profSet.TableSortField4),    new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TableSortField4),    TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableSortField4 } } },
-                    40{nameof(profSet.TablePh34),          new TransportItem() { TabNo = 4, Name = nameof(ProfileSet.TablePh34),              TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TablePh34 } } },
-
-                    {nameof(profSet.SettingsState),    new TransportItem() { Name = nameof(ProfileSet.SettingsState),    TypeIdentifier = WorkItem.TypeID.RsBooleanNo,    Content = new BoolTypeContent()     { Value = profSet.SettingsState } } },
-                    {nameof(profSet.SettingsDate),     new TransportItem() { Name = nameof(ProfileSet.SettingsDate),     TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent() { Value = profSet.SettingsDate } } },
-                    {nameof(profSet.SettingsID),       new TransportItem() { Name = nameof(ProfileSet.SettingsID),       TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.SettingsID } } },
-                    {nameof(profSet.Index),            new TransportItem() { Name = nameof(ProfileSet.Index),            TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.Index } } },
-                    {nameof(profSet.Selected),         new TransportItem() { Name = nameof(ProfileSet.Selected),         TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.Selected } } },
-                    */
         };
 
         return new SuitCaseProperties() { PropertiesDictionary = propertiesDictionary };

@@ -1,6 +1,4 @@
-﻿//using AndroidX.Navigation;
-//using AndroidX.Fragment.App.StrictMode;
-using CommunityToolkit.Maui;
+﻿using CommunityToolkit.Maui;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Maui_DynamischesFormular.Cells;
@@ -233,6 +231,8 @@ namespace Maui_DynamischesFormular.ViewModels
 
                 if (query.ContainsKey(nameof(ProfileDetailPage)))
                 {
+                    #region Region Sending Page was ProfileDetailPage
+
                     tableDetailProperties = query[nameof(ProfileDetailPage)] as SuitCaseProperties;
 
                     ActualizeProfilesWithValuesFromDetailPage(WorkItemCollection, tableDetailProperties.PropertiesDictionary);
@@ -264,15 +264,23 @@ namespace Maui_DynamischesFormular.ViewModels
                     */
 
                     int breakpoint_34 = 1;
+                    #endregion
                 }
 
-                if (query.ContainsKey(nameof(MainPage)))
 
+                if (query.ContainsKey(nameof(MainPage)))
                 {
-                    //SenderMessage = query["Parameter"].ToString() + ",   AppState: " + query[nameof(MainPage)].ToString();
+                    #region Region Sending Page was MainPage
+                  
                     SenderMessage = query["sender"].ToString() + ",   AppState: " + query[nameof(MainPage)].ToString();
 
                     int appState = (int)query["MainPage"];
+
+                    // RoSchmi: this is a trick to run the programm without real Azure Account
+                    // should be inactivated for normal action
+                    // Set it to your needs
+                    ActAccount = "bog128";
+
 
                     switch (appState)
                     {
@@ -318,15 +326,15 @@ namespace Maui_DynamischesFormular.ViewModels
                                 break;
                             }
 
-                        case 2:                          // Account selected and initialized Profile present but none of them selected (should not happen)
+                        case 2:         // Account selected and initialized Profile present but none of them selected (should not happen)
                             {
-                                _ = Application.Current.MainPage.DisplayAlert("Alert", "No Profile selected. This should not happen!", "OK");
+                                _ = Application.Current.MainPage.DisplayAlertAsync("Alert", "No Profile selected. This should not happen!", "OK");
                                 break;
                             }
 
                         case 3:
                             {
-                                _ = Application.Current.MainPage.DisplayAlert("Alert", "Profilenames could not be set. This should not happen!", "OK");
+                                _ = Application.Current.MainPage.DisplayAlertAsync("Alert", "Profilenames could not be set. This should not happen!", "OK");
 
                                 break;
                             }
@@ -350,10 +358,12 @@ namespace Maui_DynamischesFormular.ViewModels
                     }
 
                     int breakpoint_34 = 1;
+#endregion
                 }
             }
         }
 
+        #region Region FillProfileNamesAndProfilesExtended
         private bool FillProfileNamesAndProfilesExtended(ObservableCollection<WorkItem> pWorkItemCollection, Dictionary<string, SuitCaseProperties> pProfilesDictionary)
         {
             try
@@ -399,6 +409,9 @@ namespace Maui_DynamischesFormular.ViewModels
                 return false;
             }
         }
+#endregion
+
+
         #region Region ActualizeProfilesWithValuesFromDetailPage
         private void ActualizeProfilesWithValuesFromDetailPage(ObservableCollection<WorkItem> pWorkItemCollection, Dictionary<string, TransportItem> pPropertiesDictionary)
         {
@@ -807,19 +820,19 @@ namespace Maui_DynamischesFormular.ViewModels
 
             var selectedItems = new Dictionary<string, TransportItem>()
             {
-                {"Account", new TransportItem()        {Name = "Account",    DisplayName = "Account", TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = string.Empty } } },
-                {"SettingsID", new TransportItem()     {Name = nameof(actWorkItem.Name), DisplayName = "SettingsID", TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = ID } } },
-                {"Table-ID", new TransportItem()       {Name = "Table-ID", DisplayName = "Table-ID", TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = actWorkItem.Name } } },            
-                {"TableAccount", new TransportItem()   {Name = string.Empty,    DisplayName = "TableAccount", TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsString, Content = new StringTypeContent() { Value = string.Empty } } },
-                {"DataSourceTable", new TransportItem(){Name = string.Empty,    DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"TableProperty", new TransportItem()  {Name = string.Empty,    DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"TableSortField", new TransportItem() {Name = string.Empty,    DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"TableFactor", new TransportItem()    {Name = string.Empty,    DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"TableOffset", new TransportItem()    {Name = string.Empty,    DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"TableType", new TransportItem()      {Name = string.Empty,    DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"TableUnit", new TransportItem()      {Name = string.Empty,    DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"SettingsState", new TransportItem()  {Name = string.Empty,    DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsBoolean,  Content = new BoolTypeContent()  { Value = null } } },
-                {"SettingsDate", new TransportItem()   {Name = string.Empty,    DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsDateTime, Content = new DateTimeTypeContent() { Value = null } } },
+                {"Account", new TransportItem()        {Name = "Account",               DisplayName = "Account",        TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = string.Empty } } },
+                {"SettingsID", new TransportItem()     {Name = nameof(actWorkItem.Name),DisplayName = "SettingsID",     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = ID } } },
+                {"Table-ID", new TransportItem()       {Name = "Table-ID",              DisplayName = "Table-ID",       TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = actWorkItem.Name } } },            
+                {"TableAccount", new TransportItem()   {Name = string.Empty,            DisplayName = "TableAccount",   TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"DataSourceTable", new TransportItem(){Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableProperty", new TransportItem()  {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableSortField", new TransportItem() {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableFactor", new TransportItem()    {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableOffset", new TransportItem()    {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableType", new TransportItem()      {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringPi, Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableUnit", new TransportItem()      {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"SettingsState", new TransportItem()  {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsBoolean,  Content = new BoolTypeContent()  { Value = null } } },
+                {"SettingsDate", new TransportItem()   {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsDateTime, Content = new DateTimeTypeContent() { Value = null } } },
              };
 
             //itemList.Add((nameof(tableAccount), string.Empty, string.Empty));

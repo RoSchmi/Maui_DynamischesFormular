@@ -215,6 +215,7 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
         profSet.SettingsID = Guid.NewGuid().ToString();
         profSet.SettingsID = Guid.NewGuid().ToString();
 
+        //RoSchmi set to right value
         string ActAccount = "myaccount";
         profSet.Account = ActAccount;
 
@@ -409,12 +410,15 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 
         // ActAccount = AccountHelper.GetActAccountFromFile(appFolder, accountsFileName) ?? string.Empty;
 
-        ActAccount = "myAccount";
+        // Sete ActAccount to the name of the account, which was used when you created the file
+
+        ActAccount = "bog128";
+        //ActAccount = "myAccount";
         AppState = ActAccount != string.Empty ? 1 : AppState;
 
         if (AppState < 1)
         {
-            await Application.Current.MainPage.DisplayAlert("Alert", "No Account selected!\r\nGo to '< Set Data Sources' and Click 'Select Account >'on the upper right corner", "OK");
+            await Application.Current.MainPage.DisplayAlertAsync("Alert", "No Account selected!\r\nGo to '< Set Data Sources' and Click 'Select Account >'on the upper right corner", "OK");
             return;
         }
 
@@ -425,7 +429,7 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 
         if (AppState < 2)
         {
-            await Application.Current.MainPage.DisplayAlert("Alert", "No Profiles found!\r\nGo to SettingsPage", "OK");
+            await Application.Current.MainPage.DisplayAlertAsync("Alert", "No Profiles found!\r\nGo to SettingsPage", "OK");
             return;
         }
 
@@ -435,7 +439,7 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 
         if (AppState < 3)
         {
-            await Application.Current.MainPage.DisplayAlert("Alert", "Could not retrieve selected Profile!\r\nGo to SettingsPage", "OK");
+            await Application.Current.MainPage.DisplayAlertAsync("Alert", "Could not retrieve selected Profile!\r\nGo to SettingsPage", "OK");
             return;
         }
 

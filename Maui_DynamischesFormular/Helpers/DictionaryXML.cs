@@ -225,6 +225,13 @@ public static class DictionaryXML
         {
             return null;
         }
+        else
+        {
+            //File.Delete(filePath);
+
+            //return null;
+        }
+        
 
         // We  read the serialized Profiles 
         var reader = new System.Xml.Serialization.XmlSerializer(typeof(XMLContainer));
@@ -249,6 +256,7 @@ public static class DictionaryXML
                     case WorkItem.TypeID.RsStringRo:
                     case WorkItem.TypeID.RsStringNo:
                     case WorkItem.TypeID.RsStringSw:
+                    case WorkItem.TypeID.RsStringPi:
                         {
                             StringTransportItem stringTransportItem = JsonSerializer.Deserialize<StringTransportItem>(jsonProperty);
                             transportItem = new TransportItem() { Name = stringTransportItem.Name, TypeIdentifier = stringTransportItem.TypeIdentifier, Content = stringTransportItem.Content };

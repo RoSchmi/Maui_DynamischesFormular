@@ -36,6 +36,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Principal;
 using System.Text.Json;
 using RoSchmi.Maui.Interfaces;
+using RoSchmi.Maui.Helpers;
 using RoSchmi.Maui.Services;
 using System.Threading;
 using System.Xml;
@@ -137,15 +138,7 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 
     SuitCaseProperties suitCaseProperties = new();
 
-   
-
-    //private List<SettingItem> settingItems = new List<SettingItem>();
-
-    // [ObservableProperty]
-    // private string vorname;
-
-
-
+    // This is a separate example, showing how to edit values on a separate page but using the same ViewModel
     #region Region Create example ObservableCollection containing three PersonRecords
     public ObservableCollection<PersonDataRecord> PersonRecords { get; }
     = new ObservableCollection<PersonDataRecord>
@@ -196,8 +189,6 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 
     [ObservableProperty] 
     private PersonDataRecord selectedRecord;
-
-
 
 
     #region Constructor
@@ -408,11 +399,11 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 
         //Current_MainDisplayInfoChanged
 
-        // ActAccount = AccountHelper.GetActAccountFromFile(appFolder, accountsFileName) ?? string.Empty;
+        ActAccount = AccountHelper.GetActAccountFromFile(appFolder, accountsFileName) ?? string.Empty;
 
         // Sete ActAccount to the name of the account, which was used when you created the file
 
-        ActAccount = "bog128";
+        //ActAccount = "bog128";
         //ActAccount = "myAccount";
         AppState = ActAccount != string.Empty ? 1 : AppState;
 

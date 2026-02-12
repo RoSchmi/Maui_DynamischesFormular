@@ -8,6 +8,7 @@ using Maui_DynamischesFormular.Models;
 using Maui_DynamischesFormular.Pages;
 using Maui_DynamischesFormular.ViewModels;
 using RoSchmi.Maui.Interfaces;
+using RoSchmi.Maui.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -80,7 +81,7 @@ namespace Maui_DynamischesFormular.ViewModels
 
         private static List<string> names = new();
 
-        //private static SwitchCellSource switchCellSource = new(names, section1);
+        private static SwitchCellSource switchCellSource = new(names, section1);
 
         private static string lastSelectedProfile = "";
 
@@ -217,7 +218,8 @@ namespace Maui_DynamischesFormular.ViewModels
 
         private IDictionary<string, object> queryHandle;
 
-        // Here come the messages from the sending page
+        // Here automatically messages from sending page are processed
+        #region Region ApplyQueryAttributes
         public void ApplyQueryAttributes(IDictionary<string, object> query)
         {
             queryHandle = query;  // make a handle to clear the dictionary
@@ -236,6 +238,9 @@ namespace Maui_DynamischesFormular.ViewModels
                     tableDetailProperties = query[nameof(ProfileDetailPage)] as SuitCaseProperties;
 
                     ActualizeProfilesWithValuesFromDetailPage(WorkItemCollection, tableDetailProperties.PropertiesDictionary);
+
+
+
                     string profileAndAccount = string.Empty;
                     if (SelectedProfileIndex >= 0)
                     {
@@ -246,13 +251,24 @@ namespace Maui_DynamischesFormular.ViewModels
                         Application.Current.MainPage.DisplayAlertAsync("Alert", "SelectedProfileIndex was < 0", "OK");
                     }
 
+                    
+                    //RoSchmi
+                    /*
+                    profilesDictionary = new Dictionary<string, SuitCaseProperties>() 
+                    {
+                        { profileAndAccount, tableDetailProperties } 
+                    };
+                    */
+
+                   // ActualizeProfilesXmlFile(WorkItemCollection, profilesDictionary, profileAndAccount, appFolder, profilesFileName);
+
                     ActualizeProfilesXmlFile(WorkItemCollection, profilesDictionary, profileAndAccount, appFolder, profilesFileName);
 
                     profilesDictionary = DictionaryXML.GetProfilesDictionaryFromXmlFile(appFolder, profilesFileName);
 
                     //RoSchmi
                     // Inactivated since noc storage
-                    //WorkItemCollection = Wrapper.TransportItemsToWorkItems(profilesDictionary[profileAndAccount].PropertiesDictionary);
+                    WorkItemCollection = Wrapper.TransportItemsToWorkItems(profilesDictionary[profileAndAccount].PropertiesDictionary);
 
                     // Copy to ObservableCollection with less items to avoid empty space in CollectionView
                     /*
@@ -279,7 +295,7 @@ namespace Maui_DynamischesFormular.ViewModels
                     // RoSchmi: this is a trick to run the programm without real Azure Account
                     // should be inactivated for normal action
                     // Set it to your needs
-                    ActAccount = "bog128";
+                    //ActAccount = "bog128";
 
 
                     switch (appState)
@@ -362,6 +378,7 @@ namespace Maui_DynamischesFormular.ViewModels
                 }
             }
         }
+        #endregion
 
         #region Region FillProfileNamesAndProfilesExtended
         private bool FillProfileNamesAndProfilesExtended(ObservableCollection<WorkItem> pWorkItemCollection, Dictionary<string, SuitCaseProperties> pProfilesDictionary)
@@ -424,6 +441,8 @@ namespace Maui_DynamischesFormular.ViewModels
             string offset = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["TableOffset"]).StringValue;
             string type = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["TableType"]).StringValue;
             string unit = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["TableUnit"]).StringValue;
+            bool? settingsState = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["SettingsState"]).BoolValue;
+            DateTime? settingsDate = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["SettingsDate"]).DateValue;
 
             switch (tableIDName)
             {
@@ -452,6 +471,8 @@ namespace Maui_DynamischesFormular.ViewModels
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableUnit1").StringValue = unit;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableFactor1").StringValue = factor;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableOffset1").StringValue = offset;
+                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "SettingsState").BoolValue = settingsState;
+                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "SettingsDate").DateValue = settingsDate;
 
                         break;
                     }
@@ -534,13 +555,12 @@ namespace Maui_DynamischesFormular.ViewModels
         #endregion
 
 
-
         #region constructor
         public SettingsViewModel(INavigationService navigation)
         {
             _navigation = navigation;
-            //PopulateAccountFilesAction();  // This sets ActAccount
-            //switchCellSource.SwitchCellSourceSend += SwitchCellSource_SwitchCellSourceSend;
+            PopulateAccountFilesAction();  // This sets ActAccount
+            switchCellSource.SwitchCellSourceSend += SwitchCellSource_SwitchCellSourceSend;
 
             profilesDictionary = DictionaryXML.GetProfilesDictionaryFromXmlFile(appFolder, profilesFileName);
             int breakpoint67 = 1;
@@ -778,6 +798,7 @@ namespace Maui_DynamischesFormular.ViewModels
         }
         #endregion
 
+        #region Region Tap
         [RelayCommand]
         private async void Tap(WorkItem actWorkItem)
         {
@@ -835,206 +856,95 @@ namespace Maui_DynamischesFormular.ViewModels
                 {"SettingsDate", new TransportItem()   {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsDateTime, Content = new DateTimeTypeContent() { Value = null } } },
              };
 
-            //itemList.Add((nameof(tableAccount), string.Empty, string.Empty));
+         
+
+           
 
 
-            /*
-            (string Key, string Name, string DisplayName) tableAccount = (nameof(tableAccount), string.Empty, string.Empty);
-            (string Key, string Name, string DisplayName) tableName = (nameof(tableAccount), string.Empty, string.Empty);
-            (string Key, string Name, string DisplayName) columnName= (nameof(tableAccount), string.Empty, string.Empty);
-            (string Key, string Name, string DisplayName) sortField = (nameof(tableAccount), string.Empty, string.Empty);
-            (string Key, string Name, string DisplayName) factor = (nameof(tableAccount), string.Empty, string.Empty);
-            (string Key, string Name, string DisplayName) offset = (nameof(tableAccount), string.Empty, string.Empty);
-            (string Key, string Name, string DisplayName) type = (nameof(tableAccount), string.Empty, string.Empty);
-            (string Key, string Name, string DisplayName) unit = (nameof(tableAccount), string.Empty, string.Empty);
-
-            itemList.Add(tableAccount);
-            itemList.Add(tableName);
-            itemList.Add(columnName);
-            itemList.Add(sortField); itemList.Add(factor); 
-            itemList.Add(offset);
-            itemList.Add(type);
-            itemList.Add(unit);
-
-            itemList[tableAccount]
-            */
-
-            //WorkItem? actItem = null;
-
+            int selector = 0;
             switch (actWorkItem.Name)
-            {
+            {              
                 case "DataSourceTable1":
                     {
-                        foreach (var actItem in WorkItemCollection)  
-                        {
-                            if (actItem.TabNo != 0 && actItem.TabNo !=1)
-                                continue;
-
-                            if (actItem.TabNo == 0)
-                            {
-                                int breakpoint22 = 1;
-                            }
-
-
-                
-                            var baseName = actItem.TabNo == 0 ? actItem.Name : string.IsNullOrEmpty(actItem.Name) ? string.Empty : actItem.Name[..^1];
-
-                            if (selectedItems.TryGetValue(baseName, out var cop))
-                            {
-                                cop.TabNo = actItem.TabNo;
-                                cop.Name = actItem.Name;
-                                cop.DisplayName = actItem.DisplayName;
-                                                               
-                                switch (actItem.TypeIdentifier)
-                                {
-                                    case WorkItem.TypeID.RsString:
-                                    case WorkItem.TypeID.RsStringRo:  
-                                    case WorkItem.TypeID.RsStringNo:
-                                    case WorkItem.TypeID.RsStringSw:
-                                    case WorkItem.TypeID.RsStringPi:
-                                        {
-                                            cop.Content = new StringTypeContent() { Value = actItem.StringValue };
-                                            break;
-                                        }
-                                    case WorkItem.TypeID.RsBoolean:
-                                    case WorkItem.TypeID.RsBooleanRo:
-                                    case WorkItem.TypeID.RsBooleanNo:
-                                        {
-                                            cop.Content = new BoolTypeContent() { Value = actItem.BoolValue };
-                                            break;
-                                        }
-                                    case WorkItem.TypeID.RsDateTime:
-                                    case WorkItem.TypeID.RsDateTimeRo:
-                                    case WorkItem.TypeID.RsDateTimeNo:
-                                        {
-                                            cop.Content = new DateTimeTypeContent() { Value = actItem.DateValue <  DateTime.Now.AddDays(-1500) ? DateTime.Now : actItem.DateValue };
-                                            break;
-                                        }
-                                    default:
-                                        {                             
-                                            break;
-                                            //throw new ArgumentOutOfRangeException("SettingsViewModel:" + actItem.TypeIdentifier.ToString());
-                                        }
-
-                                }
-                            }
-                        }
-
-                       
-
-
-
-
-
-
-                            /*
-                            foreach (var key in selectedItems.Keys.ToList())
-                            {
-                                actItem = WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Account");
-
-                                var name = actItem?.Name ?? string.Empty; 
-                                var display = string.IsNullOrEmpty(actItem?.DisplayName) ? name : actItem.DisplayName;
-                                selectedItems[key] = (name, display);                          
-
-                            }
-                            */
-
-                            /*
-                            actItem = WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Account");
-                            tableAccount.Name = actItem?.Name ?? string.Empty;
-                            tableAccount.DisplayName = string.IsNullOrEmpty(actItem?.DisplayName) ? actItem?.Name ?? string.Empty : actItem.DisplayName;
-
-                            actItem = WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Property");
-                            columnName.Name = actItem?.Name ?? string.Empty;
-                            columnName.DisplayName = string.IsNullOrEmpty(actItem?.DisplayName) ? actItem?.Name ?? string.Empty : actItem.DisplayName;
-
-                            actItem = WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Factor");
-                            factor.Name = actItem?.Name ?? string.Empty;
-                            factor.DisplayName = string.IsNullOrEmpty(actItem?.DisplayName) ? actItem?.Name ?? string.Empty : actItem.DisplayName;
-                            */
-
-
-                            //tableAccount.Name = WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Account")?.StringValue ?? string.Empty;
-                            //tableAccount.DisplayName = WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Account") is var wi && wi != null ? (!string.IsNullOrEmpty(wi.DisplayName) ? wi.DisplayName : wi.Name) : string.Empty;
-
-                            //tableAccount.DisplayName = tableAccount.DisplayName = !string.IsNullOrEmpty(item?.DisplayName) ? item.DisplayName : item?.Name ?? string.Empty;
-                            //tableAccount.Name = item?.StringValue ?? string.Empty;
-                            //tableAccount.Name = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Account") ? WorkItemCollection.FirstOrDefault(w => w.Name == "Table1Account")?.StringValue ?? string.Empty : "";
-
-                            //tableAccount.DisplayName = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Account") ? WorkItemCollection.First(WorkItem => WorkItem.DisplayName == String.IsNullOrEmpty) .StringValue : string.Empty;
-
-                            //tableName = WorkItemCollection.Any(WorkItem => WorkItem.Name == "DataSourceTable1") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable1").StringValue : string.Empty;
-
-
-
-
-                            //columnName = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Property") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Property").StringValue : string.Empty;
-
-                            /*
-
-                            //sortField = WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1SortField").StringValue;
-                            sortField = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1SortField") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1SortField").StringValue : string.Empty;
-                            type = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Type") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Type").StringValue : string.Empty;
-                            unit = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Unit") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Unit").StringValue : string.Empty;
-                            factor = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Factor") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Factor").StringValue : string.Empty;
-                            offset = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table1Offset") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Offset").StringValue : string.Empty;
-                            */
-
-
-
-                            break;
+                        selector = 1;
+                        break;
                     }
                 case "DataSourceTable2":
                     {
-                        /*
-                        tableAccount = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table2Account") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Account").StringValue : string.Empty;
-                        tableName = WorkItemCollection.Any(WorkItem => WorkItem.Name == "DataSourceTable2") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable2").StringValue : string.Empty;
-                        columnName = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table2Property") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Property").StringValue : string.Empty;
-                        //sortField = WorkItemCollection.First(WorkItem => WorkItem.Name == "Table2SortField").StringValue;
-                        sortField = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table2SortField") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table2SortField").StringValue : string.Empty;
-                        type = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table2Type") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Type").StringValue : string.Empty;
-                        unit = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table2Unit") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Unit").StringValue : string.Empty;
-                        factor = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table2Factor") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Factor").StringValue : string.Empty;
-                        offset = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table´2Offset") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table2Offset").StringValue : string.Empty;
-                        */
-
+                        selector = 2;
                         break;
                     }
                 case "DataSourceTable3":
                     {
-                        /*
-                        tableAccount = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table3Account") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Account").StringValue : string.Empty;
-                        tableName = WorkItemCollection.Any(WorkItem => WorkItem.Name == "DataSourceTable3") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable3").StringValue : string.Empty;
-                        columnName = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table3Property") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Property").StringValue : string.Empty;
-                        //sortField = WorkItemCollection.First(WorkItem => WorkItem.Name == "Table3SortField").StringValue;
-                        sortField = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table3SortField") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table3SortField").StringValue : string.Empty;
-                        type = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table3Type") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Type").StringValue : string.Empty;
-                        unit = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table3Unit") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Unit").StringValue : string.Empty;
-                        factor = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table3Factor") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Factor").StringValue : string.Empty;
-                        offset = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table3Offset") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table3Offset").StringValue : string.Empty;
-                        */
+                        selector = 3;
                         break;
                     }
                 case "DataSourceTable4":
                     {
-                        /*
-                        tableAccount = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table4Account") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Account").StringValue : string.Empty;
-                        tableName = WorkItemCollection.Any(WorkItem => WorkItem.Name == "DataSourceTable4") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable4").StringValue : string.Empty;
-                        columnName = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table4Property") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Property").StringValue : string.Empty;
-                        //sortField = WorkItemCollection.First(WorkItem => WorkItem.Name == "Table4SortField").StringValue;
-                        sortField = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table4SortField") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table4SortField").StringValue : string.Empty;
-                        type = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table4Type") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Type").StringValue : string.Empty;
-                        unit = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table4Unit") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Unit").StringValue : string.Empty;
-                        factor = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table4Factor") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Factor").StringValue : string.Empty;
-                        offset = WorkItemCollection.Any(WorkItem => WorkItem.Name == "Table4Offset") ? WorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Offset").StringValue : string.Empty;
-                        */
+                        selector = 4;
                         break;
                     }
                 default:
                     {
                         throw new NotSupportedException("Not supported DataSourceTable");
-                    }
+                    } 
             }
+
+            #region Region foreach(....) Fill selected items for DetailsPage with values from ProfileSet
+            foreach (var actItem in WorkItemCollection)
+            {
+                if (actItem.TabNo != 0 && actItem.TabNo != selector)
+                    continue;
+
+                if (actItem.TabNo == 0)
+                {
+                    int breakpoint22 = 1;
+                }
+
+                var baseName = actItem.TabNo == 0 ? actItem.Name : string.IsNullOrEmpty(actItem.Name) ? string.Empty : actItem.Name[..^1];
+
+                if (selectedItems.TryGetValue(baseName, out var cop))
+                {
+                    cop.TabNo = actItem.TabNo;
+                    cop.Name = actItem.Name;
+                    cop.DisplayName = actItem.DisplayName;
+
+                    switch (actItem.TypeIdentifier)
+                    {
+                        case WorkItem.TypeID.RsString:
+                        case WorkItem.TypeID.RsStringRo:
+                        case WorkItem.TypeID.RsStringNo:
+                        case WorkItem.TypeID.RsStringSw:
+                        case WorkItem.TypeID.RsStringPi:
+                            {
+                                cop.Content = new StringTypeContent() { Value = actItem.StringValue };
+                                break;
+                            }
+                        case WorkItem.TypeID.RsBoolean:
+                        case WorkItem.TypeID.RsBooleanRo:
+                        case WorkItem.TypeID.RsBooleanNo:
+                            {
+                                cop.Content = new BoolTypeContent() { Value = actItem.BoolValue };
+                                break;
+                            }
+                        case WorkItem.TypeID.RsDateTime:
+                        case WorkItem.TypeID.RsDateTimeRo:
+                        case WorkItem.TypeID.RsDateTimeNo:
+                            {
+                                cop.Content = new DateTimeTypeContent() { Value = actItem.DateValue < DateTime.Now.AddDays(-1500) ? DateTime.Now : actItem.DateValue };
+                                break;
+                            }
+                        default:
+                            {
+                                break;
+                                //throw new ArgumentOutOfRangeException("SettingsViewModel:" + actItem.TypeIdentifier.ToString());
+                            }
+                    }
+                }
+            }
+            #endregion
+
+
 
             //var ID = Guid.NewGuid().ToString();
 
@@ -1081,6 +991,7 @@ namespace Maui_DynamischesFormular.ViewModels
 
             int breakpoint793 = 1;
         }
+        #endregion
 
         #region Method add Profile to Dictinoary
 
@@ -1366,7 +1277,7 @@ namespace Maui_DynamischesFormular.ViewModels
                 KeyEntry = "";
                 AccountEntry = "";
                 AccountsTableRoot.Clear();
-                //switchCellSource.Populate(names);
+                switchCellSource.Populate(names);
                 AccountsTableRoot.Add(section1);
                 SelectedAccount = names.First();
 
@@ -1395,7 +1306,7 @@ namespace Maui_DynamischesFormular.ViewModels
 
 
 
-                //  PopulateAccountFilesAction();
+                PopulateAccountFilesAction();
 
             }
             else
@@ -1405,7 +1316,7 @@ namespace Maui_DynamischesFormular.ViewModels
         }
 
         #region Method PopulateAccountFilesAction
-        /*
+        
         public void PopulateAccountFilesAction()
         {
             names = new List<string>();
@@ -1419,11 +1330,11 @@ namespace Maui_DynamischesFormular.ViewModels
             SelectedAccount = names.Count > 0 ? names.First() : "Not selected";
             ActAccount = (names.Count > 0) ? names[0] : string.Empty;
         }
-        */
+        
         #endregion
 
         #region Event SwitchCellSource_SwitchCellSourceSend
-        /*
+        
         private async void SwitchCellSource_SwitchCellSourceSend(SwitchCellSource sender, SwitchCellSource.SwitchCellSourceEventArgs e)
         {
             switch (e.Action)
@@ -1580,7 +1491,7 @@ namespace Maui_DynamischesFormular.ViewModels
                     break;
             }
         }
-        */
+        
         #endregion
 
         #region Task Get List of tables

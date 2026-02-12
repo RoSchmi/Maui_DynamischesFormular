@@ -11,6 +11,7 @@ public partial class SettingsPage : ContentPage
 		InitializeComponent();
         BindingContext = viewModel;
         vm = viewModel;
+        TableViewAccounts.Root = vm.AccountsTableRoot;
     }
 
     #region OnNavigatedTo

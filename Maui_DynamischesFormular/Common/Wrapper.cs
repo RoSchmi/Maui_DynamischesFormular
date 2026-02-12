@@ -49,7 +49,7 @@ public static class Wrapper
                         String? baseName = clipDigit && (workItem.TabNo > 0) ? string.IsNullOrEmpty(workItem.Name) ? string.Empty : workItem.Name[..^1] : workItem.Name;
                         if (baseName != string.Empty)
                         {
-                            PropertiesDictionary.Add(baseName, new TransportItem() { Name = workItem.Name, TypeIdentifier = workItem.TypeIdentifier, Content = new StringTypeContent() { Value = workItem.StringValue } });
+                            PropertiesDictionary.Add(baseName, new TransportItem() { Name = workItem.Name, DisplayName = workItem.DisplayName, TabNo = workItem.TabNo, TypeIdentifier = workItem.TypeIdentifier, Content = new StringTypeContent() { Value = workItem.StringValue } });
                         }
                             break;
                     }
@@ -61,7 +61,7 @@ public static class Wrapper
                         String? baseName = clipDigit && (workItem.TabNo > 0) ? string.IsNullOrEmpty(workItem.Name) ? string.Empty : workItem.Name[..^1] : workItem.Name;
                         if (baseName != string.Empty)
                         {
-                            PropertiesDictionary.Add(baseName, new TransportItem() { Name = workItem.Name, TypeIdentifier = workItem.TypeIdentifier, Content = new BoolTypeContent() { Value = workItem.BoolValue } });
+                            PropertiesDictionary.Add(baseName, new TransportItem() { Name = workItem.Name, DisplayName = workItem.DisplayName, TabNo = workItem.TabNo, TypeIdentifier = workItem.TypeIdentifier, Content = new BoolTypeContent() { Value = workItem.BoolValue } });
                         }
                             break;
                     }
@@ -74,7 +74,7 @@ public static class Wrapper
                         String? baseName = clipDigit && (workItem.TabNo > 0) ? string.IsNullOrEmpty(workItem.Name) ? string.Empty : workItem.Name[..^1] : workItem.Name;
                         if (baseName != string.Empty)
                         {
-                            PropertiesDictionary.Add(baseName, new TransportItem() { Name = workItem.Name, TypeIdentifier = workItem.TypeIdentifier, Content = new DateTimeTypeContent() { Value = workItem.DateValue } });
+                            PropertiesDictionary.Add(baseName, new TransportItem() { Name = workItem.Name, DisplayName = workItem.DisplayName, TabNo = workItem.TabNo, TypeIdentifier = workItem.TypeIdentifier, Content = new DateTimeTypeContent() { Value = workItem.DateValue } });
                         }
                             break;
                     }
@@ -280,7 +280,7 @@ public static class Wrapper
             case WorkItem.TypeID.RsStringSw:
             case WorkItem.TypeID.RsStringPi:
                 {
-                    returnWorkItem = new WorkItem() { Name = transportItem.Name, TypeIdentifier = transportItem.TypeIdentifier, StringValue = ((StringTypeContent)transportItem.Content).Value };
+                    returnWorkItem = new WorkItem() { Name = transportItem.Name, DisplayName = transportItem.DisplayName, TabNo = transportItem.TabNo, TypeIdentifier = transportItem.TypeIdentifier, StringValue = ((StringTypeContent)transportItem.Content).Value };
                     // return new WorkItem() { Name = transportItem.Name, TypeIdentifier = transportItem.TypeIdentifier, StringValue = ((StringTypeContent)transportItem.Content).Value };
                 }
                 break;
@@ -292,7 +292,7 @@ public static class Wrapper
                 {
 
 
-                    returnWorkItem = new WorkItem() { Name = transportItem.Name, TypeIdentifier = transportItem.TypeIdentifier, BoolValue = ((BoolTypeContent)transportItem.Content).Value };
+                    returnWorkItem = new WorkItem() { Name = transportItem.Name, DisplayName = transportItem.DisplayName, TabNo = transportItem.TabNo, TypeIdentifier = transportItem.TypeIdentifier, BoolValue = ((BoolTypeContent)transportItem.Content).Value };
                     //SettingPropertyCollection.Add(new WorkItem() { Name = property.Value.Name, TypeIdentifier = property.Value.TypeIdentifier, BoolValue = ((BoolTypeContent)property.Value.Content).Value });
                     break;
                 }
@@ -301,7 +301,7 @@ public static class Wrapper
             case WorkItem.TypeID.RsDateTimeRo:
             case WorkItem.TypeID.RsDateTimeNo:
                 {
-                    returnWorkItem = new WorkItem() { Name = transportItem.Name, TypeIdentifier = transportItem.TypeIdentifier, DateValue = ((DateTimeTypeContent)transportItem.Content).Value };
+                    returnWorkItem = new WorkItem() { Name = transportItem.Name, DisplayName = transportItem.DisplayName, TabNo = transportItem.TabNo, TypeIdentifier = transportItem.TypeIdentifier, DateValue = ((DateTimeTypeContent)transportItem.Content).Value };
                     //SettingPropertyCollection.Add(new WorkItem() { Name = property.Value.Name, TypeIdentifier = property.Value.TypeIdentifier, DateValue = ((DateTimeTypeContent)property.Value.Content).Value });
                     break;
                 }

@@ -369,7 +369,7 @@
                 <!-- <Label Text="Credentials: Select / Delete" Margin="0, 10, 0, 0" FontAttributes="Bold" HorizontalOptions="Start"/> -->
                 <VerticalStackLayout>
                     <Grid RowDefinitions="300, 1" VerticalOptions="FillAndExpand">
-                        <TableView  x:Name="TableViewAccounts" >
+                        <TableView  x:Name="TableViewAccounts">
                         </TableView>
                     </Grid>
                 </VerticalStackLayout>

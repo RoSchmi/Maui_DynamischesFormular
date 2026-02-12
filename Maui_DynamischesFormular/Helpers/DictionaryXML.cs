@@ -12,7 +12,10 @@ internal class StringTransportItem
 {
     public StringTransportItem() { }
 
+    public int TabNo { get; set; }
     public string Name { get; set; }
+
+    public string DisplayName { get; set; }
     public WorkItem.TypeID TypeIdentifier { get; set; }
     public StringTypeContent Content { get; set; }
 }
@@ -20,8 +23,10 @@ internal class StringTransportItem
 internal class BoolTransportItem
 {
     public BoolTransportItem() { }
+    public int TabNo { get; set; }
 
     public string Name { get; set; }
+    public string DisplayName { get; set; }
     public WorkItem.TypeID TypeIdentifier { get; set; }
     public BoolTypeContent Content { get; set; }
 }
@@ -30,7 +35,10 @@ public class DateTimeTransportItem
 {
     public DateTimeTransportItem() { }
 
+    public int TabNo { get; set; }
     public string Name { get; set; }
+
+    public string DisplayName { get; set; }
     public WorkItem.TypeID TypeIdentifier { get; set; }
     public DateTimeTypeContent Content { get; set; }
 }
@@ -221,15 +229,18 @@ public static class DictionaryXML
         string folderPath = Path.Combine(rootPath, pFolderName);
         string filePath = Path.Combine(folderPath, pFileName);
 
+
+
+
         if (!File.Exists(filePath))
         {
+
             return null;
         }
         else
         {
-            //File.Delete(filePath);
-
-            //return null;
+           //File.Delete(filePath);
+           //return null;
         }
         
 
@@ -259,7 +270,7 @@ public static class DictionaryXML
                     case WorkItem.TypeID.RsStringPi:
                         {
                             StringTransportItem stringTransportItem = JsonSerializer.Deserialize<StringTransportItem>(jsonProperty);
-                            transportItem = new TransportItem() { Name = stringTransportItem.Name, TypeIdentifier = stringTransportItem.TypeIdentifier, Content = stringTransportItem.Content };
+                            transportItem = new TransportItem() { Name = stringTransportItem.Name, DisplayName = stringTransportItem.DisplayName, TabNo = stringTransportItem.TabNo, TypeIdentifier = stringTransportItem.TypeIdentifier, Content = stringTransportItem.Content };
                             break;
                         }
                     case WorkItem.TypeID.RsBoolean:
@@ -267,7 +278,7 @@ public static class DictionaryXML
                     case WorkItem.TypeID.RsBooleanNo:
                         {
                             BoolTransportItem boolTransportItem = JsonSerializer.Deserialize<BoolTransportItem>(jsonProperty);
-                            transportItem = new TransportItem() { Name = boolTransportItem.Name, TypeIdentifier = boolTransportItem.TypeIdentifier, Content = boolTransportItem.Content };
+                            transportItem = new TransportItem() { Name = boolTransportItem.Name, DisplayName = boolTransportItem.DisplayName, TabNo = boolTransportItem.TabNo, TypeIdentifier = boolTransportItem.TypeIdentifier, Content = boolTransportItem.Content };
                             break;
 
                         }
@@ -276,7 +287,7 @@ public static class DictionaryXML
                     case WorkItem.TypeID.RsDateTimeNo:
                         {
                             DateTimeTransportItem dateTimeTransportItem = JsonSerializer.Deserialize<DateTimeTransportItem>(jsonProperty);
-                            transportItem = new TransportItem() { Name = dateTimeTransportItem.Name, TypeIdentifier = dateTimeTransportItem.TypeIdentifier, Content = dateTimeTransportItem.Content };
+                            transportItem = new TransportItem() { Name = dateTimeTransportItem.Name, DisplayName = dateTimeTransportItem.DisplayName, TabNo = dateTimeTransportItem.TabNo, TypeIdentifier = dateTimeTransportItem.TypeIdentifier, Content = dateTimeTransportItem.Content };
                             break;
 
                         }

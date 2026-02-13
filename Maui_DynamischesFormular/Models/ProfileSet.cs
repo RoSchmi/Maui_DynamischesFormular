@@ -12,7 +12,10 @@ namespace Maui_DynamischesFormular.Models
             public ProfileSet() { }
 
         public string Account { get; set; }
+
         public string Profile { get; set; }
+
+        public string DataGroup { get; set; }
 
         public string DataSourceTable1 { get; set; }
         public string DataSourceTable2 { get; set; }

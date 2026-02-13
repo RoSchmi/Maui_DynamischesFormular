@@ -7,8 +7,8 @@ using Maui_DynamischesFormular.Helpers;
 using Maui_DynamischesFormular.Models;
 using Maui_DynamischesFormular.Pages;
 using Maui_DynamischesFormular.ViewModels;
-using RoSchmi.Maui.Interfaces;
 using RoSchmi.Maui.Helpers;
+using RoSchmi.Maui.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,6 +18,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
+
 
 
 namespace Maui_DynamischesFormular.ViewModels
@@ -53,7 +54,8 @@ namespace Maui_DynamischesFormular.ViewModels
             Account = "",
             Index = "0",
             Selected = "1",
-            Profile = "Profile-1",
+            //Profile = "TimeSeriesGroup-1",
+            DataGroup = "Profile-1",
             TableAccount1 = "",
             // The Variablenames above may not be changed and my not be used for naming other variables, only the content can be changed
 
@@ -240,29 +242,14 @@ namespace Maui_DynamischesFormular.ViewModels
                     ActualizeProfilesWithValuesFromDetailPage(WorkItemCollection, tableDetailProperties.PropertiesDictionary);
 
 
+                    string profileAndAccount = SelectedProfileIndex >= 0 ? FormattableString.Invariant($"{ActAccount}{Delimiter}{ProfileNames[SelectedProfileIndex]}") : string.Empty;
 
-                    string profileAndAccount = string.Empty;
-                    if (SelectedProfileIndex >= 0)
-                    {
-                        profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{ProfileNames[SelectedProfileIndex]}");
-                    }
-                    else
-                    {
-                        Application.Current.MainPage.DisplayAlertAsync("Alert", "SelectedProfileIndex was < 0", "OK");
+                    if (SelectedProfileIndex < 0) { 
+                        _= Application.Current.MainPage.DisplayAlertAsync("Alert", "SelectedProfileIndex was < 0\n --> was set to 0", "OK");
+                        SelectedProfileIndex = 0;
                     }
 
-                    
-                    //RoSchmi
-                    /*
-                    profilesDictionary = new Dictionary<string, SuitCaseProperties>() 
-                    {
-                        { profileAndAccount, tableDetailProperties } 
-                    };
-                    */
-
-                   // ActualizeProfilesXmlFile(WorkItemCollection, profilesDictionary, profileAndAccount, appFolder, profilesFileName);
-
-                    ActualizeProfilesXmlFile(WorkItemCollection, profilesDictionary, profileAndAccount, appFolder, profilesFileName);
+                    ActualizeProfilesAndWriteXmlFile(WorkItemCollection, ref profilesDictionary, profileAndAccount, appFolder, profilesFileName);
 
                     profilesDictionary = DictionaryXML.GetProfilesDictionaryFromXmlFile(appFolder, profilesFileName);
 
@@ -432,6 +419,63 @@ namespace Maui_DynamischesFormular.ViewModels
         #region Region ActualizeProfilesWithValuesFromDetailPage
         private void ActualizeProfilesWithValuesFromDetailPage(ObservableCollection<WorkItem> pWorkItemCollection, Dictionary<string, TransportItem> pPropertiesDictionary)
         {
+            foreach(var entry in pPropertiesDictionary)
+            {
+               // string reconstructedName = entry.Value.TabNo == 0 ? entry.Value.Name : $"{entry.Value.Name}{entry.Value.TabNo}";
+
+                string reconstructedName = entry.Value.TabNo == 0 ? entry.Key : $"{entry.Key}{entry.Value.TabNo}";
+
+
+                switch (entry.Value.TypeIdentifier)
+                {
+                    case WorkItem.TypeID.RsString:
+                    case WorkItem.TypeID.RsStringRo:
+                    case WorkItem.TypeID.RsStringNo:
+                    case WorkItem.TypeID.RsStringSw:
+                    case WorkItem.TypeID.RsStringPi:
+                        {
+                            var No3 = pWorkItemCollection.First();
+                            var N04 = pPropertiesDictionary;
+
+
+                            var item = pWorkItemCollection.FirstOrDefault(WorkItem => WorkItem.Name == reconstructedName);
+                            if (item != null)
+                            {
+                                item.StringValue = Wrapper.TransportItemToWorkItem(pPropertiesDictionary[entry.Key]).StringValue;
+                                //var No2 = Wrapper.TransportItemToWorkItem(pPropertiesDictionary[entry.Value.Name]).StringValue = Wrapper.TransportItemToWorkItem(pPropertiesDictionary[entry.Value.Name]).StringValue;
+                            }
+                            else
+                            {
+                                int debug447 = 1;
+                            }
+                               // pWorkItemCollection.First(WorkItem => WorkItem.Name == reconstructedName).StringValue = Wrapper.TransportItemToWorkItem(pPropertiesDictionary[entry.Value.Name]).StringValue;
+                            break;
+                        }
+
+                    case WorkItem.TypeID.RsBoolean:
+                    case WorkItem.TypeID.RsBooleanRo:
+                    case WorkItem.TypeID.RsBooleanNo:
+                        {
+                            pWorkItemCollection.First(WorkItem => WorkItem.Name == reconstructedName).BoolValue = Wrapper.TransportItemToWorkItem(pPropertiesDictionary[entry.Value.Name]).BoolValue; ;
+                            break;
+                        }
+                    case WorkItem.TypeID.RsDateTime:
+                    case WorkItem.TypeID.RsDateTimeRo:
+                    case WorkItem.TypeID.RsDateTimeNo:
+
+                        {
+                            pWorkItemCollection.First(WorkItem => WorkItem.Name == reconstructedName).DateValue = Wrapper.TransportItemToWorkItem(pPropertiesDictionary[entry.Value.Name]).DateValue; ;
+                            break;
+                        }
+                    default:
+                        {
+                            throw new NotSupportedException("Not supported DataSourceTable");
+                        }
+                }
+            }
+
+            /*
+
             string tableIDName = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["Table-ID"]).StringValue;
             string tableAccount = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["TableAccount"]).StringValue;
             string cloudTableName = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["DataSourceTable"]).StringValue;
@@ -452,20 +496,10 @@ namespace Maui_DynamischesFormular.ViewModels
                     // case ProfileMemberNameAssignation["PiDataSourceTable1"]:
                     {
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableAccount1").StringValue = tableAccount;
-
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable1").StringValue = cloudTableName;
-
-
-                     //   string theTempString = cloudTableName;
-
-                     //   pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table1Property").StringValue = "Hallo";
-
-
-                    //    pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiDataSourceTable1"]).StringValue = cloudTableName;
-
+                      //pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiDataSourceTable1"]).StringValue = cloudTableName;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableProperty1").StringValue = columnName;
-                     //   pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiTable1ColumnName"]).StringValue = columnName;
-
+                      //pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiTable1ColumnName"]).StringValue = columnName;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableSortField1").StringValue = sortField;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableType1").StringValue = type;
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableUnit1").StringValue = unit;
@@ -478,6 +512,9 @@ namespace Maui_DynamischesFormular.ViewModels
                     }
                 case "DataSourceTable2":
                     {
+
+
+
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableAccount2").StringValue = tableAccount;
 
                         pWorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable2").StringValue = cloudTableName;
@@ -532,25 +569,28 @@ namespace Maui_DynamischesFormular.ViewModels
                         throw new NotSupportedException("Not supported DataSourceTable");
                     }
             }
+            */
         }
         #endregion
 
-        #region Region ActualizeProfilesXmlFile
-        private void ActualizeProfilesXmlFile(ObservableCollection<WorkItem> pWorkItemCollection, Dictionary<string, SuitCaseProperties> pProfilesDictionary, string pProfileAndAccount, string pAppFolder, string pProfilesFileName)
+        #region Region ActualizeProfilesAndWriteXmlFile
+        private void ActualizeProfilesAndWriteXmlFile(
+                ObservableCollection<WorkItem> pWorkItemCollection, 
+                ref Dictionary<string, SuitCaseProperties> pProfilesDictionary, 
+                string pProfileAndAccount, 
+                string pAppFolder, 
+                string pProfilesFileName)
         {
             Dictionary<string, TransportItem> transportItemDictionary = Wrapper.WorkItemsToTransportItems(pWorkItemCollection);
 
-            if (profilesDictionary.ContainsKey(pProfileAndAccount))
+            if (pProfilesDictionary.ContainsKey(pProfileAndAccount))
             {
-                bool _ = profilesDictionary.Remove(pProfileAndAccount);
+                bool _ = pProfilesDictionary.Remove(pProfileAndAccount);
 
-                profilesDictionary.Add(pProfileAndAccount, new SuitCaseProperties() { PropertiesDictionary = transportItemDictionary });
+                pProfilesDictionary.Add(pProfileAndAccount, new SuitCaseProperties() { PropertiesDictionary = transportItemDictionary });
             }
 
-            DictionaryXML.WriteProfilesDictionaryToXmlFile(pProfilesDictionary, appFolder, profilesFileName);
-
-            //WorkItemCollection = Wrapper.TransportItemsToWorkItems(pProfilesDictionary.First().Value.PropertiesDictionary);
-            // WorkItemCollection = Wrapper.TransportItemsToWorkItems(WorkItemCollection, pProfilesDictionary.First().Value.PropertiesDictionary);
+            DictionaryXML.WriteProfilesDictionaryToXmlFile(pProfilesDictionary, appFolder, profilesFileName);         
         }
         #endregion
 
@@ -835,55 +875,36 @@ namespace Maui_DynamischesFormular.ViewModels
             */
 
 
-            var theItem = new TransportItem() { Name = string.Empty, DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsStringNo, Content = new object() };
+         //   var theItem = new TransportItem() { Name = string.Empty, DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsStringNo, Content = new object() };
 
             var ID = Guid.NewGuid().ToString();
-
+            
             var selectedItems = new Dictionary<string, TransportItem>()
             {
-                {"Account", new TransportItem()        {Name = "Account",               DisplayName = "Account",        TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = string.Empty } } },
-                {"SettingsID", new TransportItem()     {Name = nameof(actWorkItem.Name),DisplayName = "SettingsID",     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = ID } } },
-                {"Table-ID", new TransportItem()       {Name = "Table-ID",              DisplayName = "Table-ID",       TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = actWorkItem.Name } } },            
-                {"TableAccount", new TransportItem()   {Name = string.Empty,            DisplayName = "TableAccount",   TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"DataSourceTable", new TransportItem(){Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"TableProperty", new TransportItem()  {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"TableSortField", new TransportItem() {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"TableFactor", new TransportItem()    {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"TableOffset", new TransportItem()    {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"TableType", new TransportItem()      {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringPi, Content = new StringTypeContent() { Value = string.Empty } } },
-                {"TableUnit", new TransportItem()      {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"Account", new TransportItem()        {Name = "Account",               DisplayName = "Account",         TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = string.Empty } } },
+                {"SettingsID", new TransportItem()     {Name = nameof(actWorkItem.Name),DisplayName = "SettingsID",      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = ID } } },
+                {"Profile", new TransportItem()        {Name = "Profile",               DisplayName = "Profile",         TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = SelectedProfile } } },
+                {"DataGroup", new TransportItem()      {Name = string.Empty,            DisplayName = "Daten Gruppe",     TabNo = 0,     TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent(){ Value = SelectedProfile } } },
+                {"Table-ID", new TransportItem()       {Name = "Table-ID",              DisplayName = "Table-ID",        TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = actWorkItem.Name } } },            
+                {"TableAccount", new TransportItem()   {Name = string.Empty,            DisplayName = "TableAccount",    TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"DataSourceTable", new TransportItem(){Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableProperty", new TransportItem()  {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableSortField", new TransportItem() {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableFactor", new TransportItem()    {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableOffset", new TransportItem()    {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableType", new TransportItem()      {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringPi, Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableUnit", new TransportItem()      {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
                 {"SettingsState", new TransportItem()  {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsBoolean,  Content = new BoolTypeContent()  { Value = null } } },
                 {"SettingsDate", new TransportItem()   {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsDateTime, Content = new DateTimeTypeContent() { Value = null } } },
              };
 
-         
-
-           
-
-
             int selector = 0;
             switch (actWorkItem.Name)
-            {              
-                case "DataSourceTable1":
-                    {
-                        selector = 1;
-                        break;
-                    }
-                case "DataSourceTable2":
-                    {
-                        selector = 2;
-                        break;
-                    }
-                case "DataSourceTable3":
-                    {
-                        selector = 3;
-                        break;
-                    }
-                case "DataSourceTable4":
-                    {
-                        selector = 4;
-                        break;
-                    }
+            {
+                case "DataSourceTable1": { selector = 1; break; }
+                case "DataSourceTable2": { selector = 2; break; }
+                case "DataSourceTable3": { selector = 3; break; }
+                case "DataSourceTable4": { selector = 4; break; }         
                 default:
                     {
                         throw new NotSupportedException("Not supported DataSourceTable");
@@ -901,6 +922,7 @@ namespace Maui_DynamischesFormular.ViewModels
                     int breakpoint22 = 1;
                 }
 
+                // Wenn TabNo nicht 0 ist, nach dem um eine Stelle gekürzten String suchen (letzte Stelle repräsentiert Tabellenzugehörigkeit)  
                 var baseName = actItem.TabNo == 0 ? actItem.Name : string.IsNullOrEmpty(actItem.Name) ? string.Empty : actItem.Name[..^1];
 
                 if (selectedItems.TryGetValue(baseName, out var cop))
@@ -1109,7 +1131,7 @@ namespace Maui_DynamischesFormular.ViewModels
                 string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{ProfileNames[SelectedProfileIndex]}");
                 string lastProfileAndAccount = FormattableString.Invariant($"{ActAccount}.{lastSelectedProfile}");
 
-                ActualizeProfilesXmlFile(WorkItemCollection, profilesDictionary, profileAndAccount, appFolder, profilesFileName);
+                ActualizeProfilesAndWriteXmlFile(WorkItemCollection, ref profilesDictionary, profileAndAccount, appFolder, profilesFileName);
 
                 profilesDictionary = DictionaryXML.GetProfilesDictionaryFromXmlFile(appFolder, profilesFileName);
 
@@ -1463,7 +1485,7 @@ namespace Maui_DynamischesFormular.ViewModels
 
                             string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{SelectedProfile}");
 
-                            ActualizeProfilesXmlFile(WorkItemCollection, profilesDictionary, profileAndAccount, appFolder, profilesFileName);
+                            ActualizeProfilesAndWriteXmlFile(WorkItemCollection, ref profilesDictionary, profileAndAccount, appFolder, profilesFileName);
 
                             // profilesDictionary = DictionaryXML.GetProfilesDictionaryFromXmlFile(appFolder, profilesFileName);
 

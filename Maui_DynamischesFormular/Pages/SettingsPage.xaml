@@ -203,7 +203,8 @@
                             <Label Text="Set Details  >" Grid.Column="1" Grid.Row="1" VerticalOptions="Center" HorizontalOptions="End" TextColor="DeepSkyBlue" FontAttributes="Bold"/>
                         
                             <HorizontalStackLayout Grid.Row="2">
-                                <Label Text="CloudTableName:" HorizontalOptions="Start" FontAttributes="Bold"/>
+                                <!--<Label Text="CloudTableName:" HorizontalOptions="Start" FontAttributes="Bold"/> -->
+                                <Label Text="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=DisplayName, StringFormat='{}{0}:'}" HorizontalOptions="Start" FontAttributes="Bold"/>
                                 <Label Text="{Binding Source={RelativeSource AncestorType={x:Type models:WorkItem}}, Path=StringValue}" HorizontalOptions="Start" Margin="5, 0, 0, 0" TextColor="Gray" />
                             </HorizontalStackLayout>
                         </Grid>

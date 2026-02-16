@@ -6,6 +6,7 @@ using Maui_DynamischesFormular.Common;
 using Maui_DynamischesFormular.Helpers;
 using Maui_DynamischesFormular.Models;
 using Maui_DynamischesFormular.Pages;
+using Maui_DynamischesFormular.LayoutEntryCollections;
 using Maui_DynamischesFormular.ViewModels;
 using RoSchmi.Maui.Helpers;
 using RoSchmi.Maui.Interfaces;
@@ -48,7 +49,9 @@ namespace Maui_DynamischesFormular.ViewModels
         // The types have to be defined in the File 'ProfileSet.cs'
         // Besides these default values the code in 'Wrapper.ProfileSetToSuitCaseProperties' has to be changed
 
-        private readonly ProfileSet profileSetDefault = new()
+        //RoSchmi 16.02.26
+        private readonly Entry_x4_WorkProfile profileSetDefault = new()
+        //private readonly ProfileSet profileSetDefault = new()
         {
             SettingsID = "",
             Account = "",
@@ -101,7 +104,9 @@ namespace Maui_DynamischesFormular.ViewModels
         // Holds the combinations of account and profile names of the profiles of the actually selectd account
         private ObservableCollection<string> profilesExtended = new();
 
-        private ProfileSet actProfileSet;
+        //RoSchmi 16.02.26
+        private Entry_x4_WorkProfile actProfileSet;
+        //private ProfileSet actProfileSet;
 
         [ObservableProperty]
         private string navigationState;
@@ -287,10 +292,12 @@ namespace Maui_DynamischesFormular.ViewModels
                             }
                         case 1:                          // Account selected but not one initialized Profile present, so we create 'Profile-1'
                             {
-                                ProfileSet profSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(profileSetDefault));
+                                //RoSchmi 16.02.26
+                                Entry_x4_WorkProfile profSet = JsonSerializer.Deserialize<Entry_x4_WorkProfile>(JsonSerializer.Serialize(profileSetDefault));
+                                //ProfileSet profSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(profileSetDefault));
                                 profSet.SettingsID = Guid.NewGuid().ToString();
                                 profSet.Account = ActAccount;
-                                SuitCaseProperties suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(profSet);
+                                SuitCaseProperties suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(profSet, new List<string>());
 
                                 string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.Profile}");
 
@@ -779,7 +786,7 @@ namespace Maui_DynamischesFormular.ViewModels
                     } 
             }
 
-            #region Region foreach(....) Fill selected items for DetailsPage with values from ProfileSet
+            #region Region foreach(....) Fill selected items for DetailsPage with values from ProfileSet (Entry_x4_WorkProfile)
             foreach (var actItem in WorkItemCollection)
             {
                 if (actItem.TabNo != 0 && actItem.TabNo != selector)
@@ -885,7 +892,10 @@ namespace Maui_DynamischesFormular.ViewModels
 
         #region Method add Profile to Dictinoary
 
-        private Dictionary<string, SuitCaseProperties> AddProfileToDictionary(Dictionary<string, SuitCaseProperties> dictionary, string pProfileName, string pAccountName, string pDelimiter, ProfileSet pProfile)
+        //RoSchmi 16.02.26
+        private Dictionary<string, SuitCaseProperties> AddProfileToDictionary(Dictionary<string, SuitCaseProperties> dictionary, string pProfileName, string pAccountName, string pDelimiter, Entry_x4_WorkProfile pProfile)
+        //private Dictionary<string, SuitCaseProperties> AddProfileToDictionary(Dictionary<string, SuitCaseProperties> dictionary, string pProfileName, string pAccountName, string pDelimiter, ProfileSet pProfile)
+
         {
             string profileNamePlusAccount = FormattableString.Invariant($"{pAccountName}{pDelimiter}{pProfileName}");
 
@@ -897,11 +907,15 @@ namespace Maui_DynamischesFormular.ViewModels
 
             // Aufgabe: aus ProfileSet transportItem machen
 
-            ProfileSet newProfileSet = new();
+            //RoSchmi 16.02.26
+            Entry_x4_WorkProfile newProfileSet = new();
+            //ProfileSet newProfileSet = new();
 
-            newProfileSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(pProfile));
+            newProfileSet = JsonSerializer.Deserialize<Entry_x4_WorkProfile>(JsonSerializer.Serialize(pProfile));
+            //newProfileSet = JsonSerializer.Deserialize<>(JsonSerializer.Serialize(pProfile));
 
-            SuitCaseProperties suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(newProfileSet);
+
+            SuitCaseProperties suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(newProfileSet, new List<string>());
 
             dictionary.Add(profileNamePlusAccount, suitCaseProperties);
 
@@ -912,9 +926,12 @@ namespace Maui_DynamischesFormular.ViewModels
 
 
         #region Region Method getProfileSet
-        ProfileSet getProfileSet(string pName, string pAccount, string pSelected, string pIndex = "0")
+        //RoSchmi 16.02.26
+        Entry_x4_WorkProfile getProfileSet(string pName, string pAccount, string pSelected, string pIndex = "0")
+        //ProfileSet getProfileSet(string pName, string pAccount, string pSelected, string pIndex = "0")
         {
-            ProfileSet NewProfile = new ProfileSet()
+            Entry_x4_WorkProfile NewProfile = new Entry_x4_WorkProfile()
+         //   ProfileSet NewProfile = new ProfileSet()
             {
                 SettingsID = Guid.NewGuid().ToString(),
                 Profile = pName,
@@ -940,7 +957,7 @@ namespace Maui_DynamischesFormular.ViewModels
 
                         profilesDictionary = AddProfileToDictionary(profilesDictionary, AddedProfile, ActAccount, Delimiter, newProfile);
 
-                        SuitCaseProperties suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(newProfile);
+                        SuitCaseProperties suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(newProfile, new List<string>());
 
                         WorkItemCollection = Wrapper.TransportItemsToWorkItems(suitCaseProperties.PropertiesDictionary);
 
@@ -1159,10 +1176,12 @@ namespace Maui_DynamischesFormular.ViewModels
                 await WriteListToFile(names, appFolder, accountsFileName);
 
                 // RoSchmi
-                ProfileSet profSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(profileSetDefault));
+                //RoSchmi 16.02.26
+                Entry_x4_WorkProfile profSet = JsonSerializer.Deserialize<Entry_x4_WorkProfile>(JsonSerializer.Serialize(profileSetDefault));
+                //ProfileSet profSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(profileSetDefault));
                 profSet.SettingsID = Guid.NewGuid().ToString();
                 profSet.Account = ActAccount;
-                SuitCaseProperties suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(profSet);
+                SuitCaseProperties suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(profSet, new List<string>());
                 string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.Profile}");
                 profilesDictionary = AddProfileToDictionary(profilesDictionary, profSet.Profile, ActAccount, Delimiter, profSet);
 
@@ -1488,10 +1507,12 @@ namespace Maui_DynamischesFormular.ViewModels
 
                 if (!accountProfileFound)
                 {
-                    ProfileSet profSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(profileSetDefault));
+                    //RoSchmi 16.02.26
+                    Entry_x4_WorkProfile profSet = JsonSerializer.Deserialize<Entry_x4_WorkProfile>(JsonSerializer.Serialize(profileSetDefault));
+                    //ProfileSet profSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(profileSetDefault));
                     profSet.SettingsID = Guid.NewGuid().ToString();
                     profSet.Account = ActAccount;
-                    SuitCaseProperties suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(profSet);
+                    SuitCaseProperties suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(profSet, new List<string>());
 
                     string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.Profile}");
 

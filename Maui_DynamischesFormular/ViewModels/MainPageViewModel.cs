@@ -40,6 +40,7 @@ using RoSchmi.Maui.Helpers;
 using RoSchmi.Maui.Services;
 using System.Threading;
 using System.Xml;
+using Maui_DynamischesFormular.LayoutEntryCollections;
 //using static Android.Media.Audiofx.DynamicsProcessing;
 //using Xamarin.Google.Crypto.Tink.Shaded.Protobuf;
 //using static Java.Util.Jar.Attributes;
@@ -79,7 +80,10 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
     // The types have to be defined in the File 'ProfileSet.cs'
     // Besides these default values the code in 'Wrapper.ProfileSetToSuitCaseProperties' has to be changed
 
-    private readonly ProfileSet profileSetDefault = new()
+    //RoSchmi 16.02.26
+
+    private readonly Entry_x4_WorkProfile profileSetDefault = new()
+    //private readonly ProfileSet profileSetDefault = new()
     {
         SettingsID = "",
         Account = "",
@@ -200,7 +204,11 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 
         selectedRecord = PersonRecords.First();
 
-        ProfileSet profSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(profileSetDefault));
+        //RoSchmi 16.02.26
+
+        Entry_x4_WorkProfile profSet = JsonSerializer.Deserialize<Entry_x4_WorkProfile>(JsonSerializer.Serialize(profileSetDefault));
+
+       // ProfileSet profSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(profileSetDefault));
       
 
         profSet.SettingsID = Guid.NewGuid().ToString();
@@ -210,7 +218,7 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
         string ActAccount = "myaccount";
         profSet.Account = ActAccount;
 
-        suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(profSet);
+        suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(profSet, new List<string>());
 
         string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.Profile}");
 

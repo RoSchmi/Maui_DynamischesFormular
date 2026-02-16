@@ -251,20 +251,13 @@ namespace Maui_DynamischesFormular.ViewModels
 
                     ActualizeProfilesAndWriteXmlFile(WorkItemCollection, ref profilesDictionary, profileAndAccount, appFolder, profilesFileName);
 
-                    profilesDictionary = DictionaryXML.GetProfilesDictionaryFromXmlFile(appFolder, profilesFileName);
+                    // RoSchmi
+                    // The next 2 lines are inactivated. (can be used to test that everything worked as expected)
 
-                    //RoSchmi
-                    // Inactivated since noc storage
-                    WorkItemCollection = Wrapper.TransportItemsToWorkItems(profilesDictionary[profileAndAccount].PropertiesDictionary);
+                    // profilesDictionary = DictionaryXML.GetProfilesDictionaryFromXmlFile(appFolder, profilesFileName);  
+                    // WorkItemCollection = Wrapper.TransportItemsToWorkItems(profilesDictionary[profileAndAccount].PropertiesDictionary);
 
-                    // Copy to ObservableCollection with less items to avoid empty space in CollectionView
-                    /*
-                    WorkItemShowCollection = new ObservableCollection<WorkItem>();
-                    for (int i = 0; i < 7; i++)
-                    {
-                        WorkItemShowCollection.Add(WorkItemCollection[i]);
-                    }
-                    */
+                   
 
                     int breakpoint_34 = 1;
                     #endregion
@@ -472,104 +465,7 @@ namespace Maui_DynamischesFormular.ViewModels
                             throw new NotSupportedException("Not supported DataSourceTable");
                         }
                 }
-            }
-
-            /*
-
-            string tableIDName = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["Table-ID"]).StringValue;
-            string tableAccount = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["TableAccount"]).StringValue;
-            string cloudTableName = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["DataSourceTable"]).StringValue;
-            string columnName = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["TableProperty"]).StringValue;
-            string sortField = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["TableSortField"]).StringValue;
-            string factor = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["TableFactor"]).StringValue;
-            string offset = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["TableOffset"]).StringValue;
-            string type = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["TableType"]).StringValue;
-            string unit = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["TableUnit"]).StringValue;
-            bool? settingsState = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["SettingsState"]).BoolValue;
-            DateTime? settingsDate = Wrapper.TransportItemToWorkItem(pPropertiesDictionary["SettingsDate"]).DateValue;
-
-            switch (tableIDName)
-            {
-                // Tried here to implement changeable names for DataTables and Columns but didn't get it working --> giving up
-
-                case "DataSourceTable1":
-                    // case ProfileMemberNameAssignation["PiDataSourceTable1"]:
-                    {
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableAccount1").StringValue = tableAccount;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable1").StringValue = cloudTableName;
-                      //pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiDataSourceTable1"]).StringValue = cloudTableName;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableProperty1").StringValue = columnName;
-                      //pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiTable1ColumnName"]).StringValue = columnName;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableSortField1").StringValue = sortField;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableType1").StringValue = type;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableUnit1").StringValue = unit;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableFactor1").StringValue = factor;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableOffset1").StringValue = offset;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "SettingsState").BoolValue = settingsState;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "SettingsDate").DateValue = settingsDate;
-
-                        break;
-                    }
-                case "DataSourceTable2":
-                    {
-
-
-
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableAccount2").StringValue = tableAccount;
-
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable2").StringValue = cloudTableName;
-                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiDataSourceTable2"]).StringValue = cloudTableName;
-
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableProperty2").StringValue = columnName;
-                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiTable2ColumnName"]).StringValue = columnName;
-
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableSortField2").StringValue = sortField;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableType2").StringValue = type;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableUnit2").StringValue = unit;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableFactor2").StringValue = factor;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableOffset2").StringValue = offset;
-                        break;
-                    }
-                case "DataSourceTable3":
-                    {
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableAccount3").StringValue = tableAccount;
-
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable3").StringValue = cloudTableName;
-                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiDataSourceTable3"]).StringValue = cloudTableName;
-
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableProperty3").StringValue = columnName;
-                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiTable3ColumnName"]).StringValue = columnName;
-
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableSortField3").StringValue = sortField;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableType3").StringValue = type;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableUnit3").StringValue = unit;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableFactor3").StringValue = factor;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableOffset3").StringValue = offset;
-                        break;
-                    }
-                case "DataSourceTable4":
-                    {
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableAccount4").StringValue = tableAccount;
-
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "DataSourceTable4").StringValue = cloudTableName;
-                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiDataSourceTable4"]).StringValue = cloudTableName;
-
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "Table4Property4").StringValue = columnName;
-                        //pWorkItemCollection.First(WorkItem => WorkItem.Name == ProfileMemberNameAssignation["PiTable4ColumnName"]).StringValue = columnName;
-
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableSortField4").StringValue = sortField;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableType4").StringValue = type;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableUnit4").StringValue = unit;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableFactor4").StringValue = factor;
-                        pWorkItemCollection.First(WorkItem => WorkItem.Name == "TableOffset4").StringValue = offset;
-                        break;
-                    }
-                default:
-                    {
-                        throw new NotSupportedException("Not supported DataSourceTable");
-                    }
-            }
-            */
+            }    
         }
         #endregion
 
@@ -848,35 +744,7 @@ namespace Maui_DynamischesFormular.ViewModels
             string targetPage = nameof(ProfileDetailPage);
             string injectedParameter = actWorkItem.Name;
 
-            /*
-            string tableAccount = string.Empty;
-            string tableName = string.Empty;
-            string columnName = string.Empty;
-            string sortField = string.Empty;
-            string factor = string.Empty;
-            string offset = string.Empty;
-            string type = string.Empty;
-            string unit = string.Empty;
-            */
-
-            // List<(string Key, string Name, string DisplayName)> itemList = new List<(string, string, string)>();
-
-            /*
-            var selectedItems = new Dictionary<string, (string Name, string DisplayName)>();
-
-            selectedItems["Account"] = (Name: string.Empty, DisplayName: string.Empty); 
-            selectedItems["DataSourceTable"] = (Name: string.Empty, DisplayName: string.Empty); 
-            selectedItems["TableProperty"] = (Name: string.Empty, DisplayName: string.Empty);
-            selectedItems["TableSortField"] = (Name: string.Empty, DisplayName: string.Empty);
-            selectedItems["TableFactor"] = (Name: string.Empty, DisplayName: string.Empty);
-            selectedItems["TableOffset"] = (Name: string.Empty, DisplayName: string.Empty);
-            selectedItems["TableType"] = (Name: string.Empty, DisplayName: string.Empty);
-            selectedItems["TableUnit"] = (Name: string.Empty, DisplayName: string.Empty);
-            */
-
-
-         //   var theItem = new TransportItem() { Name = string.Empty, DisplayName = string.Empty, TabNo = 0, TypeIdentifier = WorkItem.TypeID.RsStringNo, Content = new object() };
-
+            
             var ID = Guid.NewGuid().ToString();
             
             var selectedItems = new Dictionary<string, TransportItem>()
@@ -894,8 +762,8 @@ namespace Maui_DynamischesFormular.ViewModels
                 {"TableOffset", new TransportItem()    {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
                 {"TableType", new TransportItem()      {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringPi, Content = new StringTypeContent() { Value = string.Empty } } },
                 {"TableUnit", new TransportItem()      {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"SettingsState", new TransportItem()  {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsBoolean,  Content = new BoolTypeContent()  { Value = null } } },
-                {"SettingsDate", new TransportItem()   {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsDateTime, Content = new DateTimeTypeContent() { Value = null } } },
+                {"SettingsState", new TransportItem()  {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsBoolean,  Content = new BoolTypeContent()  { Value = null } } },
+                {"SettingsDate", new TransportItem()   {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsDateTime, Content = new DateTimeTypeContent() { Value = null } } },
              };
 
             int selector = 0;
@@ -1139,25 +1007,7 @@ namespace Maui_DynamischesFormular.ViewModels
                 WorkItemCollection = Wrapper.TransportItemsToWorkItems(profilesDictionary[profileAndAccount].PropertiesDictionary);
 
 
-                /*
-                CardViewEntryBackGroundColor = Colors.AliceBlue;
-                await Task.Delay(200);
-                CardViewEntryBackGroundColor = EntryBackGroundColorDefault;
-                await Task.Delay(200);
-                CardViewEntryBackGroundColor = Colors.AliceBlue;
-                await Task.Delay(200);
-                CardViewEntryBackGroundColor = EntryBackGroundColorDefault;
-                */
-
-                /*
-                SaveButtonBorderWidth = 2;
-                await Task.Delay(200);
-                SaveButtonBorderWidth = 0;
-                await Task.Delay(200);
-                SaveButtonBorderWidth = 2;
-                await Task.Delay(200);
-                SaveButtonBorderWidth = 0;
-                */
+                
 
 
                 int breakpoint56 = 1;

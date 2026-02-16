@@ -14,9 +14,6 @@ namespace Maui_DynamischesFormular.Models;
 
 public partial class StringTypeContent : ObservableObject
 {
-   //[ObservableProperty]
-   //private string? displayName;
-
     [ObservableProperty]
     private string? value;
 }

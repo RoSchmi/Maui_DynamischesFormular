@@ -11,7 +11,7 @@ namespace Maui_DynamischesFormular.LayoutEntryCollections
 
         public string? Account { get; set; }
 
-        public string? Profile { get; set; }
+        //public string? Profile { get; set; }
 
         public string? DataGroup { get; set; }
 

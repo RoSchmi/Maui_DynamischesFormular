@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Maui_DynamischesFormular.LayoutEntryCollections
 {
-    public class Entry_x4_ProfileCatalog : BaseProfile
+    public class CollectionProfile : BaseProfile
     {
         // must expose a parameter-less constructor
-        public Entry_x4_ProfileCatalog() { }
+        public CollectionProfile() { }
 
         public string? DataSourceTable1 { get; set; }
         public string? DataSourceTable2 { get; set; }

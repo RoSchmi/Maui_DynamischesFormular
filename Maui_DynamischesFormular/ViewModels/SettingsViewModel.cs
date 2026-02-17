@@ -50,8 +50,8 @@ namespace Maui_DynamischesFormular.ViewModels
         // Besides these default values the code in 'Wrapper.ProfileSetToSuitCaseProperties' has to be changed
 
         //RoSchmi 16.02.26
-        private readonly Entry_x4_WorkProfile profileSetDefault = new()
-        //private readonly ProfileSet profileSetDefault = new()
+        
+        private readonly CollectionProfile profileSetDefault = new()
         {
             SettingsID = "",
             Account = "",
@@ -63,14 +63,15 @@ namespace Maui_DynamischesFormular.ViewModels
             // The Variablenames above may not be changed and my not be used for naming other variables, only the content can be changed
 
             // From the following variables the names and the content can be changed
-            /*
-            SettingsState = false,
-            SettingsDate = DateTime.MinValue,
-            SettingsTable1 = string.Empty,
-            SettingsTable2 = string.Empty,
-            SettingsTable3 = string.Empty,
-            SettingsTable4 = string.Empty, */
+            
+            //SettingsState = false,
+            //SettingsDate = DateTime.MinValue,
+            //SettingsTable1 = string.Empty,
+            //SettingsTable2 = string.Empty,
+            //SettingsTable3 = string.Empty,
+            //SettingsTable4 = string.Empty, 
         };
+        
 
         private static Dictionary<string, string> ProfileMemberNameAssignation;
 
@@ -105,7 +106,7 @@ namespace Maui_DynamischesFormular.ViewModels
         private ObservableCollection<string> profilesExtended = new();
 
         //RoSchmi 16.02.26
-        private Entry_x4_WorkProfile actProfileSet;
+        private CollectionProfile actProfileSet;
         //private ProfileSet actProfileSet;
 
         [ObservableProperty]
@@ -293,13 +294,20 @@ namespace Maui_DynamischesFormular.ViewModels
                         case 1:                          // Account selected but not one initialized Profile present, so we create 'Profile-1'
                             {
                                 //RoSchmi 16.02.26
-                                Entry_x4_WorkProfile profSet = JsonSerializer.Deserialize<Entry_x4_WorkProfile>(JsonSerializer.Serialize(profileSetDefault));
+                                //CollectionProfile profSet = JsonSerializer.Deserialize<CollectionProfile>(JsonSerializer.Serialize(profileSetDefault));
                                 //ProfileSet profSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(profileSetDefault));
+                                
+                                CollectionProfile profSet = new CollectionProfile();
+                                profSet.DataGroup = "Profile-1";
                                 profSet.SettingsID = Guid.NewGuid().ToString();
+                                profSet.SettingsState = true;
+                                profSet.SettingsDate = DateTime.Now;
+                                profSet.Selected = "1";
                                 profSet.Account = ActAccount;
-                                SuitCaseProperties suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(profSet, new List<string>());
 
-                                string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.Profile}");
+                                SuitCaseProperties suitCaseProperties = Wrapper.ProfileToSuitCaseProperties(profSet, new Entry_x4_WorkProfile().GetProfileList());
+                                                               
+                                string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.DataGroup}");
 
                                 profilesDictionary = new Dictionary<string, SuitCaseProperties>()
                             {
@@ -319,12 +327,12 @@ namespace Maui_DynamischesFormular.ViewModels
                                 }
                                 */
 
-                                if (!ProfileNames.Contains(profSet.Profile))
+                                if (!ProfileNames.Contains(profSet.DataGroup))
                                 {
-                                    ProfileNames.Add(profSet.Profile);
+                                    ProfileNames.Add(profSet.DataGroup);
                                 }
-                                SelectedProfile = profSet.Profile;
-                                lastSelectedProfile = profSet.Profile;
+                                SelectedProfile = profSet.DataGroup;
+                                lastSelectedProfile = profSet.DataGroup;
                            
                                 break;
                             }
@@ -762,7 +770,7 @@ namespace Maui_DynamischesFormular.ViewModels
                 {"DataGroup", new TransportItem()      {Name = string.Empty,            DisplayName = "Daten Gruppe",     TabNo = 0,     TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent(){ Value = SelectedProfile } } },
                 {"Table-ID", new TransportItem()       {Name = "Table-ID",              DisplayName = "Table-ID",        TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = actWorkItem.Name } } },            
                 {"TableAccount", new TransportItem()   {Name = string.Empty,            DisplayName = "TableAccount",    TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"DataSourceTable", new TransportItem(){Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"DataSourceTable", new TransportItem(){Name = string.Empty,            DisplayName = "DataSourceTable",      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
                 {"TableProperty", new TransportItem()  {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
                 {"TableSortField", new TransportItem() {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
                 {"TableFactor", new TransportItem()    {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
@@ -786,7 +794,7 @@ namespace Maui_DynamischesFormular.ViewModels
                     } 
             }
 
-            #region Region foreach(....) Fill selected items for DetailsPage with values from ProfileSet (Entry_x4_WorkProfile)
+            #region Region foreach(....) Fill selected items for DetailsPage with values from ProfileSet (CollectionProfile)
             foreach (var actItem in WorkItemCollection)
             {
                 if (actItem.TabNo != 0 && actItem.TabNo != selector)
@@ -893,7 +901,7 @@ namespace Maui_DynamischesFormular.ViewModels
         #region Method add Profile to Dictinoary
 
         //RoSchmi 16.02.26
-        private Dictionary<string, SuitCaseProperties> AddProfileToDictionary(Dictionary<string, SuitCaseProperties> dictionary, string pProfileName, string pAccountName, string pDelimiter, Entry_x4_WorkProfile pProfile)
+        private Dictionary<string, SuitCaseProperties> AddProfileToDictionary(Dictionary<string, SuitCaseProperties> dictionary, string pProfileName, string pAccountName, string pDelimiter, CollectionProfile pProfile)
         //private Dictionary<string, SuitCaseProperties> AddProfileToDictionary(Dictionary<string, SuitCaseProperties> dictionary, string pProfileName, string pAccountName, string pDelimiter, ProfileSet pProfile)
 
         {
@@ -908,14 +916,14 @@ namespace Maui_DynamischesFormular.ViewModels
             // Aufgabe: aus ProfileSet transportItem machen
 
             //RoSchmi 16.02.26
-            Entry_x4_WorkProfile newProfileSet = new();
+            CollectionProfile newProfileSet = new();
             //ProfileSet newProfileSet = new();
 
-            newProfileSet = JsonSerializer.Deserialize<Entry_x4_WorkProfile>(JsonSerializer.Serialize(pProfile));
+            newProfileSet = JsonSerializer.Deserialize<CollectionProfile>(JsonSerializer.Serialize(pProfile));
             //newProfileSet = JsonSerializer.Deserialize<>(JsonSerializer.Serialize(pProfile));
 
 
-            SuitCaseProperties suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(newProfileSet, new List<string>());
+            SuitCaseProperties suitCaseProperties = Wrapper.ProfileToSuitCaseProperties(newProfileSet, new List<string>());
 
             dictionary.Add(profileNamePlusAccount, suitCaseProperties);
 
@@ -927,14 +935,14 @@ namespace Maui_DynamischesFormular.ViewModels
 
         #region Region Method getProfileSet
         //RoSchmi 16.02.26
-        Entry_x4_WorkProfile getProfileSet(string pName, string pAccount, string pSelected, string pIndex = "0")
+        CollectionProfile getProfileSet(string pName, string pAccount, string pSelected, string pIndex = "0")
         //ProfileSet getProfileSet(string pName, string pAccount, string pSelected, string pIndex = "0")
         {
-            Entry_x4_WorkProfile NewProfile = new Entry_x4_WorkProfile()
+            CollectionProfile NewProfile = new CollectionProfile()
          //   ProfileSet NewProfile = new ProfileSet()
             {
                 SettingsID = Guid.NewGuid().ToString(),
-                Profile = pName,
+                DataGroup = pName,
                 Account = pAccount,
                 Selected = pSelected,
                 Index = pIndex,
@@ -957,7 +965,7 @@ namespace Maui_DynamischesFormular.ViewModels
 
                         profilesDictionary = AddProfileToDictionary(profilesDictionary, AddedProfile, ActAccount, Delimiter, newProfile);
 
-                        SuitCaseProperties suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(newProfile, new List<string>());
+                        SuitCaseProperties suitCaseProperties = Wrapper.ProfileToSuitCaseProperties(newProfile, new List<string>());
 
                         WorkItemCollection = Wrapper.TransportItemsToWorkItems(suitCaseProperties.PropertiesDictionary);
 
@@ -1177,19 +1185,19 @@ namespace Maui_DynamischesFormular.ViewModels
 
                 // RoSchmi
                 //RoSchmi 16.02.26
-                Entry_x4_WorkProfile profSet = JsonSerializer.Deserialize<Entry_x4_WorkProfile>(JsonSerializer.Serialize(profileSetDefault));
+                CollectionProfile profSet = JsonSerializer.Deserialize<CollectionProfile>(JsonSerializer.Serialize(profileSetDefault));
                 //ProfileSet profSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(profileSetDefault));
                 profSet.SettingsID = Guid.NewGuid().ToString();
                 profSet.Account = ActAccount;
-                SuitCaseProperties suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(profSet, new List<string>());
-                string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.Profile}");
-                profilesDictionary = AddProfileToDictionary(profilesDictionary, profSet.Profile, ActAccount, Delimiter, profSet);
+                SuitCaseProperties suitCaseProperties = Wrapper.ProfileToSuitCaseProperties(profSet, new List<string>());
+                string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.DataGroup}");
+                profilesDictionary = AddProfileToDictionary(profilesDictionary, profSet.DataGroup, ActAccount, Delimiter, profSet);
 
                 DictionaryXML.WriteProfilesDictionaryToXmlFile(profilesDictionary, appFolder, profilesFileName);
                 WorkItemCollection = Wrapper.TransportItemsToWorkItems(suitCaseProperties.PropertiesDictionary);
                 ProfileNames.Clear();
-                ProfileNames.Add(profSet.Profile);
-                SelectedProfileIndex = ProfileNames.IndexOf(profSet.Profile);
+                ProfileNames.Add(profSet.DataGroup);
+                SelectedProfileIndex = ProfileNames.IndexOf(profSet.DataGroup);
                 SelectedProfile = AddedProfile;
                 var theCopy = WorkItemCollection;
 
@@ -1508,13 +1516,13 @@ namespace Maui_DynamischesFormular.ViewModels
                 if (!accountProfileFound)
                 {
                     //RoSchmi 16.02.26
-                    Entry_x4_WorkProfile profSet = JsonSerializer.Deserialize<Entry_x4_WorkProfile>(JsonSerializer.Serialize(profileSetDefault));
+                    CollectionProfile profSet = JsonSerializer.Deserialize<CollectionProfile>(JsonSerializer.Serialize(profileSetDefault));
                     //ProfileSet profSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(profileSetDefault));
                     profSet.SettingsID = Guid.NewGuid().ToString();
                     profSet.Account = ActAccount;
-                    SuitCaseProperties suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(profSet, new List<string>());
+                    SuitCaseProperties suitCaseProperties = Wrapper.ProfileToSuitCaseProperties(profSet, new List<string>());
 
-                    string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.Profile}");
+                    string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.DataGroup}");
 
                     profilesDictionary = AddProfileToDictionary(profilesDictionary, "Profile_1", ActAccount, Delimiter, profSet);
 

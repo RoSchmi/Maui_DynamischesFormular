@@ -78,7 +78,7 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
     // Here you can initialize new pairs of variablenames and content
     // The types string, bool and datetime are allowed for now
     // The types have to be defined in the File 'ProfileSet.cs'
-    // Besides these default values the code in 'Wrapper.ProfileSetToSuitCaseProperties' has to be changed
+    // Besides these default values the code in 'Wrapper.ProfileToSuitCaseProperties' has to be changed
 
     //RoSchmi 16.02.26
 
@@ -89,7 +89,7 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
         Account = "",
         Index = "0",
         Selected = "1",
-        Profile = "Profile-1",
+        DataGroup = "Profile-1",
         TableAccount1 = "",
         
         // The Variablenames above may not be changed and my not be used for naming other variables, only the content can be changed
@@ -206,7 +206,7 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 
         //RoSchmi 16.02.26
 
-        Entry_x4_WorkProfile profSet = JsonSerializer.Deserialize<Entry_x4_WorkProfile>(JsonSerializer.Serialize(profileSetDefault));
+        CollectionProfile profSet = JsonSerializer.Deserialize<CollectionProfile>(JsonSerializer.Serialize(profileSetDefault));
 
        // ProfileSet profSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(profileSetDefault));
       
@@ -218,9 +218,9 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
         string ActAccount = "myaccount";
         profSet.Account = ActAccount;
 
-        suitCaseProperties = Wrapper.ProfileSetToSuitCaseProperties(profSet, new List<string>());
+        suitCaseProperties = Wrapper.ProfileToSuitCaseProperties(profSet, new List<string>());
 
-        string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.Profile}");
+        string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.DataGroup}");
 
         profilesDictionary = new Dictionary<string, SuitCaseProperties>()
                                 {

@@ -91,7 +91,9 @@ namespace Maui_DynamischesFormular.ViewModels
 
         private static string lastSelectedProfile = "";
 
+        //RoSchmi
         private static Dictionary<string, SuitCaseProperties> profilesDictionary;
+        //private static Dictionary<string, SuitCaseProperties> dataGroupsDictionary;
 
         private const string AddProfileHeader = "Add new Profile";
 
@@ -306,8 +308,13 @@ namespace Maui_DynamischesFormular.ViewModels
                                 profSet.Account = ActAccount;
 
                                 SuitCaseProperties suitCaseProperties = Wrapper.ProfileToSuitCaseProperties(profSet, new Entry_x4_WorkProfile().GetProfileList());
-                                                               
-                                string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.DataGroup}");
+
+                                string datGroup = ((StringTypeContent)suitCaseProperties.PropertiesDictionary["DataGroup"].Content).Value;
+
+
+                                string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{datGroup}");
+
+                                //string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.DataGroup}");
 
                                 profilesDictionary = new Dictionary<string, SuitCaseProperties>()
                             {
@@ -764,13 +771,13 @@ namespace Maui_DynamischesFormular.ViewModels
             
             var selectedItems = new Dictionary<string, TransportItem>()
             {
-                {"Account", new TransportItem()        {Name = "Account",               DisplayName = "Account",         TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = string.Empty } } },
-                {"SettingsID", new TransportItem()     {Name = nameof(actWorkItem.Name),DisplayName = "SettingsID",      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = ID } } },
-                {"Profile", new TransportItem()        {Name = "Profile",               DisplayName = "Profile",         TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = SelectedProfile } } },
-                {"DataGroup", new TransportItem()      {Name = string.Empty,            DisplayName = "Daten Gruppe",     TabNo = 0,     TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent(){ Value = SelectedProfile } } },
-                {"Table-ID", new TransportItem()       {Name = "Table-ID",              DisplayName = "Table-ID",        TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = actWorkItem.Name } } },            
-                {"TableAccount", new TransportItem()   {Name = string.Empty,            DisplayName = "TableAccount",    TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"DataSourceTable", new TransportItem(){Name = string.Empty,            DisplayName = "DataSourceTable",      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"Account", new TransportItem()        {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = string.Empty } } },
+                {"SettingsID", new TransportItem()     {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = ID } } },
+                {"DataGroup", new TransportItem()      {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo,  Content = new StringTypeContent(){ Value = SelectedProfile } } },
+                {"Table-ID", new TransportItem()       {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = actWorkItem.Name } } },            
+                {"TableAccount", new TransportItem()   {Name = string.Empty,            DisplayName = string.Empty,     TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"DataSourceTable", new TransportItem(){Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableCloudTable", new TransportItem(){Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
                 {"TableProperty", new TransportItem()  {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
                 {"TableSortField", new TransportItem() {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
                 {"TableFactor", new TransportItem()    {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
@@ -780,6 +787,10 @@ namespace Maui_DynamischesFormular.ViewModels
                 {"SettingsState", new TransportItem()  {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsBoolean,  Content = new BoolTypeContent()  { Value = null } } },
                 {"SettingsDate", new TransportItem()   {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsDateTime, Content = new DateTimeTypeContent() { Value = null } } },
              };
+
+            // removed:    {"Profile", new TransportItem()        {Name = "Profile",               DisplayName = "Profile",         TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = SelectedProfile } } },
+           
+
 
             int selector = 0;
             switch (actWorkItem.Name)
@@ -810,9 +821,14 @@ namespace Maui_DynamischesFormular.ViewModels
 
                 if (selectedItems.TryGetValue(baseName, out var cop))
                 {
+                    // In selectedItems TabNo and name are filled with existing values
                     cop.TabNo = actItem.TabNo;
                     cop.Name = actItem.Name;
-                    cop.DisplayName = actItem.DisplayName;
+
+                    // If in selectedItems DisplayName is not set, we fill with existing DisplayName
+                    cop.DisplayName = cop.DisplayName == string.Empty ? actItem.DisplayName : cop.DisplayName;
+
+                   
 
                     switch (actItem.TypeIdentifier)
                     {
@@ -822,6 +838,7 @@ namespace Maui_DynamischesFormular.ViewModels
                         case WorkItem.TypeID.RsStringSw:
                         case WorkItem.TypeID.RsStringPi:
                             {
+               
                                 cop.Content = new StringTypeContent() { Value = actItem.StringValue };
                                 break;
                             }
@@ -901,31 +918,37 @@ namespace Maui_DynamischesFormular.ViewModels
         #region Method add Profile to Dictinoary
 
         //RoSchmi 16.02.26
-        private Dictionary<string, SuitCaseProperties> AddProfileToDictionary(Dictionary<string, SuitCaseProperties> dictionary, string pProfileName, string pAccountName, string pDelimiter, CollectionProfile pProfile)
+
+        //private Dictionary<string, SuitCaseProperties> AddToDictionary(Dictionary<string, SuitCaseProperties> dictionary, string pDataGroupName, string pAccountName, string pDelimiter, CollectionProfile pDataGroup)
+          private Dictionary<string, SuitCaseProperties> AddDataGroupToDictionary(Dictionary<string, SuitCaseProperties> dictionary, string pDataGroupName, string pAccountName, string pDelimiter, CollectionProfile pDataGroup)
         //private Dictionary<string, SuitCaseProperties> AddProfileToDictionary(Dictionary<string, SuitCaseProperties> dictionary, string pProfileName, string pAccountName, string pDelimiter, ProfileSet pProfile)
 
         {
-            string profileNamePlusAccount = FormattableString.Invariant($"{pAccountName}{pDelimiter}{pProfileName}");
+            string DataGroupNamePlusAccount = FormattableString.Invariant($"{pAccountName}{pDelimiter}{pDataGroupName}");
 
 
-            if (profilesDictionary.ContainsKey(profileNamePlusAccount))
+            if (profilesDictionary.ContainsKey(DataGroupNamePlusAccount))
             {
-                profilesDictionary.Remove(profileNamePlusAccount);
+                profilesDictionary.Remove(DataGroupNamePlusAccount);
             }
 
             // Aufgabe: aus ProfileSet transportItem machen
 
             //RoSchmi 16.02.26
-            CollectionProfile newProfileSet = new();
+            CollectionProfile profSet = new();
             //ProfileSet newProfileSet = new();
 
-            newProfileSet = JsonSerializer.Deserialize<CollectionProfile>(JsonSerializer.Serialize(pProfile));
+           // profSet.DataGroup = 
+
+
+
+            profSet = JsonSerializer.Deserialize<CollectionProfile>(JsonSerializer.Serialize(pDataGroup));
             //newProfileSet = JsonSerializer.Deserialize<>(JsonSerializer.Serialize(pProfile));
 
 
-            SuitCaseProperties suitCaseProperties = Wrapper.ProfileToSuitCaseProperties(newProfileSet, new List<string>());
+            SuitCaseProperties suitCaseProperties = Wrapper.ProfileToSuitCaseProperties(profSet, new List<string>());
 
-            dictionary.Add(profileNamePlusAccount, suitCaseProperties);
+            dictionary.Add(DataGroupNamePlusAccount, suitCaseProperties);
 
             return dictionary;
             int breakPoint756546 = 1;
@@ -963,7 +986,7 @@ namespace Maui_DynamischesFormular.ViewModels
                         var newProfile = getProfileSet(addedProfile, ActAccount, "1");
                         // wir haben jetzt ein neues ProfileSet mit einigen besetzten members
 
-                        profilesDictionary = AddProfileToDictionary(profilesDictionary, AddedProfile, ActAccount, Delimiter, newProfile);
+                        profilesDictionary = AddDataGroupToDictionary(profilesDictionary, AddedProfile, ActAccount, Delimiter, newProfile);
 
                         SuitCaseProperties suitCaseProperties = Wrapper.ProfileToSuitCaseProperties(newProfile, new List<string>());
 
@@ -981,7 +1004,7 @@ namespace Maui_DynamischesFormular.ViewModels
                 case SaveCmdMode.Rename:
                     {
                         var newProfile = getProfileSet(SelectedProfile, ActAccount, "1");
-                        profilesDictionary = AddProfileToDictionary(profilesDictionary, SelectedProfile, ActAccount, ".", newProfile);
+                        profilesDictionary = AddDataGroupToDictionary(profilesDictionary, SelectedProfile, ActAccount, ".", newProfile);
                         break;
                     }
             }
@@ -1191,7 +1214,7 @@ namespace Maui_DynamischesFormular.ViewModels
                 profSet.Account = ActAccount;
                 SuitCaseProperties suitCaseProperties = Wrapper.ProfileToSuitCaseProperties(profSet, new List<string>());
                 string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.DataGroup}");
-                profilesDictionary = AddProfileToDictionary(profilesDictionary, profSet.DataGroup, ActAccount, Delimiter, profSet);
+                profilesDictionary = AddDataGroupToDictionary(profilesDictionary, profSet.DataGroup, ActAccount, Delimiter, profSet);
 
                 DictionaryXML.WriteProfilesDictionaryToXmlFile(profilesDictionary, appFolder, profilesFileName);
                 WorkItemCollection = Wrapper.TransportItemsToWorkItems(suitCaseProperties.PropertiesDictionary);
@@ -1524,7 +1547,7 @@ namespace Maui_DynamischesFormular.ViewModels
 
                     string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.DataGroup}");
 
-                    profilesDictionary = AddProfileToDictionary(profilesDictionary, "Profile_1", ActAccount, Delimiter, profSet);
+                    profilesDictionary = AddDataGroupToDictionary(profilesDictionary, "Profile_1", ActAccount, Delimiter, profSet);
 
                   //  DictionaryXML.WriteProfilesDictionaryToXmlFile(profilesDictionary, appFolder, profilesFileName);
 

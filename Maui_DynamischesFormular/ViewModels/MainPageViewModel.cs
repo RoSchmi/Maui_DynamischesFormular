@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Maui_DynamischesFormular.Common;
 using Maui_DynamischesFormular.Helpers;
+using Maui_DynamischesFormular.LayoutEntryCollections;
 
 //using Java.Sql;
 
@@ -82,6 +83,7 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 
     //RoSchmi 16.02.26
 
+    /*
     private readonly Entry_x4_WorkProfile profileSetDefault = new()
     //private readonly ProfileSet profileSetDefault = new()
     {
@@ -95,14 +97,15 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
         // The Variablenames above may not be changed and my not be used for naming other variables, only the content can be changed
 
         // From the following variables the names and the content can be changed
-        /*
-        SettingsState = false,
-        SettingsDate = DateTime.MinValue,
-        SettingsTable1 = string.Empty,
-        SettingsTable2 = string.Empty,
-        SettingsTable3 = string.Empty,
-        SettingsTable4 = string.Empty, */
+        
+        //SettingsState = false,
+        //SettingsDate = DateTime.MinValue,
+        //SettingsTable1 = string.Empty,
+        //SettingsTable2 = string.Empty,
+        //SettingsTable3 = string.Empty,
+        //SettingsTable4 = string.Empty, 
     };
+    */
 
     private float[] actYearValues = new float[366];
     private float[] actYear_minus_1_Values = new float[366];
@@ -206,21 +209,22 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 
         //RoSchmi 16.02.26
 
-        CollectionProfile profSet = JsonSerializer.Deserialize<CollectionProfile>(JsonSerializer.Serialize(profileSetDefault));
+        //CollectionProfile profSet = JsonSerializer.Deserialize<CollectionProfile>(JsonSerializer.Serialize(profileSetDefault));
 
-       // ProfileSet profSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(profileSetDefault));
-      
-
+        CollectionProfile profSet = new CollectionProfile();
         profSet.SettingsID = Guid.NewGuid().ToString();
-        profSet.SettingsID = Guid.NewGuid().ToString();
+        profSet.Account = "NoAccount";
+        profSet.DataGroup = "Profile-1";
 
-        //RoSchmi set to right value
-        string ActAccount = "myaccount";
-        profSet.Account = ActAccount;
+        // ProfileSet profSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(profileSetDefault));
 
-        suitCaseProperties = Wrapper.ProfileToSuitCaseProperties(profSet, new List<string>());
+        suitCaseProperties = DataGroupInitializer.InitToSuitcaseProperties(profSet, new Entry_x4_WorkProfile().GetProfileList());
 
-        string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.DataGroup}");
+       
+        string theDataGroup = ((StringTypeContent)suitCaseProperties.PropertiesDictionary["DataGroup"].Content).Value;
+        
+        string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{theDataGroup}");
+        // string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.DataGroup}");
 
         profilesDictionary = new Dictionary<string, SuitCaseProperties>()
                                 {

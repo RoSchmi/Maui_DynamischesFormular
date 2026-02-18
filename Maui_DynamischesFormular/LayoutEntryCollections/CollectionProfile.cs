@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Maui_DynamischesFormular.Models;
 
 namespace Maui_DynamischesFormular.LayoutEntryCollections
 {
+    
+
     public class CollectionProfile : BaseProfile
     {
         // must expose a parameter-less constructor

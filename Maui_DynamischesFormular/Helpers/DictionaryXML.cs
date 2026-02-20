@@ -4,7 +4,8 @@ using Maui_DynamischesFormular.Models;
 using System.Text.Json;
 using Maui_DynamischesFormular.ViewModels;
 using System.Xml.Linq;
-using static CommunityToolkit.Mvvm.ComponentModel.__Internals.__TaskExtensions.TaskAwaitableWithoutEndValidation;
+
+//using static CommunityToolkit.Mvvm.ComponentModel.__Internals.__TaskExtensions.TaskAwaitableWithoutEndValidation;
 
 namespace Maui_DynamischesFormular.Helpers;
 
@@ -240,8 +241,8 @@ public static class DictionaryXML
         }
         else
         {
-           //File.Delete(filePath);
-           //return null;
+             File.Delete(filePath);
+             return null;
         }
         
 

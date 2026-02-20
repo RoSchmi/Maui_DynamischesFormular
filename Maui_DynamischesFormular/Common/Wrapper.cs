@@ -167,7 +167,8 @@ public static class Wrapper
     #endregion
 
     #region Region ProfileToSuitCaseProperties
-    
+    // Is now in Folder LayoutEntryCollections
+    /*
     public static SuitCaseProperties ProfileToSuitCaseProperties(CollectionProfile profSet, List<string> profileList)
     {
         var propertiesDictionary = new Dictionary<string, TransportItem>()
@@ -263,6 +264,7 @@ public static class Wrapper
                     {nameof(profSet.TablePh34),          new TransportItem() { TabNo = 4, Name = nameof(profSet.TablePh34),          DisplayName = "Vacant Position",     TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TablePh34 } } },
 
             };
+    
 
         //Substituted by profSet.DataGroup{ nameof(profSet.Profile),            new TransportItem() { TabNo = 0, Name = nameof(profSet.Profile), DisplayName = nameof(profSet.Profile), TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = profSet.Profile } } },
 
@@ -271,6 +273,7 @@ public static class Wrapper
 
         return new SuitCaseProperties() { PropertiesDictionary = filteredDictinonary };
     }
+    */
     #endregion
 
     #region Region TransportItemToWorkItem

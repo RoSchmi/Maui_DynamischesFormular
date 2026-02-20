@@ -5,21 +5,18 @@ using System.Text;
 
 namespace Maui_DynamischesFormular.LayoutEntryCollections
 { 
-        public static class DataGroupInitializer
+        public static class ProfileHandler
         {
-            public static SuitCaseProperties InitToSuitcaseProperties(CollectionProfile profSet, List<string> profileList)
-            {
-               // CollectionProfile profSet = new CollectionProfile()
-               // { };
-
-               // Dictionary<string, TransportItem> ProfileCatalog = new Dictionary<string, TransportItem>()
-                var propertiesDictionary = new Dictionary<string, TransportItem>()
+            public static SuitCaseProperties CreateProfileSetToSuitcaseProperties(CollectionProfile profSet, List<string> profileList)
+            {      
+                var profileCatalogDictionary = new Dictionary<string, TransportItem>()
                 {
                     {nameof(profSet.Account),            new TransportItem() { TabNo = 0, Name = nameof(profSet.Account),          DisplayName =  "Logged Account",                     TypeIdentifier = WorkItem.TypeID.RsStringRo,     Content = new StringTypeContent()   { Value = profSet.Account } } },
                     {nameof(profSet.DataGroup),          new TransportItem() { TabNo = 0, Name = nameof(profSet.DataGroup),        DisplayName = nameof(profSet.DataGroup),             TypeIdentifier = WorkItem.TypeID.RsStringRo,     Content = new StringTypeContent()   { Value = profSet.DataGroup } } },
                     {nameof(profSet.SettingsState),      new TransportItem() { TabNo = 0, Name = nameof(profSet.SettingsState),    DisplayName = nameof(profSet.SettingsState),         TypeIdentifier = WorkItem.TypeID.RsBooleanNo,    Content = new BoolTypeContent()     { Value = profSet.SettingsState } } },
                     {nameof(profSet.SettingsDate),       new TransportItem() { TabNo = 0, Name = nameof(profSet.SettingsDate),     DisplayName = nameof(profSet.SettingsDate),          TypeIdentifier = WorkItem.TypeID.RsDateTimeNo, Content = new DateTimeTypeContent() { Value = profSet.SettingsDate } } },
                     {nameof(profSet.SettingsID),         new TransportItem() { TabNo = 0, Name = nameof(profSet.SettingsID),       DisplayName = nameof(profSet.SettingsID),            TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.SettingsID } } },
+
                     {nameof(profSet.Index),              new TransportItem() { TabNo = 0, Name = nameof(profSet.Index),            DisplayName = nameof(profSet.Index),                 TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.Index } } },
                     {nameof(profSet.Selected),           new TransportItem() { TabNo = 0, Name = nameof(profSet.Selected),         DisplayName = nameof(profSet.Selected),              TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.Selected } } },
 
@@ -29,11 +26,23 @@ namespace Maui_DynamischesFormular.LayoutEntryCollections
                     {nameof(profSet.DataSourceTable3),   new TransportItem() { TabNo = 3, Name = nameof(profSet.DataSourceTable3),   DisplayName = "Storage Table",                      TypeIdentifier = WorkItem.TypeID.RsStringSw,     Content = new StringTypeContent()   { Value = profSet.DataSourceTable4 } } },
                     {nameof(profSet.DataSourceTable4),   new TransportItem() { TabNo = 4, Name = nameof(profSet.DataSourceTable4),   DisplayName = "Storage Table",                      TypeIdentifier = WorkItem.TypeID.RsStringSw,     Content = new StringTypeContent()   { Value = profSet.DataSourceTable4 } } },
 
+                    {nameof(profSet.TableAlias1),   new TransportItem() { TabNo = 1, Name = nameof(profSet.TableAlias1),   DisplayName = "Table Alias",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAlias1 } } },
+                    {nameof(profSet.TableAlias2),   new TransportItem() { TabNo = 2, Name = nameof(profSet.TableAlias2),   DisplayName = "Table Alias",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAlias1 } } },
+                    {nameof(profSet.TableAlias3),   new TransportItem() { TabNo = 3, Name = nameof(profSet.TableAlias3),   DisplayName = "Table Alias",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAlias3 } } },
+                    {nameof(profSet.TableAlias4),   new TransportItem() { TabNo = 3, Name = nameof(profSet.TableAlias4),   DisplayName = "Table Alias",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAlias3 } } },
 
-                    {nameof(profSet.TableProperty1),     new TransportItem() { TabNo = 1, Name = nameof(profSet.TableProperty1),     DisplayName = "Tabellenspalte",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,     Content = new StringTypeContent()   { Value = profSet.TableProperty1 } } },
-                    {nameof(profSet.TableProperty2),     new TransportItem() { TabNo = 2, Name = nameof(profSet.TableProperty2),     DisplayName = "Tabellenspalte",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,     Content = new StringTypeContent()   { Value = profSet.TableProperty2 } } },
-                    {nameof(profSet.TableProperty3),     new TransportItem() { TabNo = 3, Name = nameof(profSet.TableProperty3),     DisplayName = "Tabellenspalte",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,     Content = new StringTypeContent()   { Value = profSet.TableProperty3 } } },
-                    {nameof(profSet.TableProperty4),     new TransportItem() { TabNo = 4, Name = nameof(profSet.TableProperty4),     DisplayName = "Tabellenspalte",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,     Content = new StringTypeContent()   { Value = profSet.TableProperty4 } } },
+
+                    {nameof(profSet.TableProperty1),     new TransportItem() { TabNo = 1, Name = nameof(profSet.TableProperty1),     DisplayName = "Property (Column)",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,     Content = new StringTypeContent()   { Value = profSet.TableProperty1 } } },
+                    {nameof(profSet.TableProperty2),     new TransportItem() { TabNo = 2, Name = nameof(profSet.TableProperty2),     DisplayName = "Property (Column)",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,     Content = new StringTypeContent()   { Value = profSet.TableProperty2 } } },
+                    {nameof(profSet.TableProperty3),     new TransportItem() { TabNo = 3, Name = nameof(profSet.TableProperty3),     DisplayName = "Property (Column)",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,     Content = new StringTypeContent()   { Value = profSet.TableProperty3 } } },
+                    {nameof(profSet.TableProperty4),     new TransportItem() { TabNo = 4, Name = nameof(profSet.TableProperty4),     DisplayName = "Property (Column)",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,     Content = new StringTypeContent()   { Value = profSet.TableProperty4 } } },
+
+                    {nameof(profSet.PropertyAlias1),     new TransportItem() { TabNo = 1, Name = nameof(profSet.PropertyAlias1),     DisplayName = "Property Alias",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,     Content = new StringTypeContent()   { Value = profSet.PropertyAlias1 } } },
+                    {nameof(profSet.PropertyAlias2),     new TransportItem() { TabNo = 2, Name = nameof(profSet.PropertyAlias2),     DisplayName = "Property Alias",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,     Content = new StringTypeContent()   { Value = profSet.PropertyAlias2 } } },
+                    {nameof(profSet.PropertyAlias3),     new TransportItem() { TabNo = 3, Name = nameof(profSet.PropertyAlias3),     DisplayName = "Property Alias",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,     Content = new StringTypeContent()   { Value = profSet.PropertyAlias3 } } },
+                    {nameof(profSet.PropertyAlias4),     new TransportItem() { TabNo = 4, Name = nameof(profSet.PropertyAlias4),     DisplayName = "Property Alias",                     TypeIdentifier = WorkItem.TypeID.RsStringNo,     Content = new StringTypeContent()   { Value = profSet.PropertyAlias4 } } },
+
+
 
                     {nameof(profSet.TableAutomaticYear1),new TransportItem() { TabNo = 1, Name = nameof(profSet.TableAutomaticYear1),DisplayName = "Jahr-Suffix?",                       TypeIdentifier = WorkItem.TypeID.RsBooleanNo,    Content = new BoolTypeContent()     { Value = profSet.TableAutomaticYear1 } } },
                     {nameof(profSet.TableAutomaticYear2),new TransportItem() { TabNo = 2, Name = nameof(profSet.TableAutomaticYear2),DisplayName = "Jahr-Suffix?",                       TypeIdentifier = WorkItem.TypeID.RsBooleanNo,    Content = new BoolTypeContent()     { Value = profSet.TableAutomaticYear2 } } },
@@ -89,10 +98,10 @@ namespace Maui_DynamischesFormular.LayoutEntryCollections
                     {nameof(profSet.TableAccount3),      new TransportItem() { TabNo = 3, Name = nameof(profSet.TableAccount3),      DisplayName = "Storage Account", TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount3 } } },
                     {nameof(profSet.TableAccount4),      new TransportItem() { TabNo = 4, Name = nameof(profSet.TableAccount4),      DisplayName = "Storage Account", TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableAccount4 } } },
 
-                    {nameof(profSet.TableCloudTable1),   new TransportItem() { TabNo = 1, Name = nameof(profSet.TableCloudTable1),   DisplayName = "Cloud Table Name",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableCloudTable1 } } },
-                    {nameof(profSet.TableCloudTable2),   new TransportItem() { TabNo = 2, Name = nameof(profSet.TableCloudTable2),   DisplayName = "Cloud Table Name",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableCloudTable1 } } },
-                    {nameof(profSet.TableCloudTable3),   new TransportItem() { TabNo = 3, Name = nameof(profSet.TableCloudTable3),   DisplayName = "Cloud Table Name",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableCloudTable3 } } },
-                    {nameof(profSet.TableCloudTable4),   new TransportItem() { TabNo = 3, Name = nameof(profSet.TableCloudTable4),   DisplayName = "Cloud Table Name",                   TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableCloudTable3 } } },
+                    {nameof(profSet.AccountAlias1),      new TransportItem() { TabNo = 1, Name = nameof(profSet.AccountAlias1),      DisplayName = "Account Alias", TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.AccountAlias1 } } },
+                    {nameof(profSet.AccountAlias2),      new TransportItem() { TabNo = 2, Name = nameof(profSet.AccountAlias2),      DisplayName = "Account Alias", TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.AccountAlias2 } } },
+                    {nameof(profSet.AccountAlias3),      new TransportItem() { TabNo = 3, Name = nameof(profSet.AccountAlias3),      DisplayName = "Account Alias", TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.AccountAlias3 } } },
+                    {nameof(profSet.AccountAlias4),      new TransportItem() { TabNo = 4, Name = nameof(profSet.AccountAlias4),      DisplayName = "Account Alias", TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.AccountAlias4 } } },
 
                     {nameof(profSet.TableSortField1),    new TransportItem() { TabNo = 1, Name = nameof(profSet.TableSortField1),    DisplayName = "Sortierspalte",                      TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableSortField1 } } },
                     {nameof(profSet.TableSortField2),    new TransportItem() { TabNo = 2, Name = nameof(profSet.TableSortField2),    DisplayName = "Sortierspalte", TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TableSortField2 } } },
@@ -105,8 +114,8 @@ namespace Maui_DynamischesFormular.LayoutEntryCollections
                     {nameof(profSet.TablePh34),          new TransportItem() { TabNo = 4, Name = nameof(profSet.TablePh34),          DisplayName = "Vacant Position",     TypeIdentifier = WorkItem.TypeID.RsStringNo,   Content = new StringTypeContent()   { Value = profSet.TablePh34 } } },
                };
                
-
-            var filteredDictinonary = !profileList.Any() ? propertiesDictionary : propertiesDictionary.Where(kvp => profileList.Contains(kvp.Key)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            // From the catalog only take the entries which are items of the profileList
+            var filteredDictinonary = !profileList.Any() ? profileCatalogDictionary : profileCatalogDictionary.Where(kvp => profileList.Contains(kvp.Key)).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
             return new SuitCaseProperties() { PropertiesDictionary = filteredDictinonary };
         }

@@ -14,10 +14,16 @@
         <DataTemplate x:Key="stringTypeTemplate" x:DataType="models:WorkItem">
             <Grid Padding="10">
                 <Border HeightRequest="35">
-                    <Grid ColumnDefinitions="2*, 4*">
+                    <Grid ColumnDefinitions="15*, 15*, 25*">
                         <Label Text="{Binding DisplayName}" Grid.Column="0" VerticalOptions="Center" FontAttributes="Bold" />
-                            <!-- <Entry Text="{Binding StringValue}" Margin="20, 0, 0, 0" BackgroundColor="{Binding CardViewEntryBackGroundColor}"  FontAttributes="Bold" /> -->
-                        <Entry Text="{Binding StringValue}" Grid.Column="1"   Margin="20, 0, 0, 0" BackgroundColor ="Bisque" TextColor="Black" MinimumWidthRequest="150" FontAttributes="Bold" />
+                        <HorizontalStackLayout Grid.Column="1">
+                            <Label Text="(" VerticalOptions="Center" Margin="5,0,0,0" FontAttributes="Bold" BackgroundColor="Gainsboro"/>
+                            <Label Text="{Binding Name}" VerticalOptions="Center" FontAttributes="Bold" BackgroundColor="Gainsboro"/>
+                            <Label Text=")" VerticalOptions="Center"  FontAttributes="Bold" BackgroundColor="Gainsboro"/>
+                        </HorizontalStackLayout>
+
+                        <!-- <Entry Text="{Binding StringValue}" Margin="20, 0, 0, 0" BackgroundColor="{Binding CardViewEntryBackGroundColor}"  FontAttributes="Bold" /> -->
+                        <Entry Text="{Binding StringValue}" Grid.Column="2"   Margin="20, 0, 0, 0" BackgroundColor ="Bisque" TextColor="Black" MinimumWidthRequest="150" FontAttributes="Bold" />
                     </Grid>
                 </Border>
             </Grid>
@@ -26,40 +32,32 @@
         <DataTemplate x:Key="stringTypeReadOnlyTemplate" x:DataType="models:WorkItem">
             <Grid Padding="10">
                 <Border HeightRequest="35">
-                    <Grid ColumnDefinitions="2*, 4*">
+                    <Grid ColumnDefinitions="15*, 15*, 25*">
                         <Label Text="{Binding DisplayName}" Grid.Column="0" VerticalOptions="Center" FontAttributes="Bold" />
-                        <Entry Text="{Binding StringValue}" Grid.Column="1" Margin="20, 0, 0, 0" TextColor="DarkGray" IsReadOnly="True" FontAttributes="Bold" />
+                        <HorizontalStackLayout Grid.Column="1">
+                            <Label Text="(" VerticalOptions="Center" Margin="5,0,0,0" FontAttributes="Bold" BackgroundColor="Gainsboro"/>
+                            <Label Text="{Binding Name}" VerticalOptions="Center" FontAttributes="Bold" BackgroundColor="Gainsboro"/>
+                            <Label Text=")" VerticalOptions="Center" FontAttributes="Bold" BackgroundColor="Gainsboro"/>
+                        </HorizontalStackLayout>
+                        <Entry Text="{Binding StringValue}" Grid.Column="2" Margin="20, 0, 0, 0" TextColor="DarkGray" IsReadOnly="True" MinimumWidthRequest="150" FontAttributes="Bold" />
                     </Grid>
                 </Border>
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="stringTypeSwipeTemplate">
-            <SwipeView>
-                <Frame HeightRequest="70">
-                    <Frame.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="1"  
-                                                              Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:SettingsViewModel}}, 
-                                                               Path=TapCommand}"
-                                                               CommandParameter="{Binding .}" />
-                    </Frame.GestureRecognizers>
-
-                    <!--  <Grid ColumnDefinitions="4*, 10*, 2*" VerticalOptions="Start"> -->
-
-                    <!--      <Label Text="{Binding Name}" VerticalOptions="Center" Grid.Column="0" HorizontalOptions="Start" MinimumWidthRequest="200" MaximumWidthRequest="300" FontAttributes="Bold" /> -->
-                    <!--   <Entry Text="{Binding StringValue}" Margin="20, 0, 0, 0" BackgroundColor="{Binding CardViewEntryBackGroundColor}"  FontAttributes="Bold" /> -->
-                    <!--  <Entry Text="{Binding StringValue}" Grid.Column="1" BackgroundColor ="Bisque" VerticalOptions="Center" HorizontalOptions="Start" MinimumWidthRequest="250" MaximumWidthRequest="250" FontAttributes="Bold" /> -->
-                    <!--    <Label Text=">" VerticalOptions="Center" Grid.Column="2" Margin="0, 0, 15, 0" HorizontalOptions="End" FontAttributes="Bold" /> -->
-                    <!--    <Label Text="String" Margin="20, 0, 0, 0" FontSize="15"/> -->
-                    <!--  <Label Text="{Binding .}" FontSize="24" Grid.Column="0"/> -->
-                    <VerticalStackLayout>
-                        <Label Text="{Binding DisplayName}" HorizontalOptions="Start"/>
-                        <Label Text="{Binding StringValue}" HorizontalOptions="Start" />
-                        <!-- <Entry Text="{Binding StringValue}" VerticalOptions="Center" BackgroundColor="Bisque" HorizontalOptions="Start" MinimumWidthRequest="250" MaximumWidthRequest="250" FontAttributes="Bold" /> -->
-                    </VerticalStackLayout>
-
-                    <!--  </Grid> -->
-                </Frame>
-            </SwipeView>
+        <DataTemplate x:Key="stringTypeSwipeTemplate" x:DataType="models:WorkItem">
+            <Grid Padding="10">
+                <Border HeightRequest="35">
+                    <Grid ColumnDefinitions="15*, 15*, 25*">
+                        <Label Text="{Binding DisplayName}" Grid.Column="0" VerticalOptions="Center" FontAttributes="Bold" />
+                        <HorizontalStackLayout Grid.Column="1">
+                            <Label Text="(" VerticalOptions="Center" Margin="5,0,0,0" FontAttributes="Bold" BackgroundColor="Gainsboro"/>
+                            <Label Text="{Binding Name}" VerticalOptions="Center" FontAttributes="Bold" BackgroundColor="Gainsboro"/>
+                            <Label Text=")" VerticalOptions="Center" FontAttributes="Bold" BackgroundColor="Gainsboro"/>
+                        </HorizontalStackLayout>
+                        <Entry Text="{Binding StringValue}" Grid.Column="2" Margin="20, 0, 0, 0" TextColor="DarkGray" IsReadOnly="True" MinimumWidthRequest="150" FontAttributes="Bold" />
+                    </Grid>
+                </Border>
+            </Grid>
         </DataTemplate>
         <DataTemplate x:Key="stringTypeDontShowTemplate">
             <Grid   Padding="0"></Grid>
@@ -68,28 +66,22 @@
         <DataTemplate x:Key="stringTypePickerTemplate" x:DataType="models:WorkItem">
             <Grid Padding="10">
                 <Border HeightRequest="35">
-                    <Grid ColumnDefinitions="2*,4*">
-                     <!--   <HorizontalStackLayout VerticalOptions="Center" Grid.Column="0" Padding="0"> -->
+                    <Grid ColumnDefinitions="15*, 15*, 25*">
                         <Label Text="{Binding DisplayName}" Grid.Column="0"  VerticalOptions="Center" FontAttributes="Bold" />
-                            <!-- <Entry Text="{Binding StringValue}" Margin="20, 0, 0, 0" BackgroundColor="{Binding CardViewEntryBackGroundColor}"  FontAttributes="Bold" /> -->
-                            <Picker SelectedItem="{Binding StringValue}" Grid.Column="1" VerticalTextAlignment="Start" Margin="20, 0, 0, 0" BackgroundColor ="Bisque" TextColor="Black" MinimumWidthRequest="100" FontAttributes="Bold">
-                                <Picker.ItemsSource>
-                                    <x:Array Type="{x:Type x:String}">
-                                        <x:String>String</x:String>
-                                        <x:String>Float</x:String>
-                                        <x:String>TimeSpan</x:String>
-                                    </x:Array>
-                                </Picker.ItemsSource>
-                            </Picker>
-                            <!-- 
-                <Label Grid.Column="1"
-                       Text="{Binding DateOfBirth, StringFormat='{0:d}'}"
-                       TextColor="Green" />
-                <Label Grid.Column="2"
-                       Text="{Binding Location}"
-                       TextColor="Green"
-                       HorizontalTextAlignment="End" /> -->
-                      <!--  </HorizontalStackLayout> -->
+                        <HorizontalStackLayout Grid.Column="1">
+                            <Label Text="(" VerticalOptions="Center" Margin="5,0,0,0" FontAttributes="Bold" BackgroundColor="Gainsboro"/>
+                            <Label Text="{Binding Name}" VerticalOptions="Center" FontAttributes="Bold" BackgroundColor="Gainsboro"/>
+                            <Label Text=")" VerticalOptions="Center"  FontAttributes="Bold" BackgroundColor="Gainsboro"/>
+                        </HorizontalStackLayout>
+                        <Picker SelectedItem="{Binding StringValue}" Grid.Column="2" VerticalTextAlignment="Start" Margin="20, 0, 0, 0" BackgroundColor ="Bisque" TextColor="Black" MinimumWidthRequest="80" FontAttributes="Bold">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>String</x:String>
+                                    <x:String>Float</x:String>
+                                    <x:String>TimeSpan</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
                     </Grid>
                 </Border>
             </Grid>
@@ -193,31 +185,26 @@
                 <Entry Grid.Row="1" Grid.ColumnSpan="2"  HorizontalOptions= "FillAndExpand" BackgroundColor="LightGray" IsReadOnly="True" IsEnabled="False"/>
             </Grid>
             <VerticalStackLayout>
-                <Grid RowDefinitions="Auto, Auto, Auto, 400, 200">
+                <Grid RowDefinitions="Auto, Auto, Auto, Auto" ColumnDefinitions="* , *, Auto">
                     <Label Text="Edit Table Details" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center" />
                     <HorizontalStackLayout Grid.Row="1" Margin="10,0,0,0">
                         <Button Text="&lt; go back"   HorizontalOptions = "Start" Command="{Binding GoBackCommand}"/>
                         <Button Text="Debug" HorizontalOptions="Start" Margin="20,0,0,0"  Command="{Binding ClickToDebugCommand}"/>
                         <Button Text="ShadowPage" HorizontalOptions="Start" Margin="20,0,0,0"  Command="{Binding GoToShadowsCommand}" CommandParameter="{Binding ShadowFileProperties}"/>
                     </HorizontalStackLayout>
-                    <HorizontalStackLayout Grid.Row="2" Margin="0,20,0,0">
-                        <Label Text="TableName" />
-                        <Entry Text="{Binding TableName}" Placeholder="Enter Tablename here" BackgroundColor="Beige" IsTextPredictionEnabled="False" MinimumWidthRequest="200"/>
-                    </HorizontalStackLayout>
-
-                    <Label Text="{Binding TextToShow}" Grid.Row="2"/>
-                    <!-- ><CollectionView ItemsSource="{Binding ItemCollection}"> -->
-                    <!-- working -->
-
-                    <ScrollView Grid.Row="3">
-                        <VerticalStackLayout>
-                            <HorizontalStackLayout>
-                                <CollectionView x:Name="collectionView" ItemsSource="{Binding Path=TableDetailCollection}" ItemTemplate="{StaticResource typeDataTemplateSelector}"/>
-                            </HorizontalStackLayout>
-                        </VerticalStackLayout>
-                    </ScrollView>
-                    <!--  <Button Text="Click here to go back" HorizontalOptions="Start" Command="{Binding GoBackCommand}"/> -->
-                </Grid>
+                    <VerticalStackLayout Grid.Row="3">
+                        <HorizontalStackLayout Margin="5,10,0,10">
+                            <Label Text="Data Source Settings for:" Margin="5,0,10,0" TextColor="DarkBlue" FontSize="Subtitle" VerticalOptions="Center"/>
+                            <Label Text="{Binding TextToShow}" TextColor="DarkGoldenrod" FontSize="Small" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                            <Grid ColumnDefinitions ="90*,1*">
+                                <BoxView   Color="Gray" HeightRequest="3" HorizontalOptions="Fill" />
+                            </Grid>
+                            <Grid>
+                            <CollectionView x:Name="collectionView"  MaximumHeightRequest="350"  ItemsSource="{Binding Path=TableDetailCollection}" ItemTemplate="{StaticResource typeDataTemplateSelector}"/>
+                        </Grid>
+                    </VerticalStackLayout>
+            </Grid>
             </VerticalStackLayout>
         </VerticalStackLayout>
     </ContentPage.Content>

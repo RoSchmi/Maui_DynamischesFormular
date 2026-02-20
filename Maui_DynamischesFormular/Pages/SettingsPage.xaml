@@ -377,7 +377,7 @@
             </VerticalStackLayout>
             
             <VerticalStackLayout x:Name="SettingStacklayout" IsVisible="{Binding SettingsStacklayoutVisible}">
-                <Grid RowDefinitions="Auto, Auto, Auto, Auto">
+                <Grid RowDefinitions="Auto,Auto,Auto,*">
                     <VerticalStackLayout Grid.Row="0">
                         <HorizontalStackLayout IsVisible="{Binding NavStateRowIsVisible}">
                             <Label Text="Injected: " FontSize="Medium" Margin="10, 10, 0, 0"/>
@@ -393,7 +393,7 @@
                             <Button Text="Debug" Command="{Binding Button_Debug_clicked_Command}" Margin="5,0,10,0" HorizontalOptions="End" TextColor="Blue" />
 
                         </HorizontalStackLayout>
-                        
+
                         <Grid Grid.Row="3" ColumnDefinitions="30*, 20*, 20*,20*, 20*" RowDefinitions="Auto, Auto, Auto, Auto">
                             <Label Text="Click to Select Profile" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,10,0,0"/>
                             <Label Text="Rename, Add or Delete" Grid.Column="2" Grid.ColumnSpan="3" Margin="0,10,0,0"/>
@@ -401,35 +401,35 @@
                             <Button Text="Ren" Margin="5,5,10,5" MinimumWidthRequest="70" Grid.Column="2" Grid.Row="1" Command="{Binding ButtonRenProfileClickedCommand}"/>
                             <Button Text="Add" Margin="5,5,10,5" MinimumWidthRequest="70" Grid.Column="3" Grid.Row="1" Command="{Binding ButtonAddProfileClickedCommand}"/>
                             <Button Text="Del" Margin="5,5,10,5" MinimumWidthRequest="70" Grid.Column="4" Grid.Row="1" Command="{Binding ButtonDelProfileClickedCommand}"/>
-                            <BoxView Grid.Row="2" Grid.ColumnSpan="5" Color="LightGray" HeightRequest="3" HorizontalOptions="Fill" />
-                            
+                            <BoxView Grid.Row="2" Grid.ColumnSpan="5" Color="Gray" HeightRequest="3" HorizontalOptions="Fill" />
+
                         </Grid>
-                        <ScrollView Grid.Row="3" Background="CadetBlue"  VerticalScrollBarVisibility="Always" HorizontalScrollBarVisibility="Always">
-                            <VerticalStackLayout BackgroundColor="LightGreen" Padding="5,5" >
-                                <CollectionView x:Name="collectionView" ItemsSource="{Binding Path=WorkItemCollection}"  SelectionMode="Single" ItemTemplate="{StaticResource typeDataTemplateSelector}"/>
-                            </VerticalStackLayout>
-                        </ScrollView>
-
-
-                    </VerticalStackLayout>
-
-                    <VerticalStackLayout Grid.Row="2" x:Name="Rename_StackLauout" IsVisible="{Binding Rename_StackLayout_IsVisible}">
-                        <Label Text="{Binding Rename_Command_Header}" VerticalOptions="End"  TextColor="Red" HorizontalOptions="CenterAndExpand" FontSize="Header" IsEnabled="False"/>
-                        <Label Text="Actual Profilename:" HorizontalOptions="StartAndExpand" FontSize="Micro" TextColor="Red"/>
-                        <Entry Text="{Binding SelectedProfile}" IsReadOnly="True"/>
-                        <Label Text="New Profilename:" HorizontalOptions="StartAndExpand" FontSize="Micro" TextColor="Red"/>
-                        <Entry Text="{Binding NewProfileName}" Placeholder="Enter new Profilename"/>
-                        <HorizontalStackLayout>
-                            <Button Text=" Cancel " Margin="20,0,20,0" BorderWidth="1" BorderColor="DarkGray" HorizontalOptions="CenterAndExpand" Command="{Binding Button_RenProfile_Cancel_clicked_Command}"/>
-                            <Button Text=" Accept " Margin="20,0,20,0" BorderWidth="1" BorderColor="DarkGray" HorizontalOptions="CenterAndExpand" Command="{Binding Button_RenProfile_Accept_clicked_Command}"/>
-                        </HorizontalStackLayout>
-
-                        <Label HeightRequest="4" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand" IsEnabled="False"/>
-                        <Label Text="" HorizontalOptions="StartAndExpand" Margin="0,10,0,10"/>
-                    </VerticalStackLayout>
+                        
+                        <VerticalStackLayout Grid.Row="3" BackgroundColor="LightGreen" Padding="5,5" >
+                            <CollectionView x:Name="collectionView" ItemsSource="{Binding Path=WorkItemCollection}" Grid.Row="3" MaximumHeightRequest="450" SelectionMode="Single" ItemTemplate="{StaticResource typeDataTemplateSelector}"/>
+                        </VerticalStackLayout>
+                   
                     
-                </Grid>
+
             </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Row="2" x:Name="Rename_StackLauout" IsVisible="{Binding Rename_StackLayout_IsVisible}">
+                <Label Text="{Binding Rename_Command_Header}" VerticalOptions="End"  TextColor="Red" HorizontalOptions="CenterAndExpand" FontSize="Small" IsEnabled="False"/>
+                <Label Text="Actual Profilename:" HorizontalOptions="StartAndExpand" FontSize="Micro" TextColor="Red"/>
+                <Entry Text="{Binding SelectedProfile}" IsReadOnly="True"/>
+                <Label Text="New Profilename:" HorizontalOptions="StartAndExpand" FontSize="Micro" TextColor="Red"/>
+                <Entry Text="{Binding NewProfileName}" Placeholder="Enter new Profilename"/>
+                <HorizontalStackLayout>
+                    <Button Text=" Cancel " Margin="20,0,20,0" BorderWidth="1" BorderColor="DarkGray" HorizontalOptions="CenterAndExpand" Command="{Binding Button_RenProfile_Cancel_clicked_Command}"/>
+                    <Button Text=" Accept " Margin="20,0,20,0" BorderWidth="1" BorderColor="DarkGray" HorizontalOptions="CenterAndExpand" Command="{Binding Button_RenProfile_Accept_clicked_Command}"/>
+                </HorizontalStackLayout>
+
+                <Label HeightRequest="4" BackgroundColor="LightGray" HorizontalOptions="FillAndExpand" IsEnabled="False"/>
+                <Label Text="" HorizontalOptions="StartAndExpand" Margin="0,10,0,10"/>
+            </VerticalStackLayout>
+
+         </Grid>
+        </VerticalStackLayout>
         </VerticalStackLayout>
     </ContentPage.Content>
 

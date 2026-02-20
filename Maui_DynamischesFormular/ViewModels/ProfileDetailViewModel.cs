@@ -1,6 +1,4 @@
-﻿//using AndroidX.Navigation;
-//using Common.Models;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Maui_DynamischesFormular.Common;
 using Maui_DynamischesFormular.Models;
@@ -17,35 +15,18 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-//using static ChartSluuk.PageModels.ProfileDetailViewModel;
-
 namespace Maui_DynamischesFormular.ViewModels;
 
-//[QueryProperty("TextToShow", "Parameter")]
 [QueryProperty("TextToShow", "Sender")]
 
-
-//[QueryProperty("Bear", "navigationParameter")]
-//[QueryProperty("Bear", "navigationParameter")]
 
 public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributable
 {
 
-    //Dictionary<string, ProfileDetailViewModel> _profiles;
-
-    //ObservableCollection<string> ItemCollection { get; set; }
-
-    // ItemCollection = new ObservableCollection<string>() { "Name in Azure Table", "Display Name" };
-
-  
-
-
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-
-        // LocalDataSourceProperties = query["FirstAndOnlyRow"] as DataSourceProperties;
-
-        // RoSchmi
+        
+        #region Region Sender is Settingspage
         if (query.ContainsKey("SettingsPage"))
         {
             LocalSuitCaseProperties = query["SettingsPage"] as SuitCaseProperties;
@@ -104,6 +85,7 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
 
             int dummy24 = 1;
         }
+        #endregion
 
     }
 
@@ -111,14 +93,6 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
     {
         throw new NotImplementedException();
     }
-
-
-    //Dictionary<string, object> valuePairs = new();
-
-    //public Dictionary<string, string> MyDict
-
-    //private Dictionary<string, DataSourceProperties> localDataSourceProperties;
-
 
 
     [ObservableProperty]
@@ -130,14 +104,9 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
 
     [ObservableProperty]
     private DataSourceProperties localDataSourceProperties;
-    // private Dictionary<string, DataSourceProperties> localDataSourceProperties;
-
-    //[ObservableProperty]
-    //private ProfilesViewModel.Animal monkey;
-
+   
     [ObservableProperty]
     private string navigationState;
-
 
     [ObservableProperty]
     private Dictionary<string, DataSourceProperties> propertiesDictionary;
@@ -151,52 +120,18 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
     [ObservableProperty]
     private static ObservableCollection<WorkItem>? tableDetailCollection = new();           // Is the Binding source of CollectionView of the ProfileDetailPage
 
+    // Constructor
     public ProfileDetailViewModel()
-    {
-        //TableDetailCollection = new ObservableCollection<WorkItem>();
+    {}
 
-        //TableDetailCollection = Wrapper.TransportItemsToWorkItems(profilesDictionary.First().Value.PropertiesDictionary);
-
-        /*
-        MyDict = new Dictionary<string, DataSourceMembers>
-        {
-            { "Item_1", new DataSourceMembers() { Name = "Tabellenname1", Table = "AzureName1" } },
-            { "Item_2", new DataSourceMembers() { Name = "Tabellenname2", Table = "AzureName2" } }
-        };
-        */
-
-
-
-
-
-
-        // MyDict.Add("Name in Azure Table", new DataSourceMembers() { Name = "AzureTablename1", Table = "AzureName1" });
-
-        // MyDict.Add("Display Name", new DataSourceMembers() { Name = "DisplayName1", Table = "AzureName1" });
-
-
-    }
-
-    /*
-    public ProfileDetailViewModel()
-    {
-        ItemCollection = new ObservableCollection<string>() { "Name in Azure Table", "Display Name" };
-}
-    */
-   
-
-    public async void OnProfileDetailPageNavigatedToCommand()
-    {
+    public async void OnProfileDetailPageNavigatedToCommand(){
         NavigationState = Shell.Current.CurrentState.Location.ToString();
         int breakpoint78 = 1;
     }
 
-    public async void OnProfileDetailPageBackButtonPressedCommand()
-    {
+    public async void OnProfileDetailPageBackButtonPressedCommand(){
         int breakpoint777 = 1;
     }
-
-
 
     [ObservableProperty]
     private string entryText = "Guckste, was?";

@@ -218,14 +218,13 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
 
         // ProfileSet profSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(profileSetDefault));
 
-        suitCaseProperties = DataGroupInitializer.InitToSuitcaseProperties(profSet, new Entry_x4_WorkProfile().GetProfileList());
+        suitCaseProperties = ProfileHandler.CreateProfileSetToSuitcaseProperties(profSet, new Entry_x4_WorkProfile().GetProfileList());
 
        
         string theDataGroup = ((StringTypeContent)suitCaseProperties.PropertiesDictionary["DataGroup"].Content).Value;
         
         string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{theDataGroup}");
-        // string profileAndAccount = FormattableString.Invariant($"{ActAccount}{Delimiter}{profSet.DataGroup}");
-
+       
         profilesDictionary = new Dictionary<string, SuitCaseProperties>()
                                 {
                                 {profileAndAccount, suitCaseProperties},

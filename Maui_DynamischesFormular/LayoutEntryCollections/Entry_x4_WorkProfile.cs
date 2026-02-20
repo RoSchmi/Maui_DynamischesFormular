@@ -14,11 +14,20 @@ namespace Maui_DynamischesFormular.LayoutEntryCollections
         public string? DataSourceTable3 { get; set; }
         public string? DataSourceTable4 { get; set; }
 
+        public string? TableAlias1 { get; set; }
+        public string? TableAlias2 { get; set; }
+        public string? TableAlias3 { get; set; }
+        public string? TableAlias4 { get; set; }
+
         public string? TableProperty1 { get; set; }
         public string? TableProperty2 { get; set; }
         public string? TableProperty3 { get; set; }
         public string? TableProperty4 { get; set; }
 
+        public string? PropertyAlias1 { get; set; }
+        public string? PropertyAlias2 { get; set; }
+        public string? PropertyAlias3 { get; set; }
+        public string? PropertyAlias4 { get; set; }
 
         public bool? TableAutomaticYear1 { get; set; }
         public string? TableProvider1 { get; set; }
@@ -30,7 +39,8 @@ namespace Maui_DynamischesFormular.LayoutEntryCollections
         public DateTime? TableStartDate1 { get; set; }
         public DateTime? TableEndDate1 { get; set; }
         public string? TableAccount1 { get; set; }
-        public string? TableCloudTable1 { get; set; }
+
+        public string? AccountAlias1 { get; set; }
         public string? TableSortField1 { get; set; }
         public string? TablePh31 { get; set; }
 
@@ -44,7 +54,7 @@ namespace Maui_DynamischesFormular.LayoutEntryCollections
         public DateTime? TableStartDate2 { get; set; }
         public DateTime? TableEndDate2 { get; set; }
         public string? TableAccount2 { get; set; }
-        public string? TableCloudTable2 { get; set; }
+        public string? AccountAlias2 { get; set; }
         public string? TableSortField2 { get; set; }
         public string? TablePh32 { get; set; }
 
@@ -58,7 +68,8 @@ namespace Maui_DynamischesFormular.LayoutEntryCollections
         public DateTime? TableStartDate3 { get; set; }
         public DateTime? TableEndDate3 { get; set; }
         public string? TableAccount3 { get; set; }
-        public string? TableCloudTable3 { get; set; }
+
+        public string? AccountAlias3 { get; set; }
         public string? TableSortField3 { get; set; }
         public string? TablePh33 { get; set; }
 
@@ -73,7 +84,7 @@ namespace Maui_DynamischesFormular.LayoutEntryCollections
         public DateTime? TableStartDate4 { get; set; }
         public DateTime? TableEndDate4 { get; set; }
         public string? TableAccount4 { get; set; }
-        public string? TableCloudTable4 { get; set; }
+        public string? AccountAlias4 { get; set; }
         public string? TableSortField4 { get; set; }
         public string? TablePh34 { get; set; }
 

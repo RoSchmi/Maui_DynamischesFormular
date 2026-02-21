@@ -119,7 +119,6 @@ public static class Wrapper
                 case WorkItem.TypeID.RsStringPi:
                     {
                         workItemsList.Add(new WorkItem() { TabNo = property.Value.TabNo, Name = property.Value.Name, DisplayName = property.Value.DisplayName, TypeIdentifier = property.Value.TypeIdentifier, StringValue = ((StringTypeContent)property.Value.Content).Value });
-                        //SettingPropertyCollection.Add(new WorkItem() { Name = property.Value.Name, TypeIdentifier = property.Value.TypeIdentifier, StringValue = ((StringTypeContent)property.Value.Content).Value });
                         break;
                     }
 

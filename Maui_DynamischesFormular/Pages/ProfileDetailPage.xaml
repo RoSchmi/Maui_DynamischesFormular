@@ -6,6 +6,8 @@
              xmlns:templates="clr-namespace:DataTemplates"
              xmlns:viewmodel="clr-namespace:Maui_DynamischesFormular.ViewModels"
              xmlns:models="clr-namespace:Maui_DynamischesFormular.Models"
+             xmlns:pages ="clr-namespace:Maui_DynamischesFormular.Pages"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:DataType="viewmodel:ProfileDetailViewModel"
              Title="ProfileDetailPage">
 
@@ -73,15 +75,11 @@
                             <Label Text="{Binding Name}" VerticalOptions="Center" FontAttributes="Bold" BackgroundColor="Gainsboro"/>
                             <Label Text=")" VerticalOptions="Center"  FontAttributes="Bold" BackgroundColor="Gainsboro"/>
                         </HorizontalStackLayout>
-                        <Picker SelectedItem="{Binding StringValue}" Grid.Column="2" VerticalTextAlignment="Start" Margin="20, 0, 0, 0" BackgroundColor ="Bisque" TextColor="Black" MinimumWidthRequest="80" FontAttributes="Bold">
-                            <Picker.ItemsSource>
-                                <x:Array Type="{x:Type x:String}">
-                                    <x:String>String</x:String>
-                                    <x:String>Float</x:String>
-                                    <x:String>TimeSpan</x:String>
-                                </x:Array>
-                            </Picker.ItemsSource>
-                        </Picker>
+                        <Picker SelectedItem="{Binding StringValue}"  Grid.Column="2" VerticalTextAlignment="Start" Margin="20, 0, 0, 0" BackgroundColor ="Bisque" TextColor="Black" MinimumWidthRequest="80" FontAttributes="Bold"
+                                  ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type pages:ProfileDetailPage}}, Path=BindingContext.AllowedPickerItems}"
+                                Opened="Picker_Opened"
+                                BindingContextChanged="Picker_BindingContextChanged"/>
+                        
                     </Grid>
                 </Border>
             </Grid>

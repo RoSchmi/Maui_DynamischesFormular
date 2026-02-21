@@ -44,33 +44,6 @@ namespace Maui_DynamischesFormular.ViewModels
 
 
 
-        // Here you can initialize new pairs of variablenames and content
-        // The types string, bool and datetime are allowed for now
-        // The types have to be defined in the File 'ProfileSet.cs'
-        // Besides these default values the code in 'Wrapper.ProfileSetToSuitCaseProperties' has to be changed
-
-        //RoSchmi 16.02.26
-        
-        private readonly CollectionProfile profileSetDefault = new()
-        {
-            SettingsID = "",
-            Account = "",
-            Index = "0",
-            Selected = "1",
-            //Profile = "TimeSeriesGroup-1",
-            DataGroup = "Profile-1",
-            TableAccount1 = "",
-            // The Variablenames above may not be changed and my not be used for naming other variables, only the content can be changed
-
-            // From the following variables the names and the content can be changed
-            
-            //SettingsState = false,
-            //SettingsDate = DateTime.MinValue,
-            //SettingsTable1 = string.Empty,
-            //SettingsTable2 = string.Empty,
-            //SettingsTable3 = string.Empty,
-            //SettingsTable4 = string.Empty, 
-        };
         
 
         private static Dictionary<string, string> ProfileMemberNameAssignation;
@@ -167,6 +140,9 @@ namespace Maui_DynamischesFormular.ViewModels
 
         [ObservableProperty]
         private static ObservableCollection<WorkItem> workItemCollection;   // Is the Binding source of CollectionView of the SettingsPage
+
+        
+
 
         //[ObservableProperty]
         //private static ObservableCollection<WorkItem> workItemShowCollection = new();
@@ -573,12 +549,15 @@ namespace Maui_DynamischesFormular.ViewModels
         }
         #endregion
 
+        
+
 
         #region RelayCommand ButtonAddProfileClicked()
 
         [RelayCommand]
         private async Task Button_Tip_clicked_()
         {
+            
             await Application.Current.MainPage.DisplayAlert("Alert", "Typing long keys on the keyboard is boring!\r\n" +
                "Instead you can email the key to your phone and then use copy and paste.", "OK");
             int breakpoint = 1;

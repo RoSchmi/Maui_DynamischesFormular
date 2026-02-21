@@ -9,7 +9,10 @@ namespace Maui_DynamischesFormular.Models;
 
 public partial class WorkItem : ObservableObject
 {
-    public WorkItem() { }
+    public WorkItem() 
+    {
+        stringValue = String.Empty;
+    }
 
     public enum TypeID
     {
@@ -42,7 +45,7 @@ public partial class WorkItem : ObservableObject
     private string displayName;
 
     [ObservableProperty]
-    private string stringValue;
+    private string stringValue = string.Empty;
 
     [ObservableProperty]
     private DateTime? dateValue;

@@ -36,9 +36,20 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
 
             // transportItemDictionary = LocalSuitCaseProperties.PropertiesDictionary;
 
-            TableDetailCollection = Wrapper.TransportItemsToWorkItems(LocalSuitCaseProperties.PropertiesDictionary);
+
+            var newItems = Wrapper.TransportItemsToWorkItems(LocalSuitCaseProperties.PropertiesDictionary);
+            TableDetailCollection.Clear();
+
+            foreach (var wi in newItems)
+            {
+                TableDetailCollection.Add(wi);
+            }
 
 
+
+          //  TableDetailCollection = Wrapper.TransportItemsToWorkItems(LocalSuitCaseProperties.PropertiesDictionary);
+
+            //TableDetailCollection = new ObservableCollection<WorkItem>(Wrapper.TransportItemsToWorkItems(LocalSuitCaseProperties.PropertiesDictionary));
 
             //TableDetailCollection = Wrapper.TransportItemsToWorkItems(LocalSuitCaseProperties.PropertiesDictionary);
 
@@ -82,8 +93,7 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
                 MyDict.Add(member, LocalDataSourceProperties.Properties[member]);
             }
             */
-
-            int dummy24 = 1;
+            
         }
         #endregion
 
@@ -120,9 +130,14 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
     [ObservableProperty]
     private static ObservableCollection<WorkItem>? tableDetailCollection = new();           // Is the Binding source of CollectionView of the ProfileDetailPage
 
+    [ObservableProperty]
+    private static ObservableCollection<string> allowedPickerItems = new();
+
+
     // Constructor
     public ProfileDetailViewModel()
-    {}
+    { 
+    }
 
     public async void OnProfileDetailPageNavigatedToCommand(){
         NavigationState = Shell.Current.CurrentState.Location.ToString();
@@ -144,6 +159,16 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
 
     [ObservableProperty]
     private string tableName;
+
+    [RelayCommand]
+    private async Task PickerOpened()
+
+    {
+        // await Application.Current.MainPage.DisplayAlertasync("Alert", "Typing long keys on the keyboard is boring!\r\n" +
+        //   "Instead you can email the key to your phone and then use copy and paste.", "OK");
+        int breakpoint = 1;
+    }
+
 
     #region RelayCommand GoToShadows
     [RelayCommand]

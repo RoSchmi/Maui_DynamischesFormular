@@ -3,17 +3,18 @@ using CommunityToolkit.Mvvm.Input;
 using Maui_DynamischesFormular.Common;
 using Maui_DynamischesFormular.Models;
 using Maui_DynamischesFormular.Pages;
-using Maui_DynamischesFormular.ViewModels;
-using Microsoft.Maui.Controls;
-using System;
-using System.Collections.Generic;
+//using Maui_DynamischesFormular.ViewModels;
+//using Microsoft.Extensions.Primitives;
+//using Microsoft.Maui.Controls;
+//using System;
+//using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Numerics;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+//using System.Linq;
+//using System.Numerics;
+//using System.Reflection.Metadata;
+//using System.Runtime.CompilerServices;
+//using System.Text;
+//using System.Threading.Tasks;
 
 namespace Maui_DynamischesFormular.ViewModels;
 
@@ -22,6 +23,13 @@ namespace Maui_DynamischesFormular.ViewModels;
 
 public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributable
 {
+    public Dictionary<string, List<string>> PickerOptions { get; } =
+    new()
+    {
+        { "TableProvider", new List<string> { "Azure Storage", "AWS-Database (not impl.)", "Google-Database (not impl.)" } },
+        { "TableType",     new List<string> { "String", "DateTime", "Float" } }
+    };
+
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
     {
@@ -30,13 +38,8 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
         if (query.ContainsKey("SettingsPage"))
         {
             LocalSuitCaseProperties = query["SettingsPage"] as SuitCaseProperties;
-
-
-            // var transportItemDictionary = new Dictionary<string, TransportItem>();
-
-            // transportItemDictionary = LocalSuitCaseProperties.PropertiesDictionary;
-
-            /*
+        
+            /* Suggested by Copilot but seems not to be needed
             var newItems = Wrapper.TransportItemsToWorkItems(LocalSuitCaseProperties.PropertiesDictionary);
             TableDetailCollection.Clear();
 
@@ -46,63 +49,18 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
             }
             */
 
-
             TableDetailCollection = Wrapper.TransportItemsToWorkItems(LocalSuitCaseProperties.PropertiesDictionary);
 
-            //TableDetailCollection = new ObservableCollection<WorkItem>(Wrapper.TransportItemsToWorkItems(LocalSuitCaseProperties.PropertiesDictionary));
-
-            //TableDetailCollection = Wrapper.TransportItemsToWorkItems(LocalSuitCaseProperties.PropertiesDictionary);
-
-            //RoSchmi
-            /*
-            ShadowFileProperties = new ShadowFileSettingItems()
-            {
-                AccountName = TableDetailCollection.First(WorkItem => WorkItem.Name == "TableAccount").StringValue,
-                TableName = TableDetailCollection.First(WorkItem => WorkItem.Name == "CloudTableName").StringValue,
-                TableAccount = TableDetailCollection.First(WorkItem => WorkItem.Name == "TableAccount").StringValue,
-                ColumnType = TableDetailCollection.First(WorkItem => WorkItem.Name == "Type").StringValue,
-                Factor = TableDetailCollection.First(WorkItem => WorkItem.Name == "Factor").StringValue,
-                Sender = nameof(ProfileDetailPage),
-            };
-            */
-
-           // var testThing = tableDetailCollection.First(WorkItem => WorkItem.Name == "ColumnName").StringValue;
-
-            //ColumnName = TableDetailCollection.First(WorkItem => WorkItem.Name == "ColumnName").StringValue,
-
-            //TableDetailCollection.First(WorkItem => WorkItem.Name == "CloudTableName").StringValue = factor;
-
-            //TableDetailCollection = Wrapper.TransportItemsToWorkItems(TableDetailCollection, LocalSuitCaseProperties.PropertiesDictionary);
-
-            ItemCollection = new();
-
-            // profilesDictionary = DictionaryXML.GetProfilesDictionaryFromXmlFile(appFolder, profilesFileName);
-
-            // TableDetailCollection = Wrapper.TransportItemsToWorkItems(profilesDictionary.First().Value.PropertiesDictionary);
-
-            /*
-            foreach (string member in LocalDataSourceProperties.Properties.Keys)
-            {
-                ItemCollection.Add(member);
+            foreach (var item in TableDetailCollection) {
+                if (item.TypeIdentifier == WorkItem.TypeID.RsStringPi)
+                {
+                    item.InitializePicker(PickerOptions);
+                }
             }
-
-            MyDict = new();
-
-            foreach(string member in ItemCollection)
-            {
-                MyDict.Add(member, LocalDataSourceProperties.Properties[member]);
-            }
-            */
-            
         }
         #endregion
-
     }
 
-    private object Tuple<T1, T2>(T1 empty1, T2 empty2)
-    {
-        throw new NotImplementedException();
-    }
 
 
     [ObservableProperty]
@@ -125,10 +83,7 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
     private string textToShow;
 
     [ObservableProperty]
-    private ObservableCollection<string> itemCollection; // = new ObservableCollection<string>() { "Name in Azure Table", "Display Name" };
-
-    [ObservableProperty]
-    private static ObservableCollection<WorkItem>? tableDetailCollection = new();           // Is the Binding source of CollectionView of the ProfileDetailPage
+    private static ObservableCollection<WorkItem>? tableDetailCollection = new();   // Is the Binding source of CollectionView of the ProfileDetailPage
 
     // RoSchmi evtl to delete
     [ObservableProperty]
@@ -161,15 +116,7 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
     [ObservableProperty]
     private string tableName;
 
-    [RelayCommand]
-    private async Task PickerOpened()
-
-    {
-        // await Application.Current.MainPage.DisplayAlertasync("Alert", "Typing long keys on the keyboard is boring!\r\n" +
-        //   "Instead you can email the key to your phone and then use copy and paste.", "OK");
-        int breakpoint = 1;
-    }
-
+    
 
     #region RelayCommand GoToShadows
     [RelayCommand]

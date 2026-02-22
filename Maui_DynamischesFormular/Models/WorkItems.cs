@@ -10,10 +10,6 @@ namespace Maui_DynamischesFormular.Models;
 
 public partial class WorkItem : ObservableObject
 {
-    public WorkItem() 
-    {
-    }
-
     public enum TypeID
     {
         RsString,               // String editable
@@ -36,6 +32,37 @@ public partial class WorkItem : ObservableObject
         RsShort,
     };
 
+    // Constructor
+    public WorkItem() 
+    {
+    }
+
+    public void InitializePicker(Dictionary<string, List<string>> pickerOptions)
+    {
+        AllowedPickerItems.Clear();
+
+        var baseName = TabNo == 0
+            ? Name
+            : string.IsNullOrEmpty(Name) ? string.Empty : Name[..^1];
+
+        if (pickerOptions.TryGetValue(baseName, out var items))
+        {
+            foreach (var item in items)
+                AllowedPickerItems.Add(item);
+        }
+        else
+        {
+            AllowedPickerItems.Add(""); // fallback
+        }
+
+        // Initialwert setzen
+        SelectedPickerItem = StringValue;
+    }
+
+
+
+    
+
     public string? Name { get; set; }
     public TypeID TypeIdentifier { get; set; }
 
@@ -46,7 +73,17 @@ public partial class WorkItem : ObservableObject
 
     partial void OnSelectedPickerItemChanged(string value)
     {
-        StringValue = value;
+       // StringValue = value != null ? value : StringValue;
+        
+        if (value != null)
+        {
+            StringValue = value;
+        }
+        else
+        {
+            SelectedPickerItem =  StringValue;
+        }
+        
     }
 
     // Ausgewählter Wert

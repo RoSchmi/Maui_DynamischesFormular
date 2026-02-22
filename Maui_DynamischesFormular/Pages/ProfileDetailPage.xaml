@@ -76,8 +76,7 @@
                             <Label Text=")" VerticalOptions="Center"  FontAttributes="Bold" BackgroundColor="Gainsboro"/>
                         </HorizontalStackLayout>
                         <Picker SelectedItem="{Binding SelectedPickerItem}"  Grid.Column="2" VerticalTextAlignment="Start" Margin="20, 0, 0, 0" BackgroundColor ="Bisque" TextColor="Black" MinimumWidthRequest="80" FontAttributes="Bold"
-                                ItemsSource="{Binding AllowedPickerItems}"
-                                Loaded="Picker_Loaded"/>
+                                ItemsSource="{Binding AllowedPickerItems}"/>
                     </Grid>
                 </Border>
             </Grid>

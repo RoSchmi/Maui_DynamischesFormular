@@ -1,2 +1,20 @@
 ## Maui-DynamischesFormular
-Zeigt als eigenes Beispiel(Maui-10, Visual Studio 2026) für eine  CommunityToolkit.Mvvm Lösung die Bindung von ObservableCollection an eine CollectionView unter Verwendung von DataTemplates
+Beispiel für den eigenen Gebrauch (Maui-10, Visual Studio 2026). 
+
+Demonstriert eine Möglichkeit, Eingaben unterschiedlicher Datentypen (String, String in Picker mit ItemsSource, Bool, DateTime, Float steht noch aus) über eine dynamische generierte Eingabeseite zu erfassen. 
+
+Unterstützt werden u. a.:
+
+einfache Strings
+
+Strings über Picker mit ItemsSource
+
+Bool‑Werte
+
+DateTime
+
+Float (steht noch aus)
+
+Die Eingaben werden lokal auf dem Gerät gespeichert, separiert mit Unterscheidung nach Account, DataGroup und Tabelle. 
+
+Das Projekt demonstriert den Einsatz von CommunityToolkit.MVVM, DataTemplates, ObservableCollection und CollectionView, um ein flexibles, datengetriebenes Formularsystem aufzubauen. 

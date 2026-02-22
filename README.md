@@ -19,4 +19,4 @@ Die Eingaben werden lokal auf dem Gerät gespeichert, separiert mit Unterscheidu
 
 Das Projekt demonstriert den Einsatz von CommunityToolkit.MVVM, DataTemplates, ObservableCollection und CollectionView, um ein flexibles, datengetriebenes Formularsystem aufzubauen.
 
-Zusätzlich wird eine Möglichkeit zur Eingabe von Daten (z,B, Adressdaten) über eine einfache Eingabeseite demonstriert.
+Zusätzlich wird eine Möglichkeit zur Eingabe von Daten (z.B. Adressdaten) über eine einfache Eingabeseite demonstriert.

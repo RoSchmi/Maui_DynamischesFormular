@@ -48,9 +48,16 @@ public static class Wrapper
                         String? baseName = clipDigit && (workItem.TabNo > 0) ? string.IsNullOrEmpty(workItem.Name) ? string.Empty : workItem.Name[..^1] : workItem.Name;
                         if (baseName != string.Empty)
                         {
-                            PropertiesDictionary.Add(baseName, new TransportItem() { Name = workItem.Name, DisplayName = workItem.DisplayName, TabNo = workItem.TabNo, TypeIdentifier = workItem.TypeIdentifier, Content = new StringTypeContent() { Value = workItem.StringValue } });
+                            //PropertiesDictionary.Add(baseName, new TransportItem() { Name = workItem.Name, DisplayName = workItem.DisplayName, TabNo = workItem.TabNo, TypeIdentifier = workItem.TypeIdentifier, Content = new StringTypeContent() { Value = workItem.StringValue } });
+
+                            // In case of Picker: SelectedPickerItem is transferred to the 'StringValue' because it could be altered by Picker action.
+                            // For simple Strings the eventually altered StringValue is taken
+                            //var alteredString = workItem.TypeIdentifier == WorkItem.TypeID.RsStringPi ? workItem.SelectedPickerItem : workItem.StringValue;
+                            var alteredString = workItem.StringValue;
+                            PropertiesDictionary.Add(baseName, new TransportItem() { Name = workItem.Name, DisplayName = workItem.DisplayName, TabNo = workItem.TabNo, TypeIdentifier = workItem.TypeIdentifier, Content = new StringTypeContent() { Value = alteredString } });
+
                         }
-                            break;
+                        break;
                     }
 
                 case WorkItem.TypeID.RsBoolean:
@@ -118,9 +125,12 @@ public static class Wrapper
                 case WorkItem.TypeID.RsStringSw:
                 case WorkItem.TypeID.RsStringPi:
                     {
-                        workItemsList.Add(new WorkItem() { TabNo = property.Value.TabNo, Name = property.Value.Name, DisplayName = property.Value.DisplayName, TypeIdentifier = property.Value.TypeIdentifier, StringValue = ((StringTypeContent)property.Value.Content).Value });
+                        // arriving StringValue must be transered to StringValue and SelectedPickerItem (needed for binding to Picker)
+                        var arrivingStringValue = ((StringTypeContent)property.Value.Content).Value;
+                        workItemsList.Add(new WorkItem() { TabNo = property.Value.TabNo, Name = property.Value.Name, DisplayName = property.Value.DisplayName, TypeIdentifier = property.Value.TypeIdentifier,  StringValue = arrivingStringValue });
+                        
                         break;
-                    }
+                    }    // SelectedPickerItem = arrivingStringValue,
 
                 case WorkItem.TypeID.RsBoolean:
                 case WorkItem.TypeID.RsBooleanRo:

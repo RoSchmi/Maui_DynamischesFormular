@@ -1,6 +1,7 @@
 using Maui_DynamischesFormular.ViewModels;
 using Maui_DynamischesFormular.Models;
 
+
 namespace Maui_DynamischesFormular.Pages;
 
 public partial class ProfileDetailPage : ContentPage
@@ -104,6 +105,16 @@ public partial class ProfileDetailPage : ContentPage
 
     private void Picker_BindingContextChanged(object sender, EventArgs e)
     {
+        
+    }
+
+    private void Picker_HandlerChanged(object sender, EventArgs e)
+    {
+      
+    }
+
+    private void Picker_Loaded(object sender, EventArgs e)
+    {
         if (sender is not Picker picker)
             return;
 
@@ -120,27 +131,33 @@ public partial class ProfileDetailPage : ContentPage
         // Wenn TabNo nicht 0 ist, nach dem um eine Stelle gekürzten String suchen (letzte Stelle repräsentiert Tabellenzugehörigkeit)  
         var baseName = actItem.TabNo == 0 ? actItem.Name : string.IsNullOrEmpty(actItem.Name) ? string.Empty : actItem.Name[..^1];
 
-        vm.AllowedPickerItems.Clear();
         switch (baseName)
         {
-            case "TableProvider":
-                vm.AllowedPickerItems.Add("Azure Storage");
-                vm.AllowedPickerItems.Add("AWS-Datbase (not impl.)");
-                vm.AllowedPickerItems.Add("Google-Datbase (not impl.)");
+            case "TableProvider":         
+                actItem.AllowedPickerItems.Clear();
 
+                actItem.AllowedPickerItems.Add("Azure Storage");
+                actItem.AllowedPickerItems.Add("AWS-Datbase (not impl.)");
+                actItem.AllowedPickerItems.Add("Google-Datbase (not impl.)");
+
+                actItem.SelectedPickerItem = actItem.StringValue;
                 break;
-            case "TableType":
-                vm.AllowedPickerItems.Add("String");
-                vm.AllowedPickerItems.Add("DateTime");
-                vm.AllowedPickerItems.Add("Float");
+            case "TableType":              
+                actItem.AllowedPickerItems.Clear();
+
+                actItem.AllowedPickerItems.Add("String");
+                actItem.AllowedPickerItems.Add("DateTime");
+                actItem.AllowedPickerItems.Add("Float");
+
+                actItem.SelectedPickerItem = actItem.StringValue;
                 break;
+
             default:
-                vm.AllowedPickerItems.Add("");
-                break;
-        }
-        picker.SelectedItem = actItem.StringValue;
-        System.Diagnostics.Debugger.Break();
+                actItem.AllowedPickerItems.Clear();
+                actItem.AllowedPickerItems.Add("");
 
-        int breakpoint63 = 1;
+                actItem.SelectedPickerItem = actItem.StringValue;
+                break;
+        }      
     }
 }

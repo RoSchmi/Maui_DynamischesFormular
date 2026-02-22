@@ -75,11 +75,9 @@
                             <Label Text="{Binding Name}" VerticalOptions="Center" FontAttributes="Bold" BackgroundColor="Gainsboro"/>
                             <Label Text=")" VerticalOptions="Center"  FontAttributes="Bold" BackgroundColor="Gainsboro"/>
                         </HorizontalStackLayout>
-                        <Picker SelectedItem="{Binding StringValue}"  Grid.Column="2" VerticalTextAlignment="Start" Margin="20, 0, 0, 0" BackgroundColor ="Bisque" TextColor="Black" MinimumWidthRequest="80" FontAttributes="Bold"
-                                  ItemsSource="{Binding Source={RelativeSource AncestorType={x:Type pages:ProfileDetailPage}}, Path=BindingContext.AllowedPickerItems}"
-                                Opened="Picker_Opened"
-                                BindingContextChanged="Picker_BindingContextChanged"/>
-                        
+                        <Picker SelectedItem="{Binding SelectedPickerItem}"  Grid.Column="2" VerticalTextAlignment="Start" Margin="20, 0, 0, 0" BackgroundColor ="Bisque" TextColor="Black" MinimumWidthRequest="80" FontAttributes="Bold"
+                                ItemsSource="{Binding AllowedPickerItems}"
+                                Loaded="Picker_Loaded"/>
                     </Grid>
                 </Border>
             </Grid>

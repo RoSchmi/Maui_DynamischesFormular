@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,6 @@ public partial class WorkItem : ObservableObject
 {
     public WorkItem() 
     {
-        stringValue = String.Empty;
     }
 
     public enum TypeID
@@ -40,12 +40,24 @@ public partial class WorkItem : ObservableObject
     public TypeID TypeIdentifier { get; set; }
 
     public int TabNo { get; set; }
-    
+
+    // ItemsSource für den Picker
+    public ObservableCollection<string> AllowedPickerItems { get; set; } = new ObservableCollection<string>();
+
+    partial void OnSelectedPickerItemChanged(string value)
+    {
+        StringValue = value;
+    }
+
+    // Ausgewählter Wert
+    [ObservableProperty] 
+    private string selectedPickerItem;
+
     [ObservableProperty]
     private string displayName;
 
     [ObservableProperty]
-    private string stringValue = string.Empty;
+    private string stringValue; 
 
     [ObservableProperty]
     private DateTime? dateValue;

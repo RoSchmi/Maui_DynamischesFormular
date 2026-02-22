@@ -14,6 +14,7 @@ public class TransportItem
     public string Name { get; set; }
 
     public string DisplayName { get; set; }
+
     public WorkItem.TypeID TypeIdentifier { get; set; }
     public object Content { get; set; }
 }

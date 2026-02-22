@@ -36,7 +36,7 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
 
             // transportItemDictionary = LocalSuitCaseProperties.PropertiesDictionary;
 
-
+            /*
             var newItems = Wrapper.TransportItemsToWorkItems(LocalSuitCaseProperties.PropertiesDictionary);
             TableDetailCollection.Clear();
 
@@ -44,10 +44,10 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
             {
                 TableDetailCollection.Add(wi);
             }
+            */
 
 
-
-          //  TableDetailCollection = Wrapper.TransportItemsToWorkItems(LocalSuitCaseProperties.PropertiesDictionary);
+            TableDetailCollection = Wrapper.TransportItemsToWorkItems(LocalSuitCaseProperties.PropertiesDictionary);
 
             //TableDetailCollection = new ObservableCollection<WorkItem>(Wrapper.TransportItemsToWorkItems(LocalSuitCaseProperties.PropertiesDictionary));
 
@@ -130,6 +130,7 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
     [ObservableProperty]
     private static ObservableCollection<WorkItem>? tableDetailCollection = new();           // Is the Binding source of CollectionView of the ProfileDetailPage
 
+    // RoSchmi evtl to delete
     [ObservableProperty]
     private static ObservableCollection<string> allowedPickerItems = new();
 

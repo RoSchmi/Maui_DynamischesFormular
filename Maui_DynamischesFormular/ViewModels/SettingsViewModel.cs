@@ -273,7 +273,7 @@ namespace Maui_DynamischesFormular.ViewModels
                             {                           
                                 CollectionProfile profSet = new CollectionProfile();
                                 profSet.DataGroup = "Profile-1";
-                                profSet.SettingsID = Guid.NewGuid().ToString();
+                                profSet.DataGroupID = Guid.NewGuid().ToString();
                                 profSet.SettingsState = true;
                                 profSet.SettingsDate = DateTime.Now;
                                 profSet.Selected = "1";
@@ -414,6 +414,7 @@ namespace Maui_DynamischesFormular.ViewModels
                     case WorkItem.TypeID.RsStringNo:
                     case WorkItem.TypeID.RsStringSw:
                     case WorkItem.TypeID.RsStringPi:
+                    case WorkItem.TypeID.RsStringFlo:
                         {
                             var No3 = pWorkItemCollection.First();
                             var N04 = pPropertiesDictionary;
@@ -741,7 +742,7 @@ namespace Maui_DynamischesFormular.ViewModels
             var selectedItems = new Dictionary<string, TransportItem>()
             {
                 {"Account", new TransportItem()        {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = string.Empty } } },
-                {"SettingsID", new TransportItem()     {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = ID } } },
+                {"DataGroupID", new TransportItem()    {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo, Content = new StringTypeContent() { Value = ID } } },
                 {"DataGroup", new TransportItem()      {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringRo,  Content = new StringTypeContent(){ Value = SelectedProfile } } },
                 {"TableProvider", new TransportItem()  {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringPi, Content = new StringTypeContent() { Value = string.Empty } } },
                 {"TableAccount", new TransportItem()   {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
@@ -751,8 +752,8 @@ namespace Maui_DynamischesFormular.ViewModels
                 {"TableProperty", new TransportItem()  {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
                 {"PropertyAlias", new TransportItem()  {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
                 {"TableSortField", new TransportItem() {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"TableFactor", new TransportItem()    {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
-                {"TableOffset", new TransportItem()    {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableFactor", new TransportItem()    {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringFlo,   Content = new StringTypeContent() { Value = string.Empty } } },
+                {"TableOffset", new TransportItem()    {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringFlo,   Content = new StringTypeContent() { Value = string.Empty } } },
                 {"TableType", new TransportItem()      {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsStringPi, Content = new StringTypeContent() { Value = string.Empty } } },
                 {"TableUnit", new TransportItem()      {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsString,   Content = new StringTypeContent() { Value = string.Empty } } },
                 {"SettingsState", new TransportItem()  {Name = string.Empty,            DisplayName = string.Empty,      TabNo = 0,      TypeIdentifier = WorkItem.TypeID.RsBoolean,  Content = new BoolTypeContent()  { Value = null } } },
@@ -782,6 +783,7 @@ namespace Maui_DynamischesFormular.ViewModels
                 if (actItem.TabNo != 0 && actItem.TabNo != selector)
                     continue;
 
+                // RoSchmi to delete
                 if (actItem.TabNo == 0)
                 {
                     int breakpoint22 = 1;
@@ -799,8 +801,6 @@ namespace Maui_DynamischesFormular.ViewModels
                     // If in selectedItems DisplayName is not set, we fill with existing DisplayName
                     cop.DisplayName = cop.DisplayName == string.Empty ? actItem.DisplayName : cop.DisplayName;
 
-                   
-
                     switch (actItem.TypeIdentifier)
                     {
                         case WorkItem.TypeID.RsString:
@@ -808,6 +808,7 @@ namespace Maui_DynamischesFormular.ViewModels
                         case WorkItem.TypeID.RsStringNo:
                         case WorkItem.TypeID.RsStringSw:
                         case WorkItem.TypeID.RsStringPi:
+                        case WorkItem.TypeID.RsStringFlo:
                             {
                
                                 cop.Content = new StringTypeContent() { Value = actItem.StringValue };
@@ -907,7 +908,7 @@ namespace Maui_DynamischesFormular.ViewModels
 
             //RoSchmi 16.02.26
             CollectionProfile profSet = new();
-            profSet.SettingsID = Guid.NewGuid().ToString();
+            profSet.DataGroupID = Guid.NewGuid().ToString();
             profSet.Account = "NoAccount";
             profSet.DataGroup = "Profile-1";
             
@@ -933,7 +934,7 @@ namespace Maui_DynamischesFormular.ViewModels
             CollectionProfile NewProfile = new CollectionProfile()
          //   ProfileSet NewProfile = new ProfileSet()
             {
-                SettingsID = Guid.NewGuid().ToString(),
+                DataGroupID = Guid.NewGuid().ToString(),
                 DataGroup = pName,
                 Account = pAccount,
                 Selected = pSelected,
@@ -1180,7 +1181,7 @@ namespace Maui_DynamischesFormular.ViewModels
                 //RoSchmi 16.02.26
                 //CollectionProfile profSet = JsonSerializer.Deserialize<CollectionProfile>(JsonSerializer.Serialize(profileSetDefault));
                 CollectionProfile profSet = new CollectionProfile();
-                profSet.SettingsID = Guid.NewGuid().ToString();
+                profSet.DataGroupID = Guid.NewGuid().ToString();
                 profSet.Account = ActAccount;
                 profSet.DataGroup = "Profile-1";
                 //SuitCaseProperties suitCaseProperties = Wrapper.ProfileToSuitCaseProperties(profSet, new List<string>());
@@ -1520,7 +1521,7 @@ namespace Maui_DynamischesFormular.ViewModels
                     CollectionProfile profSet = new CollectionProfile();
 
                     //ProfileSet profSet = JsonSerializer.Deserialize<ProfileSet>(JsonSerializer.Serialize(profileSetDefault));
-                    profSet.SettingsID = Guid.NewGuid().ToString();
+                    profSet.DataGroupID = Guid.NewGuid().ToString();
                     profSet.Account = ActAccount;
                     //uitCaseProperties suitCaseProperties = Wrapper.ProfileToSuitCaseProperties(profSet, new List<string>());
                     

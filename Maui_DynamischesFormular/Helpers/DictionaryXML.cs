@@ -270,6 +270,7 @@ public static class DictionaryXML
                     case WorkItem.TypeID.RsStringNo:
                     case WorkItem.TypeID.RsStringSw:
                     case WorkItem.TypeID.RsStringPi:
+                    case WorkItem.TypeID.RsStringFlo:
                         {
                             StringTransportItem stringTransportItem = JsonSerializer.Deserialize<StringTransportItem>(jsonProperty);
                             transportItem = new TransportItem() { Name = stringTransportItem.Name, DisplayName = stringTransportItem.DisplayName, TabNo = stringTransportItem.TabNo, TypeIdentifier = stringTransportItem.TypeIdentifier, Content = stringTransportItem.Content };

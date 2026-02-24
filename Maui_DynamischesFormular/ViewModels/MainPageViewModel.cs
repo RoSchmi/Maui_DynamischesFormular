@@ -212,7 +212,7 @@ public partial class MainPageViewModel : ObservableObject, IQueryAttributable
         //CollectionProfile profSet = JsonSerializer.Deserialize<CollectionProfile>(JsonSerializer.Serialize(profileSetDefault));
 
         CollectionProfile profSet = new CollectionProfile();
-        profSet.SettingsID = Guid.NewGuid().ToString();
+        profSet.DataGroupID = Guid.NewGuid().ToString();
         profSet.Account = "NoAccount";
         profSet.DataGroup = "Profile-1";
 

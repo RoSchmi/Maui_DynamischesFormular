@@ -12,9 +12,7 @@ namespace Maui_DynamischesFormular.LayoutEntryCollections
         // must expose a parameter-less constructor
         public CollectionProfile() { }
 
-        public string? DataSourceTable1 { get; set; }
-
-        
+        public string? DataSourceTable1 { get; set; }      
         public string? DataSourceTable2 { get; set; }
         public string? DataSourceTable3 { get; set; }
         public string? DataSourceTable4 { get; set; }

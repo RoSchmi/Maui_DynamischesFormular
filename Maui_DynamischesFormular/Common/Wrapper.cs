@@ -44,6 +44,7 @@ public static class Wrapper
                 case WorkItem.TypeID.RsStringRo:  //actItem.Name : string.IsNullOrEmpty(actItem.Name) ? string.Empty : actItem.Name[..^1];
                 case WorkItem.TypeID.RsStringSw:
                 case WorkItem.TypeID.RsStringPi:
+                case WorkItem.TypeID.RsStringFlo:
                     {
                         String? baseName = clipDigit && (workItem.TabNo > 0) ? string.IsNullOrEmpty(workItem.Name) ? string.Empty : workItem.Name[..^1] : workItem.Name;
                         if (baseName != string.Empty)
@@ -124,9 +125,10 @@ public static class Wrapper
                 case WorkItem.TypeID.RsStringNo:
                 case WorkItem.TypeID.RsStringSw:
                 case WorkItem.TypeID.RsStringPi:
+                case WorkItem.TypeID.RsStringFlo:
                     {
                        
-                        workItemsList.Add(new WorkItem() { TabNo = property.Value.TabNo, Name = property.Value.Name, DisplayName = property.Value.DisplayName, TypeIdentifier = property.Value.TypeIdentifier,  StringValue = ((StringTypeContent)property.Value.Content).Value });
+                        workItemsList.Add(new WorkItem() { TabNo = property.Value.TabNo, Name = property.Value.Name, DisplayName = property.Value.DisplayName, TypeIdentifier = property.Value.TypeIdentifier, StringValue = ((StringTypeContent)property.Value.Content).Value });
                         
                         break;
                     }    
@@ -178,6 +180,7 @@ public static class Wrapper
             case WorkItem.TypeID.RsStringNo:
             case WorkItem.TypeID.RsStringSw:
             case WorkItem.TypeID.RsStringPi:
+            case WorkItem.TypeID.RsStringFlo:
                 {
                     returnWorkItem = new WorkItem() { Name = transportItem.Name, DisplayName = transportItem.DisplayName, TabNo = transportItem.TabNo, TypeIdentifier = transportItem.TypeIdentifier, StringValue = ((StringTypeContent)transportItem.Content).Value };
                 }

@@ -23,6 +23,7 @@ namespace Maui_DynamischesFormular.ViewModels;
 
 public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributable
 {
+    // Set identifying names to use Picker and corresponding Picker ItemsSources
     public Dictionary<string, List<string>> PickerOptions { get; } =
     new()
     {
@@ -55,6 +56,10 @@ public partial class ProfileDetailViewModel : ObservableObject, IQueryAttributab
                 if (item.TypeIdentifier == WorkItem.TypeID.RsStringPi)
                 {
                     item.InitializePicker(PickerOptions);
+                }
+                if (item.TypeIdentifier == WorkItem.TypeID.RsStringFlo)
+                {
+                    item.InitializeFloatEntry(item.StringValue);
                 }
             }
         }

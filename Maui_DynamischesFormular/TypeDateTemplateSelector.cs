@@ -19,6 +19,8 @@ namespace DataTemplates
 
         public DataTemplate StringTypePickerTemplate { get; set; }
 
+        public DataTemplate StringTypeFloatTemplate { get; set; }
+
         public DataTemplate BoolTypeTemplate { get; set; }
 
         public DataTemplate BoolTypeReadOnlyTemplate { get; set; }
@@ -98,6 +100,11 @@ namespace DataTemplates
                         break;
                     }
 
+                case WorkItem.TypeID.RsStringFlo:
+                    {
+                        returnTemplate = StringTypeFloatTemplate;
+                        break;
+                    }
 
                 default:
                     {

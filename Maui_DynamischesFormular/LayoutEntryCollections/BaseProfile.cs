@@ -10,13 +10,8 @@ namespace Maui_DynamischesFormular.LayoutEntryCollections
         public BaseProfile() { }
 
         public string? Account { get; set; }
-
-        //public string? Profile { get; set; }
-
         public string? DataGroup { get; set; }       
-
-        public string? SettingsID { get; set; }
-
+        public string? DataGroupID { get; set; }
         public bool? SettingsState { get; set; }
         public DateTime? SettingsDate { get; set; }
         public string? Index { get; set; }

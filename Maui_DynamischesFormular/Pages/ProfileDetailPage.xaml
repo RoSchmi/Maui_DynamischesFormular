@@ -4,6 +4,7 @@
              x:Class="Maui_DynamischesFormular.Pages.ProfileDetailPage"
              xmlns:local="clr-namespace:Maui_DynamischesFormular"
              xmlns:templates="clr-namespace:DataTemplates"
+             xmlns:behaviors="clr-namespace:Maui_DynamischesFormular.Behaviors"
              xmlns:viewmodel="clr-namespace:Maui_DynamischesFormular.ViewModels"
              xmlns:models="clr-namespace:Maui_DynamischesFormular.Models"
              xmlns:pages ="clr-namespace:Maui_DynamischesFormular.Pages"
@@ -81,7 +82,26 @@
                 </Border>
             </Grid>
         </DataTemplate>
-
+                            
+        <DataTemplate x:Key="stringTypeFloatTemplate" x:DataType="models:WorkItem">
+            <Grid Padding="10">
+                <Border HeightRequest="35">
+                    <Grid ColumnDefinitions="15*, 15*, 25*">
+                        <Label Text="{Binding DisplayName}" Grid.Column="0" VerticalOptions="Center" FontAttributes="Bold" />
+                        <HorizontalStackLayout Grid.Column="1">
+                            <Label Text="(" VerticalOptions="Center" Margin="5,0,0,0" FontAttributes="Bold" BackgroundColor="Gainsboro"/>
+                            <Label Text="{Binding Name}" VerticalOptions="Center" FontAttributes="Bold" BackgroundColor="Gainsboro"/>
+                            <Label Text=")" VerticalOptions="Center"  FontAttributes="Bold" BackgroundColor="Gainsboro"/>
+                        </HorizontalStackLayout>
+                        <Entry Text="{Binding StringDisplayCultureFloat}" Grid.Column="2"   Margin="20, 0, 0, 0" BackgroundColor ="Bisque" TextColor="Black" MinimumWidthRequest="150" FontAttributes="Bold">
+                           <Entry.Behaviors>
+                                <behaviors:FloatValidationBehavior />
+                            </Entry.Behaviors> 
+                        </Entry>
+                    </Grid>
+                </Border>
+            </Grid>
+        </DataTemplate>
         <DataTemplate x:Key="boolTypeTemplate" x:DataType="models:WorkItem">
             <Grid Padding="10">
                 <Border HeightRequest="35">
@@ -157,6 +177,7 @@
                                           StringTypeDontShowTemplate="{StaticResource stringTypeDontShowTemplate}"
                                           StringTypeSwipeTemplate="{StaticResource stringTypeSwipeTemplate}"
                                           StringTypePickerTemplate="{StaticResource stringTypePickerTemplate}"
+                                          StringTypeFloatTemplate="{StaticResource stringTypeFloatTemplate}"  
                                           BoolTypeTemplate="{StaticResource boolTypeTemplate}"
                                           BoolTypeReadOnlyTemplate="{StaticResource boolTypeReadOnlyTemplate}"
                                           BoolTypeDontShowTemplate="{StaticResource boolTypeDontShowTemplate}"                                           

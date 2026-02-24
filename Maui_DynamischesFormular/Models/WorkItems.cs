@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.ObjectModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace Maui_DynamischesFormular.Models;
 
@@ -17,6 +19,7 @@ public partial class WorkItem : ObservableObject
         RsStringNo,             // String not displayed
         RsStringSw,             // Display on Swipe View
         RsStringPi,             // Display on Picker
+        RsStringFlo,            // Display in Float format
         RsBoolean,
         RsBooleanRo,
         RsBooleanNo,
@@ -26,7 +29,6 @@ public partial class WorkItem : ObservableObject
         RsTimeSpan,
         RsGuid,
         RsDouble,
-        RsFloat,
         RsInt,
         RsLong,
         RsShort,
@@ -59,17 +61,62 @@ public partial class WorkItem : ObservableObject
         SelectedPickerItem = StringValue;
     }
 
-
-
     
+    public void InitializeFloatEntry(string invariantCultureString)
+    {
+        float tempFloat = 0.0f;
+        if (float.TryParse(invariantCultureString, NumberStyles.Float, CultureInfo.InvariantCulture, out float result)) {          
+            tempFloat = result;      
+        }
+        StringDisplayCultureFloat = tempFloat.ToString(CultureInfo.CurrentCulture);
+    }
+    
+
+    partial void OnStringValueChanged(string value)
+    {
+        if (TypeIdentifier != TypeID.RsStringFlo)
+            return;
+
+        if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out var f))
+        {
+            StringDisplayCultureFloat = f.ToString(CultureInfo.CurrentCulture);
+        }
+        else
+        {
+            StringDisplayCultureFloat = string.Empty;
+        }
+    }
+
+    partial void OnStringDisplayCultureFloatChanged(string value)
+    {
+        if (TypeIdentifier != TypeID.RsStringFlo)
+            return;
+
+        if (float.TryParse(value, NumberStyles.Float, CultureInfo.CurrentCulture, out var f))
+        {
+            StringValue = f.ToString(CultureInfo.InvariantCulture);
+        }
+        else
+        { 
+            StringValue = string.Empty; 
+        }
+    }
+
 
     public string? Name { get; set; }
     public TypeID TypeIdentifier { get; set; }
 
     public int TabNo { get; set; }
 
+    #region Region Properties and functions for Picker handling
     // ItemsSource für den Picker
     public ObservableCollection<string> AllowedPickerItems { get; set; } = new ObservableCollection<string>();
+
+
+
+    [ObservableProperty]
+    private string selectedPickerItem;
+
 
     partial void OnSelectedPickerItemChanged(string value)
     {
@@ -85,10 +132,13 @@ public partial class WorkItem : ObservableObject
         }
         
     }
+    #endregion
 
-    // Ausgewählter Wert
-    [ObservableProperty] 
-    private string selectedPickerItem;
+
+    
+
+    [ObservableProperty]
+    private string stringDisplayCultureFloat;
 
     [ObservableProperty]
     private string displayName;
